@@ -33,8 +33,8 @@ public class CementaryCipherView {
         String b = "|\u2022|\n \u203E";
         String c = "|\u2022\n \u203E";
         String d = " _\n \u2022|\n \u203E";
-        String e = " _\n|\u2022|\n \u203E";
-        System.out.println(a+"\n" + b+"\n"+c+"\n"+d+"\n"+e);
+        String h = " :|\n \u203E ";
+        System.out.println(a+"\n" + b+"\n"+c+"\n"+d+"\n"+h);
         
         
     }
