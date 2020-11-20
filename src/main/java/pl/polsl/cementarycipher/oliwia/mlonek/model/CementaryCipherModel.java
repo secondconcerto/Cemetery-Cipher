@@ -5,6 +5,8 @@
  */
 package pl.polsl.cementarycipher.oliwia.mlonek.model;
 
+import java.text.CharacterIterator;
+import java.text.StringCharacterIterator;
 import java.util.HashMap;
 
 /**
@@ -76,9 +78,17 @@ public class CementaryCipherModel {
     
     public void ciphereMessage(String userInput)
     {
+        CharacterIterator it = new StringCharacterIterator(userInput);
+
         
-        for (int i = 0; i < userInput.length(); i++) {
+        while (it.current() != CharacterIterator.DONE) {
+            String x = Character.toString(it.current());
+            if(cipheredAlphabet.get(x) != null)
+                System.out.println(cipheredAlphabet.get(x) +" "+ x +"\n");
+            else 
+                 System.out.println(it.current()+"\n");
             
+            it.next();
         }
     }
       

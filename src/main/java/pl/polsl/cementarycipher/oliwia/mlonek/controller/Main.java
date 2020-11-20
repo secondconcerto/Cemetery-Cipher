@@ -18,6 +18,9 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        for (String s: args) {
+            System.out.println(s);
+        }
         CementaryCipherModel model = new CementaryCipherModel();
         //Make a view
         CementaryCipherView view = new CementaryCipherView(model);

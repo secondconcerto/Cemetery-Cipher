@@ -27,16 +27,7 @@ public class CementaryCipherView {
         System.out.println("1. Encode text");
         System.out.println("2. Decode text");
         System.out.println("3. Exit");
-        
- 
-        String a = " \u2022|\n \u203E ";
-        String b = "|\u2022|\n \u203E";
-        String c = "|\u2022\n \u203E";
-        String d = " _\n \u2022|\n \u203E";
-        String h = " :|\n \u203E ";
-        System.out.println(a+"\n" + b+"\n"+c+"\n"+d+"\n"+h);
-        
-        
+
     }
 
     public String getEncodeText() {
