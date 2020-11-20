@@ -35,6 +35,8 @@ public class CementaryCipherController {
 
             case 1:
                 model.ciphereMessage(view.getEncodeText());
+                view.showOutputString(model.getCipheredValue());
+                model.resetValue();
                 break;
 
             case 2:

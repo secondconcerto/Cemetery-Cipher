@@ -42,6 +42,11 @@ public class CementaryCipherView {
 
     public void getDecodeText() {
         
-      }
+    }
+    
+    public void showOutputString( String OutputString)
+    {
+        System.out.println(OutputString);
+    }
     
 }
