@@ -7,6 +7,7 @@ package pl.polsl.cementarycipher.oliwia.mlonek.controller;
 
 import java.util.Scanner;
 import pl.polsl.cementarycipher.oliwia.mlonek.model.CementaryCipherModel;
+import pl.polsl.cementarycipher.oliwia.mlonek.model.DecodeAlphabet;
 import pl.polsl.cementarycipher.oliwia.mlonek.view.CementaryCipherView;
 
 /**
@@ -16,6 +17,7 @@ import pl.polsl.cementarycipher.oliwia.mlonek.view.CementaryCipherView;
 public class CementaryCipherController {
     private CementaryCipherModel model;
     private CementaryCipherView view;
+    
 
     public CementaryCipherController (CementaryCipherModel model, CementaryCipherView view) {
         this.model = model;
@@ -34,13 +36,15 @@ public class CementaryCipherController {
         switch (choice) {
 
             case 1:
-                model.ciphereMessage(view.getEncodeText());
-                view.showOutputString(model.getCipheredValue());
+                model.encodeMessage(view.getEncodeText());
+                view.showEncodedString(model.getEncodedValue());
                 model.resetValue();
                 break;
 
             case 2:
-                view.getDecodeText();
+                view.showCodeMap();
+                view.showDecodedString(model.decodeMessage(view.getDecodeText()));
+                
                 break;
 
             case 3:

@@ -6,6 +6,7 @@
 package pl.polsl.cementarycipher.oliwia.mlonek.model;
 
 import java.util.HashMap;
+import java.util.Set;
 
 /**
  *
@@ -77,5 +78,9 @@ public class EncodeAlphabet {
             {
                 return cipheredAlphabet;
             }
+
+    Set entrySet() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

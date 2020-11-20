@@ -23,7 +23,7 @@ public class Main {
         }
         CementaryCipherModel model = new CementaryCipherModel();
         //Make a view
-        CementaryCipherView view = new CementaryCipherView(model);
+        CementaryCipherView view = new CementaryCipherView();
         //Make a contorller and assign a model and view to it
         CementaryCipherController controller = new CementaryCipherController(model, view);
 

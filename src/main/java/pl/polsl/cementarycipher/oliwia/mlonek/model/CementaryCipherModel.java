@@ -7,19 +7,25 @@ package pl.polsl.cementarycipher.oliwia.mlonek.model;
 
 import java.text.CharacterIterator;
 import java.text.StringCharacterIterator;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map.Entry;
+
+
 
 /**
  *
  * @author roza
  */
 public class CementaryCipherModel {
-    private String cipheredValue = "";
+    private String enocdeValue = "";
+    private String decodedValue = "";
     private EncodeAlphabet cipheredAlphabet = new EncodeAlphabet();
     
  
     
-    public void ciphereMessage(String userInput)
+    public void encodeMessage(String userInput)
     {
         CharacterIterator it = new StringCharacterIterator(userInput);
 
@@ -27,23 +33,65 @@ public class CementaryCipherModel {
         while (it.current() != CharacterIterator.DONE) {
             String x = Character.toString(it.current());
             if(cipheredAlphabet.getMap().get(x) != null)
-                cipheredValue = cipheredValue + cipheredAlphabet.getMap().get(x)+ " " + it.current() +"\n";
+                enocdeValue = enocdeValue + cipheredAlphabet.getMap().get(x)+ " " + it.current() +"\n";
             else 
-                 cipheredValue = cipheredValue + it.current()+"\n\n\n";
+                 enocdeValue = enocdeValue + it.current()+"\n\n\n";
             
             it.next();
         }
     }
       
-    public String getCipheredValue()
+    public List<String> decodeMessage(List<String> decodeText) {
+           String x;
+           List<String> output = new ArrayList<>();
+           
+        for (String decodeText1 : decodeText) {
+            x = decodeText1;
+            int i = 0;
+            
+            if (x == null)
+            {
+                output.add(" ");
+                i++;
+            }
+            
+            else
+            {
+                    for (Entry<String, String> entry : cipheredAlphabet.getMap().entrySet()) {
+                    if (entry.getValue().equals(decodeText1)) {
+                        output.add(entry.getKey());
+                        i++;
+                        break;
+                    }
+                }
+                
+            }
+               
+           
+            
+            
+            
+
+        }
+        return output;
+    }
+    
+    public String getEncodedValue()
     {
-        return cipheredValue;
+        return enocdeValue;
+    }
+    
+    public String getDecodedValue()
+    {
+        return decodedValue;
     }
     
     public void resetValue()
     {
-        cipheredValue = "";
+        enocdeValue = "";
     }
+
+    
         
 
     
