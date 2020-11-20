@@ -21,10 +21,8 @@ public class CementaryCipherModel {
        put("c", "|\u2022\n \u203E");
        put("D", " _\n \u2022|\n \u203E");
        put("d", " _\n \u2022|\n \u203E");
-       put("E", "\u2680");
-       put("e", "\u2680"); 
-       put("O", "\u2360");
-       put("o", "\u2360");
+       put("E", " _\n|\u2022|\n \u203E");
+       put("e", " _\n|\u2022|\n \u203E"); 
     }};
  
     
