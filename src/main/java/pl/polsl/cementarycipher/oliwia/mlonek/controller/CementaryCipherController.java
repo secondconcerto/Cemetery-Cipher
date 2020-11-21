@@ -103,7 +103,7 @@ public class CementaryCipherController {
         }
         else
         {
-            System.out.println("Wrong input. Try again!"); 
+            view.printError("Wrong input. Try again!"); 
         }
         getInput();
         return;
