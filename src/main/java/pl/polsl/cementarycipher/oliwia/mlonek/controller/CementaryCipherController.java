@@ -42,12 +42,13 @@ public class CementaryCipherController {
             case 2:
                 view.showCodeMap();
                 List<String> input = view.getDecodeText();
-                if(input.size() != 0 && input != null )
+                if(input != null && input.size() != 0 )
                 {
 
                  view.showDecodedString(model.decodeMessage(input));
 
                 }
+
                 else
                 {
                     System.out.println("Wrong input. Try again!"); 
@@ -62,9 +63,9 @@ public class CementaryCipherController {
         }
     }
     
-    void encodeText()
+    void encodeText(String x)
     {
-        model.encodeMessage(view.getEncodeText());
+        model.encodeMessage(x);
         view.showEncodedString(model.getEncodedValue());
         model.resetValue();
         getInput();

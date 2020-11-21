@@ -25,13 +25,16 @@ public class Main {
         //Make a contorller and assign a model and view to it
         CementaryCipherController controller = new CementaryCipherController(model, view);
         
-        if (args[0].contentEquals("en"))
-            controller.encodeText();
+        if(args.length == 0)
+            controller.getInput();
+        else if ( args.length == 2 && args[0].contentEquals("en"))
+            controller.encodeText(args[1]);
         else if (args[0].contentEquals("de"))
             controller.decodeText();
-        else if (!args[0].contentEquals("en") && !args[0].contentEquals("de"))
+        else
             controller.getInput();
         
+                    
 
         
     }

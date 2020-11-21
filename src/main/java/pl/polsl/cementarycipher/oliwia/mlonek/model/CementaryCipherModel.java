@@ -90,6 +90,11 @@ public class CementaryCipherModel {
     {
         enocdeValue = "";
     }
+    
+    public void resetDecodedValue()
+    {
+        decodedValue = "";
+    }
 
     
         
