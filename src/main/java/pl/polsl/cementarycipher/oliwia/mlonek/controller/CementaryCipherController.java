@@ -5,6 +5,7 @@
  */
 package pl.polsl.cementarycipher.oliwia.mlonek.controller;
 
+import java.util.List;
 import java.util.Scanner;
 import pl.polsl.cementarycipher.oliwia.mlonek.model.CementaryCipherModel;
 import pl.polsl.cementarycipher.oliwia.mlonek.model.DecodeAlphabet;
@@ -28,11 +29,8 @@ public class CementaryCipherController {
     {
         while (true) {
         view.printMainMenu();
-        
         Scanner scanner = new Scanner(System.in);
-
         int choice = scanner.nextInt();
-
         switch (choice) {
 
             case 1:
@@ -43,8 +41,18 @@ public class CementaryCipherController {
 
             case 2:
                 view.showCodeMap();
-                view.showDecodedString(model.decodeMessage(view.getDecodeText()));
-                
+                List<String> input = view.getDecodeText();
+                if(input.size() != 0 && input != null )
+                {
+
+                 view.showDecodedString(model.decodeMessage(input));
+
+                }
+                else
+                {
+                    System.out.println("Wrong input. Try again!"); 
+                }
+                model.resetDecodedValue();
                 break;
 
             case 3:
@@ -52,6 +60,32 @@ public class CementaryCipherController {
                 return;
         }
         }
+    }
+    
+    void encodeText()
+    {
+        model.encodeMessage(view.getEncodeText());
+        view.showEncodedString(model.getEncodedValue());
+        model.resetValue();
+        getInput();
+        return;
+    }
+
+    void decodeText() {
+        view.showCodeMap();
+        List<String> input = view.getDecodeText();
+        if(input.size() != 0 && input != null )
+        {
+
+         view.showDecodedString(model.decodeMessage(input));
+
+        }
+        else
+        {
+            System.out.println("Wrong input. Try again!"); 
+        }
+        getInput();
+        return;
     }
 
 

@@ -18,16 +18,22 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        for (String s: args) {
-            System.out.println(s);
-        }
+        
         CementaryCipherModel model = new CementaryCipherModel();
         //Make a view
         CementaryCipherView view = new CementaryCipherView();
         //Make a contorller and assign a model and view to it
         CementaryCipherController controller = new CementaryCipherController(model, view);
+        
+        if (args[0].contentEquals("en"))
+            controller.encodeText();
+        else if (args[0].contentEquals("de"))
+            controller.decodeText();
+        else if (!args[0].contentEquals("en") && !args[0].contentEquals("de"))
+            controller.getInput();
+        
 
-        controller.getInput();
+        
     }
     
 }

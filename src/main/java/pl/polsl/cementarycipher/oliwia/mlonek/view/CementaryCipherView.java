@@ -47,17 +47,36 @@ public class CementaryCipherView {
     }
 
     public List<String> getDecodeText() {
-        System.out.println("Enter your message using numbers printed above. Please, seperate each number or whitespace with comma , (e.g. 1,2, ,3,4) "); 
-        Scanner sc= new Scanner(System.in);
-        String str= sc.nextLine(); 
-        System.out.println("You have entered: "+str);  
-        String[] myStrings = str.split(",");
-        List<String> list = new ArrayList<>();
-        for(int i = 0; i < myStrings.length;i++)
-        {
-            list.add(decodeTableAlphabet.getMap().get(myStrings[i]));
-        }
+       
+        System.out.println("Enter your message using numbers printed above. To put whitespaces between words type enter. To finish message type dot ."); 
         
+        Scanner input = new Scanner(System.in);
+        
+        List<String> list = new ArrayList<>();
+        
+        
+        int i = 0;
+        
+        while (i == 0)
+        {
+            String word = input.nextLine();
+            
+            if(word.contentEquals("."))
+                return list;
+            else if (word.isBlank())
+                list.add(" ");
+            else if (!word.matches("\\d+"))
+            {
+                list.clear();
+                return list;
+            }
+            else if  ( 0 < (Integer.parseInt(word)) && (Integer.parseInt(word)) < 27  ) 
+                list.add(decodeTableAlphabet.getMap().get(word));
+            else 
+                i = 1;
+            
+        }
+        list.clear();
         return list;
     }
     

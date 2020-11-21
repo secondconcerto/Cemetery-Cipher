@@ -49,7 +49,7 @@ public class CementaryCipherModel {
             x = decodeText1;
             int i = 0;
             
-            if (x == null)
+            if (x.isBlank())
             {
                 output.add(" ");
                 i++;
