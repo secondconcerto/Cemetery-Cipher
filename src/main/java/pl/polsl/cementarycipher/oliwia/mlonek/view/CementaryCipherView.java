@@ -101,5 +101,9 @@ public class CementaryCipherView {
         };
    
     }
+
+    public void printError(String what) {
+        System.out.println("There is an error: " + what); 
+    }
     
 }

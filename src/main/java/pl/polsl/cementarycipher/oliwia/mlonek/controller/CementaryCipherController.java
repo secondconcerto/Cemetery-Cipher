@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Scanner;
 import pl.polsl.cementarycipher.oliwia.mlonek.model.CementaryCipherModel;
 import pl.polsl.cementarycipher.oliwia.mlonek.model.DecodeAlphabet;
+import pl.polsl.cementarycipher.oliwia.mlonek.model.WrongInputException;
 import pl.polsl.cementarycipher.oliwia.mlonek.view.CementaryCipherView;
 
 /**
@@ -34,9 +35,19 @@ public class CementaryCipherController {
         switch (choice) {
 
             case 1:
-                model.encodeMessage(view.getEncodeText());
+                try {
+                    model.encodeMessage(view.getEncodeText());
+                
+                } catch (WrongInputException e) {
+                    view.printError(e.what());
+                }
+                finally
+                {
                 view.showEncodedString(model.getEncodedValue());
                 model.resetValue();
+                }
+               
+                
                 break;
 
             case 2:
@@ -65,10 +76,19 @@ public class CementaryCipherController {
     
     void encodeText(String x)
     {
-        model.encodeMessage(x);
-        view.showEncodedString(model.getEncodedValue());
-        model.resetValue();
-        getInput();
+        try {
+            model.encodeMessage(x);
+        } catch (WrongInputException e) {
+            view.printError(e.what());
+        }
+        
+        finally
+        {
+            view.showEncodedString(model.getEncodedValue());
+            model.resetValue();
+            getInput();
+        }
+        
         return;
     }
 

@@ -25,12 +25,15 @@ public class CementaryCipherModel {
     
  
     
-    public void encodeMessage(String userInput)
+    public void encodeMessage(String userInput) throws WrongInputException
     {
         CharacterIterator it = new StringCharacterIterator(userInput);
 
         
         while (it.current() != CharacterIterator.DONE) {
+         if (!(it.current() >= 'a' && it.current() <= 'z') || it.current() >= 'A' && it.current() <= 'Z' ) {
+            throw new WrongInputException();
+         }
             String x = Character.toString(it.current());
             if(cipheredAlphabet.getMap().get(x) != null)
                 enocdeValue = enocdeValue + cipheredAlphabet.getMap().get(x)+ " " + it.current() +"\n";
