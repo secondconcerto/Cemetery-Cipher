@@ -12,7 +12,7 @@ import java.util.Set;
  *
  * @author roza
  */
-public class EncodeAlphabet {
+public class EncodeAlphabetModel {
     
     private HashMap<String, String> cipheredAlphabet = new HashMap<String, String>()
     {{
@@ -79,8 +79,5 @@ public class EncodeAlphabet {
                 return cipheredAlphabet;
             }
 
-    Set entrySet() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
     
 }

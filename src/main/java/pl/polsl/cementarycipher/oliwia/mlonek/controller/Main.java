@@ -25,6 +25,7 @@ public class Main {
         //Make a contorller and assign a model and view to it
         CementaryCipherController controller = new CementaryCipherController(model, view);
         
+        //PRZENIESC DO KONTROLERA
         if(args.length == 0)
             controller.getInput();
         else if ( args.length > 1 && args[0].contentEquals("en"))

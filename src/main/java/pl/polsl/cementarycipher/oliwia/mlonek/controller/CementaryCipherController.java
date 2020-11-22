@@ -5,9 +5,8 @@
  */
 package pl.polsl.cementarycipher.oliwia.mlonek.controller;
 
-
-import java.util.Scanner;
 import pl.polsl.cementarycipher.oliwia.mlonek.model.CementaryCipherModel;
+import pl.polsl.cementarycipher.oliwia.mlonek.model.DecodeAlphabetModel;
 import pl.polsl.cementarycipher.oliwia.mlonek.model.WrongInputException;
 import pl.polsl.cementarycipher.oliwia.mlonek.view.CementaryCipherView;
 
@@ -16,9 +15,10 @@ import pl.polsl.cementarycipher.oliwia.mlonek.view.CementaryCipherView;
  * @author roza
  */
 public class CementaryCipherController {
+   
     private CementaryCipherModel model;
     private CementaryCipherView view;
-    
+    private DecodeAlphabetModel decodeTableAlphabet = new DecodeAlphabetModel();
 
     public CementaryCipherController (CementaryCipherModel model, CementaryCipherView view) {
         this.model = model;
@@ -29,28 +29,27 @@ public class CementaryCipherController {
     {
         while (true) {
         view.printMainMenu();
-        Scanner scanner = new Scanner(System.in);
-        String choice = scanner.nextLine();
-        switch (choice) {
+
+        switch (view.getUserChoice()) {
 
             case "1":
                 try {
                     model.encodeMessage(view.getTextToEncode());
+                    view.showResult(model.getEncodedValue());
                 
                 } catch (WrongInputException e) {
                     model.resetValue();
                     view.printError(e.what());
                 }
 
-                view.showResult(model.getEncodedValue());
                 model.resetValue();
 
                 break;
 
             case "2":
-                view.showCodeMap();
+                view.showCodeMap(decodeTableAlphabet.getMap());
                 try {
-                    view.showResult(model.decodeMessage(view.getTextToDecode()));
+                    view.showResult(model.decodeMessage(view.getTextToDecode(decodeTableAlphabet.getMap())));
                 } catch (WrongInputException e) {
                     model.resetDecodedValue();
                     view.printError(e.what());
@@ -75,11 +74,13 @@ public class CementaryCipherController {
     {
         try {
             model.encodeMessage(model.convertToString(textFromConsole));
+            view.showResult(model.getEncodedValue());
+           
+            
         } catch (WrongInputException e) {
             view.printError(e.what());
         }
         
-            view.showResult(model.getEncodedValue());
             model.resetValue();
             getInput();
         
@@ -87,9 +88,9 @@ public class CementaryCipherController {
     }
 
     public void decodeText() {
-        view.showCodeMap();
+        view.showCodeMap(decodeTableAlphabet.getMap());
         try {
-            view.showResult(model.decodeMessage(view.getTextToDecode()));
+            view.showResult(model.decodeMessage(view.getTextToDecode(decodeTableAlphabet.getMap())));
         } catch (WrongInputException e) {
             view.printError(e.what());
         }

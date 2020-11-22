@@ -7,13 +7,14 @@ package pl.polsl.cementarycipher.oliwia.mlonek.view;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeMap;
-import pl.polsl.cementarycipher.oliwia.mlonek.model.CementaryCipherModel;
-import pl.polsl.cementarycipher.oliwia.mlonek.model.DecodeAlphabet;
+import pl.polsl.cementarycipher.oliwia.mlonek.model.DecodeAlphabetModel;
+
 
 /**
  *
@@ -21,11 +22,7 @@ import pl.polsl.cementarycipher.oliwia.mlonek.model.DecodeAlphabet;
  */
 public class CementaryCipherView {
     
-    private DecodeAlphabet decodeTableAlphabet = new DecodeAlphabet();
-//    public CementaryCipherView(CementaryCipherModel model) {
-//        this.model = model;
-//        
-//    }
+
 
     public void printMainMenu() {
         System.out.println("Welcome in the program");
@@ -47,9 +44,9 @@ public class CementaryCipherView {
         
     }
 
-    public List<String> getTextToDecode() {
+    public List<String> getTextToDecode(HashMap<String, String> decodeTableAlphabet) {
        
-        System.out.println("Enter your message using numbers printed above. To put whitespaces between words type enter. To finish message type dot ."); 
+        System.out.println("Enter your message using numbers printed above. To put whitespace between words type enter. To finish message type dot ."); 
         
         Scanner input = new Scanner(System.in);
         
@@ -72,10 +69,9 @@ public class CementaryCipherView {
                 return list;
             }
             else if  ( 9 < (Integer.parseInt(word)) && (Integer.parseInt(word)) < 36  ) 
-                list.add(decodeTableAlphabet.getMap().get(word));
+                list.add(decodeTableAlphabet.get(word));
             else 
                 i = 1;
-            
         }
         
         list.clear();
@@ -89,21 +85,25 @@ public class CementaryCipherView {
     
 
     
-    public void showCodeMap()
+    public void showCodeMap(HashMap<String, String> decodeTableAlphabet )
     {
-            TreeMap<String, String> sorted = new TreeMap<>(decodeTableAlphabet.getMap()); 
+            TreeMap<String, String> sorted = new TreeMap<>(decodeTableAlphabet); 
             Set<Entry<String, String>> mappings = sorted.entrySet(); 
             for(Entry<String, String> mapping : mappings){
-                System.out.println(mapping.getKey() + "  =>   " + "\n" +mapping.getValue() + "\n" ); 
+                System.out.println(mapping.getKey() + "  =>   " + "\n" + mapping.getValue() + "\n" ); 
             }
 
-
-
-   
     }
 
     public void printError(String what) {
         System.out.println("There is an error: " + what); 
     }
+
+    public String getUserChoice() {
+        Scanner scanner = new Scanner(System.in);
+        String choice = scanner.nextLine();  
+        return choice;
+    }
+        
     
 }

@@ -19,8 +19,12 @@ import java.util.Map.Entry;
 public class CementaryCipherModel {
     private String enocdeValue = "";
     private String decodedValue = "";
-    private EncodeAlphabet cipheredAlphabet = new EncodeAlphabet();
-    
+    private EncodeAlphabetModel cipheredAlphabet;
+
+    public CementaryCipherModel() {
+        this.cipheredAlphabet = new EncodeAlphabetModel();
+    }
+
  
     public String convertToString(String [] userArray)
     {
@@ -29,13 +33,15 @@ public class CementaryCipherModel {
         int n = userArray.length-1;
         String[] newArray = new String[n];
         System.arraycopy(userArray,1,newArray,0,n);
-        for(int i = 0; i < newArray.length; i++) {
-            userMessageString += newArray[i];
+        for (String newArray1 : newArray) {
+            userMessageString += newArray1;
             userMessageString += " ";
         }
 
         return userMessageString;
     }
+    
+
     
     public void encodeMessage(String userInput) throws WrongInputException
     {
@@ -65,7 +71,6 @@ public class CementaryCipherModel {
       
     public String decodeMessage(List<String> decodeText) throws WrongInputException {
            String x;
-           //List<String> output = new ArrayList<>();
            String output = "";
            if(decodeText == null || decodeText.size() == 0 )
            {

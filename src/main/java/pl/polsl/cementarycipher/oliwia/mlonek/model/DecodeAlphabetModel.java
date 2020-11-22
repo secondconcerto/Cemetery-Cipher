@@ -11,7 +11,7 @@ import java.util.HashMap;
  *
  * @author roza
  */
-public class DecodeAlphabet {
+public class DecodeAlphabetModel {
     private HashMap<String, String> cipheredTableMap = new HashMap<String, String>()
     {{
         put("10", " \u2022|\n \u203E ");
