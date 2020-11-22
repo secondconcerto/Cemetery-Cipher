@@ -22,9 +22,25 @@ public class CementaryCipherModel {
     private EncodeAlphabet cipheredAlphabet = new EncodeAlphabet();
     
  
+    public String convertToString(String [] userArray)
+    {
+        String userMessageString = "";
+
+        int n = userArray.length-1;
+        String[] newArray = new String[n];
+        System.arraycopy(userArray,1,newArray,0,n);
+        for(int i = 0; i < newArray.length; i++) {
+            userMessageString += newArray[i];
+            userMessageString += " ";
+        }
+
+        return userMessageString;
+    }
     
     public void encodeMessage(String userInput) throws WrongInputException
     {
+        
+        
         CharacterIterator it = new StringCharacterIterator(userInput);
          if (userInput.isBlank())
          {
@@ -34,7 +50,7 @@ public class CementaryCipherModel {
         while (it.current() != CharacterIterator.DONE) {
          if ( (Character.toString(it.current()).isBlank()) == false ){
              if( !(it.current() >= 'a' && it.current() <= 'z') && !(it.current() >= 'A' && it.current() <= 'Z')) {
-            throw new WrongInputException();
+                throw new WrongInputException();
              }
          }
         String x = Character.toString(it.current());

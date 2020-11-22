@@ -8,7 +8,6 @@ package pl.polsl.cementarycipher.oliwia.mlonek.controller;
 
 import java.util.Scanner;
 import pl.polsl.cementarycipher.oliwia.mlonek.model.CementaryCipherModel;
-
 import pl.polsl.cementarycipher.oliwia.mlonek.model.WrongInputException;
 import pl.polsl.cementarycipher.oliwia.mlonek.view.CementaryCipherView;
 
@@ -72,10 +71,10 @@ public class CementaryCipherController {
         }
     }
     
-    public void encodeText(String x)
+    public void encodeText(String[] textFromConsole)
     {
         try {
-            model.encodeMessage(x);
+            model.encodeMessage(model.convertToString(textFromConsole));
         } catch (WrongInputException e) {
             view.printError(e.what());
         }

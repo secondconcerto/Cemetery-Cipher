@@ -27,8 +27,8 @@ public class Main {
         
         if(args.length == 0)
             controller.getInput();
-        else if ( args.length == 2 && args[0].contentEquals("en"))
-            controller.encodeText(args[1]);
+        else if ( args.length > 1 && args[0].contentEquals("en"))
+            controller.encodeText(args);
         else if (args[0].contentEquals("de"))
             controller.decodeText();
         else
