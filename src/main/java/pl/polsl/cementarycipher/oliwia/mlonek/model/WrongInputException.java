@@ -12,7 +12,7 @@ package pl.polsl.cementarycipher.oliwia.mlonek.model;
 public class WrongInputException extends Exception{
     
     public String what(){
-        return "You must type only english characters!";
+        return "Your input contains invalid characters or is empty!";
     }
 }
 

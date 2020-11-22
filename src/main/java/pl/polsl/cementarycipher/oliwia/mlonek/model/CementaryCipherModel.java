@@ -7,8 +7,6 @@ package pl.polsl.cementarycipher.oliwia.mlonek.model;
 
 import java.text.CharacterIterator;
 import java.text.StringCharacterIterator;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
 
@@ -28,25 +26,36 @@ public class CementaryCipherModel {
     public void encodeMessage(String userInput) throws WrongInputException
     {
         CharacterIterator it = new StringCharacterIterator(userInput);
-
-        
-        while (it.current() != CharacterIterator.DONE) {
-         if (!(it.current() >= 'a' && it.current() <= 'z') || it.current() >= 'A' && it.current() <= 'Z' ) {
-            throw new WrongInputException();
+         if (userInput.isBlank())
+         {
+              throw new WrongInputException();
          }
-            String x = Character.toString(it.current());
-            if(cipheredAlphabet.getMap().get(x) != null)
-                enocdeValue = enocdeValue + cipheredAlphabet.getMap().get(x)+ " " + it.current() +"\n";
-            else 
-                 enocdeValue = enocdeValue + it.current()+"\n\n\n";
-            
-            it.next();
+
+        while (it.current() != CharacterIterator.DONE) {
+         if ( (Character.toString(it.current()).isBlank()) == false ){
+             if( !(it.current() >= 'a' && it.current() <= 'z') && !(it.current() >= 'A' && it.current() <= 'Z')) {
+            throw new WrongInputException();
+             }
+         }
+        String x = Character.toString(it.current());
+        if(cipheredAlphabet.getMap().get(x) != null)
+            enocdeValue = enocdeValue + cipheredAlphabet.getMap().get(x)+ " " + it.current() +"\n\n";
+        else 
+             enocdeValue = enocdeValue + it.current()+"\n\n\n";
+
+        it.next();
         }
     }
       
-    public List<String> decodeMessage(List<String> decodeText) {
+    public String decodeMessage(List<String> decodeText) throws WrongInputException {
            String x;
-           List<String> output = new ArrayList<>();
+           //List<String> output = new ArrayList<>();
+           String output = "";
+           if(decodeText == null || decodeText.size() == 0 )
+           {
+               throw new WrongInputException();
+           }
+             
            
         for (String decodeText1 : decodeText) {
             x = decodeText1;
@@ -54,29 +63,27 @@ public class CementaryCipherModel {
             
             if (x.isBlank())
             {
-                output.add(" ");
+                output += (" ");
                 i++;
             }
             
             else
             {
-                    for (Entry<String, String> entry : cipheredAlphabet.getMap().entrySet()) {
+                for (Entry<String, String> entry : cipheredAlphabet.getMap().entrySet()) {
                     if (entry.getValue().equals(decodeText1)) {
-                        output.add(entry.getKey());
+                        output += entry.getKey();
                         i++;
                         break;
                     }
                 }
                 
             }
-               
-           
-            
-            
-            
 
         }
-        return output;
+        if(output.isBlank())
+            throw new WrongInputException();
+        else
+         return output;
     }
     
     public String getEncodedValue()
