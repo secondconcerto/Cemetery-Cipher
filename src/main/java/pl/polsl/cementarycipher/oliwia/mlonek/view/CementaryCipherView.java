@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package pl.polsl.cementarycipher.oliwia.mlonek.view;
 
 
@@ -13,17 +8,20 @@ import java.util.Map.Entry;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeMap;
-import pl.polsl.cementarycipher.oliwia.mlonek.model.DecodeAlphabetModel;
 
 
-/**
- *
- * @author roza
+/** 
+ * View class represents the visualization of the data. 
+ * Provides interaction with the user.
+ * 
+ * @author Oliwia Mlonek
+ * @version 1.0
  */
 public class CementaryCipherView {
     
-
-
+    /** 
+    * Print the application menu on the screen.
+    */
     public void printMainMenu() {
         System.out.println("Welcome in the program");
         System.out.println("What would you like to do?");
@@ -33,6 +31,10 @@ public class CementaryCipherView {
 
     }
 
+   /** 
+    * Ask for and take user input as a text to encode.
+    * @return text entered by the user
+    */
     public String getTextToEncode() {
          
         System.out.println("Enter a string: "); 
@@ -44,6 +46,12 @@ public class CementaryCipherView {
         
     }
 
+    /** 
+    * Ask for and take user input as a text (numbers), in specific format, to decode.
+    * 
+    * @param decodeTableAlphabet structure holding the alphabet, needed to read the pictogram by the number.
+    * @return message entered by the user (as the pictograms)
+    */
     public List<String> getTextToDecode(HashMap<String, String> decodeTableAlphabet) {
        
         System.out.println("Enter your message using numbers printed above. To put whitespace between words type enter. To finish message type dot ."); 
@@ -78,13 +86,22 @@ public class CementaryCipherView {
         return list;
     }
     
+    /** 
+    * Print the result on the user screen.
+    * 
+    * @param outputString value that holds encoded/decoded message
+    */
     public void showResult( String outputString)
     {
         System.out.println(outputString);
     }
     
 
-    
+    /** 
+    * Print the decoding map ( numer - pictogram), so the user can put the message to decode in form of numbers.
+    * 
+    * @param decodeTableAlphabet structure holding the alphabet map
+    */
     public void showCodeMap(HashMap<String, String> decodeTableAlphabet )
     {
             TreeMap<String, String> sorted = new TreeMap<>(decodeTableAlphabet); 
@@ -95,10 +112,21 @@ public class CementaryCipherView {
 
     }
 
-    public void printError(String what) {
-        System.out.println("There is an error: " + what); 
+    
+   /** 
+    * Print the eroor message on the user screen.
+    * 
+    * @param errorText text to be displayed
+    */
+    public void printError(String errorText) {
+        System.out.println("There is an error: " + errorText); 
     }
 
+    /** 
+    * Retrieve the user's choice on the operation to be performed.
+    * 
+    * @return user choice
+    */
     public String getUserChoice() {
         Scanner scanner = new Scanner(System.in);
         String choice = scanner.nextLine();  
