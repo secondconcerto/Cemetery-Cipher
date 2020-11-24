@@ -114,12 +114,16 @@ public class CementaryCipherView {
 
     
    /** 
-    * Print the eroor message on the user screen.
+    * Print the error message on the user screen.
     * 
     * @param errorText text to be displayed
     */
     public void printError(String errorText) {
         System.out.println("There is an error: " + errorText); 
+        long start = System.currentTimeMillis();
+        long end = start + 20*100;
+        while (System.currentTimeMillis() < end) {
+        }
     }
 
     /** 

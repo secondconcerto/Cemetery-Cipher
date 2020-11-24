@@ -1,6 +1,7 @@
 
 package pl.polsl.cementarycipher.oliwia.mlonek.controller;
 
+import java.util.concurrent.TimeUnit;
 import pl.polsl.cementarycipher.oliwia.mlonek.model.CementaryCipherModel;
 import pl.polsl.cementarycipher.oliwia.mlonek.model.DecodeAlphabetModel;
 import pl.polsl.cementarycipher.oliwia.mlonek.model.WrongInputException;
@@ -50,13 +51,17 @@ public class CementaryCipherController {
            
             /** If first option was chosen, take data and encode it */
             case "1":
-                try {
-                    model.encodeMessage(view.getTextToEncode());
-                    view.showResult(model.getEncodedValue());
-                
-                } catch (WrongInputException e) {
-                    model.resetValue();
-                    view.printError(e.what());
+                while(true)
+                {
+                    try {
+                        model.encodeMessage(view.getTextToEncode());
+                        view.showResult(model.getEncodedValue());
+                        break;
+
+                    } catch (WrongInputException e) {
+                        model.resetValue();
+                        view.printError(e.what());
+                    }
                 }
 
                 model.resetValue();
@@ -64,12 +69,17 @@ public class CementaryCipherController {
                 break;
             /** If second option was chosen, take data and decode it */
             case "2":
-                view.showCodeMap(decodeTableAlphabet.getMap());
-                try {
-                    view.showResult(model.decodeMessage(view.getTextToDecode(decodeTableAlphabet.getMap())));
-                } catch (WrongInputException e) {
-                    model.resetDecodedValue();
-                    view.printError(e.what());
+                while(true)
+                {
+                    view.showCodeMap(decodeTableAlphabet.getMap());
+                    try {
+                        view.showResult(model.decodeMessage(view.getTextToDecode(decodeTableAlphabet.getMap())));
+                        break;
+                    } catch (WrongInputException e) {
+                        model.resetDecodedValue();
+                        view.printError(e.what());
+                        
+                    }
                 }
                 
                 model.resetDecodedValue();

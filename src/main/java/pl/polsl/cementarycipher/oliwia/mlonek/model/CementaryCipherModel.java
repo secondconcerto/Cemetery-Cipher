@@ -3,9 +3,14 @@ package pl.polsl.cementarycipher.oliwia.mlonek.model;
 
 import java.text.CharacterIterator;
 import java.text.StringCharacterIterator;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
+import java.util.stream.Collectors;
+import static java.util.stream.Collectors.joining;
 
 
 
@@ -32,7 +37,7 @@ public class CementaryCipherModel {
 
  
      /** 
-     * Compares a person and as a result of lower returns 
+     * Converts array od string to single array.
      * 
      * @param userArray user input from command line stored in an array
      * @return user input convertet to a single string
@@ -40,13 +45,19 @@ public class CementaryCipherModel {
     public String convertToString(String [] userArray)
     {
         String userMessageString = "";
-        List<String> list = Arrays.asList(userArray);  
+        List<String> list =  new ArrayList<String>(Arrays.asList(userArray));
         list.remove(0);
- 
-        for (String newArray1 : list) {
-            userMessageString += newArray1;
-            userMessageString += " ";
-        }
+
+//        for (String PartOfString : list) {
+//            userMessageString += PartOfString;
+//            userMessageString += " ";
+//        }
+//        
+//        String result = list.stream()
+//        .map(list.stream().collect(joining(" ")))
+//        .collect(joining("\n"));
+
+        userMessageString = list.stream().collect(Collectors.joining(" "));
 
         return userMessageString;
     }
@@ -61,7 +72,6 @@ public class CementaryCipherModel {
     public void encodeMessage(String userInput) throws WrongInputException
     {
         
-        
         CharacterIterator it = new StringCharacterIterator(userInput);
          if (userInput.isBlank())
          {
@@ -75,11 +85,17 @@ public class CementaryCipherModel {
              }
          }
         String x = Character.toString(it.current());
-        if(cipheredAlphabet.getMap().get(x) != null)
-            enocdeValue = enocdeValue + cipheredAlphabet.getMap().get(x)+ " " + it.current() +"\n\n";
-        else 
-             enocdeValue = enocdeValue + it.current()+"\n\n\n";
-
+//        if(cipheredAlphabet.getMap().get(x) != null)
+//            enocdeValue = enocdeValue + cipheredAlphabet.getMap().get(x)+ " " + it.current() +"\n\n";
+//        else 
+//             enocdeValue = enocdeValue + it.current()+"\n\n\n";
+        
+        enocdeValue += cipheredAlphabet.getMap().entrySet()
+                .stream()
+                .filter(entry -> entry.getKey().equals(x))
+                .map(Map.Entry::getValue)
+                .collect(Collectors.joining());
+        enocdeValue += " " + it.current() +"\n\n";
         it.next();
         }
     }
