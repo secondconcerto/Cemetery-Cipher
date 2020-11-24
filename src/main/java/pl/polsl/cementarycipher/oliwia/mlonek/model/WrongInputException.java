@@ -2,20 +2,26 @@
 package pl.polsl.cementarycipher.oliwia.mlonek.model;
 
 /**
- * Exception class for objects thrown when attempting to proccess invalid user input.
+ * Exception classthrown when attempting to proccess invalid user input.
  *
- * @author Gall Anonim
- * @version 1.1
+ * @author Oliwia Mlonek
+ * @version 1.0
  */
 public class WrongInputException extends Exception{
-    
+
     /**
-     * Display error message on the user screen.
-     * 
-     * @return error message.
+     * Non-parameter constructor
      */
-    public String what(){
-        return "Your input contains invalid characters or is empty!";
+    public WrongInputException() {
+    }
+
+   /**
+     * Exception class constructor
+     *
+     * @param message display message
+     */ 
+    public WrongInputException (String message) {
+        super(message);
     }
 }
 

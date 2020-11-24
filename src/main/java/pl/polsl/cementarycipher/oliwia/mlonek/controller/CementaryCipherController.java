@@ -60,7 +60,7 @@ public class CementaryCipherController {
 
                     } catch (WrongInputException e) {
                         model.resetValue();
-                        view.printError(e.what());
+                        view.printError(e);
                     }
                 }
 
@@ -77,7 +77,7 @@ public class CementaryCipherController {
                         break;
                     } catch (WrongInputException e) {
                         model.resetDecodedValue();
-                        view.printError(e.what());
+                        view.printError(e);
                         
                     }
                 }
@@ -112,7 +112,7 @@ public class CementaryCipherController {
            
             
         } catch (WrongInputException e) {
-            view.printError(e.what());
+            view.printError(e);
         }
         
             model.resetValue();
@@ -131,7 +131,7 @@ public class CementaryCipherController {
         try {
             view.showResult(model.decodeMessage(view.getTextToDecode(decodeTableAlphabet.getMap())));
         } catch (WrongInputException e) {
-            view.printError(e.what());
+            view.printError(e);
         }
 
         model.resetDecodedValue();

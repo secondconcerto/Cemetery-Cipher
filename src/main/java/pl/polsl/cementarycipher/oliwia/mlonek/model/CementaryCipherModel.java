@@ -5,12 +5,9 @@ import java.text.CharacterIterator;
 import java.text.StringCharacterIterator;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
 import java.util.Map.Entry;
-import java.util.stream.Collectors;
-import static java.util.stream.Collectors.joining;
+
 
 
 
@@ -70,13 +67,13 @@ public class CementaryCipherModel {
         CharacterIterator it = new StringCharacterIterator(userInput);
             if (userInput.isBlank())
             {
-                 throw new WrongInputException();
+                 throw new WrongInputException("Your input is empty!");
             }
 
            while (it.current() != CharacterIterator.DONE) {
             if ( (Character.toString(it.current()).isBlank()) == false ){
                 if( !(it.current() >= 'a' && it.current() <= 'z') && !(it.current() >= 'A' && it.current() <= 'Z')) {
-                   throw new WrongInputException();
+                   throw new WrongInputException("Your input contains invalid characters!");
                 }
             }
            String x = Character.toString(it.current());
@@ -99,10 +96,10 @@ public class CementaryCipherModel {
      */
     public String decodeMessage(List<String> decodeText) throws WrongInputException {
            String x;
-           String output = "";
+
            if(decodeText.isEmpty() )
            {
-               throw new WrongInputException();
+               throw new WrongInputException("Your input is empty");
            }
              
            
@@ -112,7 +109,7 @@ public class CementaryCipherModel {
             
             if (x.isBlank())
             {
-                output += (" ");
+                decodedValue += (" ");
                 i++;
             }
             
@@ -120,7 +117,7 @@ public class CementaryCipherModel {
             {
                 for (Entry<String, String> entry : cipheredAlphabet.getMap().entrySet()) {
                     if (entry.getValue().equals(decodeText1)) {
-                        output += entry.getKey();
+                        decodedValue += entry.getKey();
                         i++;
                         break;
                     }
@@ -129,10 +126,10 @@ public class CementaryCipherModel {
             }
 
         }
-        if(output.isBlank())
-            throw new WrongInputException();
+        if(decodedValue.isBlank())
+            throw new WrongInputException("Your input is empty");
         else
-         return output;
+         return decodedValue;
     }
     
     /** 

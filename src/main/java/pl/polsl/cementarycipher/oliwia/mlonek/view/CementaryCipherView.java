@@ -8,6 +8,7 @@ import java.util.Map.Entry;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeMap;
+import pl.polsl.cementarycipher.oliwia.mlonek.model.WrongInputException;
 
 
 /** 
@@ -118,8 +119,9 @@ public class CementaryCipherView {
     * 
     * @param errorText text to be displayed
     */
-    public void printError(String errorText) {
-        System.out.println("There is an error: " + errorText); 
+    public void printError(WrongInputException errorText) {
+        System.out.println("There is an error: "); 
+        System.err.println(errorText.getMessage());
         long start = System.currentTimeMillis();
         long end = start + 20*100;
         while (System.currentTimeMillis() < end) {
