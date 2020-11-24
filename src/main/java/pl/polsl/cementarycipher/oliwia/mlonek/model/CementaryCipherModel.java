@@ -48,17 +48,12 @@ public class CementaryCipherModel {
         List<String> list =  new ArrayList<String>(Arrays.asList(userArray));
         list.remove(0);
 
-//        for (String PartOfString : list) {
-//            userMessageString += PartOfString;
-//            userMessageString += " ";
-//        }
-//        
-//        String result = list.stream()
-//        .map(list.stream().collect(joining(" ")))
-//        .collect(joining("\n"));
+        for (String newArray1 : list) {
+            userMessageString += newArray1;
+            userMessageString += " ";
+        }
 
-        userMessageString = list.stream().collect(Collectors.joining(" "));
-
+       
         return userMessageString;
     }
     
@@ -73,30 +68,24 @@ public class CementaryCipherModel {
     {
         
         CharacterIterator it = new StringCharacterIterator(userInput);
-         if (userInput.isBlank())
-         {
-              throw new WrongInputException();
-         }
+            if (userInput.isBlank())
+            {
+                 throw new WrongInputException();
+            }
 
-        while (it.current() != CharacterIterator.DONE) {
-         if ( (Character.toString(it.current()).isBlank()) == false ){
-             if( !(it.current() >= 'a' && it.current() <= 'z') && !(it.current() >= 'A' && it.current() <= 'Z')) {
-                throw new WrongInputException();
-             }
-         }
-        String x = Character.toString(it.current());
-//        if(cipheredAlphabet.getMap().get(x) != null)
-//            enocdeValue = enocdeValue + cipheredAlphabet.getMap().get(x)+ " " + it.current() +"\n\n";
-//        else 
-//             enocdeValue = enocdeValue + it.current()+"\n\n\n";
+           while (it.current() != CharacterIterator.DONE) {
+            if ( (Character.toString(it.current()).isBlank()) == false ){
+                if( !(it.current() >= 'a' && it.current() <= 'z') && !(it.current() >= 'A' && it.current() <= 'Z')) {
+                   throw new WrongInputException();
+                }
+            }
+           String x = Character.toString(it.current());
+           if(cipheredAlphabet.getMap().get(x) != null)
+               enocdeValue = enocdeValue + cipheredAlphabet.getMap().get(x)+ " " + it.current() +"\n\n";
+           else 
+                enocdeValue = enocdeValue + it.current()+"\n\n\n";
+           it.next();
         
-        enocdeValue += cipheredAlphabet.getMap().entrySet()
-                .stream()
-                .filter(entry -> entry.getKey().equals(x))
-                .map(Map.Entry::getValue)
-                .collect(Collectors.joining());
-        enocdeValue += " " + it.current() +"\n\n";
-        it.next();
         }
     }
      
