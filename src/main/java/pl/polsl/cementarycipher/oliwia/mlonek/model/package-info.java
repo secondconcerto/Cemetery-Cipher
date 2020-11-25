@@ -1,4 +1,4 @@
-/*
+/**
  * Provides model classes and custom exception class. 
  * Manages the data, logic and rules of the application.
  */

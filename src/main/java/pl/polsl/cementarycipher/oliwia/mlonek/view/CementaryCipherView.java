@@ -55,7 +55,8 @@ public class CementaryCipherView {
     */
     public List<String> getTextToDecode(HashMap<String, String> decodeTableAlphabet) {
        
-        System.out.println("Enter your message using numbers printed above. To put whitespace between words type enter. To finish message type dot ."); 
+        System.out.println("Enter your message using numbers printed above. After each number push enter. \n"
+                + "To put whitespace between words leave empty line ( double enter ).\nTo finish message type dot ' . ' \n"); 
         
         Scanner input = new Scanner(System.in);
         
@@ -99,7 +100,7 @@ public class CementaryCipherView {
     
 
     /** 
-    * Print the decoding map ( numer - pictogram), so the user can put the message to decode in form of numbers.
+    * Print the decoding map ( number - pictogram), so the user can put the message to decode in form of numbers.
     * 
     * @param decodeTableAlphabet structure holding the alphabet map
     */

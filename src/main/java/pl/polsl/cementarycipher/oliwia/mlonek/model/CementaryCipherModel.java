@@ -67,7 +67,7 @@ public class CementaryCipherModel {
         CharacterIterator it = new StringCharacterIterator(userInput);
             if (userInput.isBlank())
             {
-                 throw new WrongInputException("Your input is empty!");
+                 throw new WrongInputException("Your input is empty or is written in wrong format!");
             }
 
            while (it.current() != CharacterIterator.DONE) {
@@ -99,7 +99,7 @@ public class CementaryCipherModel {
 
            if(decodeText.isEmpty() )
            {
-               throw new WrongInputException("Your input is empty");
+               throw new WrongInputException("Your input contains invalid characters or is written in wrong format!");
            }
              
            
@@ -127,7 +127,7 @@ public class CementaryCipherModel {
 
         }
         if(decodedValue.isBlank())
-            throw new WrongInputException("Your input is empty");
+            throw new WrongInputException("Your input is empty or is written in wrong format!");
         else
          return decodedValue;
     }
