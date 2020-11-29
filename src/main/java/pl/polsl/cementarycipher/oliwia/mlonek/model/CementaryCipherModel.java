@@ -71,17 +71,17 @@ public class CementaryCipherModel {
             }
 
            while (it.current() != CharacterIterator.DONE) {
-            if ( (Character.toString(it.current()).isBlank()) == false ){
-                if( !(it.current() >= 'a' && it.current() <= 'z') && !(it.current() >= 'A' && it.current() <= 'Z')) {
-                   throw new WrongInputException("Your input contains invalid characters!");
+                if ( (Character.toString(it.current()).isBlank()) == false ){
+                    if( !(it.current() >= 'a' && it.current() <= 'z') && !(it.current() >= 'A' && it.current() <= 'Z')) {
+                       throw new WrongInputException("Your input contains invalid characters!");
+                    }
                 }
-            }
-           String x = Character.toString(it.current());
-           if(cipheredAlphabet.getMap().get(x) != null)
-               enocdeValue = enocdeValue + cipheredAlphabet.getMap().get(x)+ " " + it.current() +"\n\n";
-           else 
-                enocdeValue = enocdeValue + it.current()+"\n\n\n";
-           it.next();
+               String x = Character.toString(it.current());
+               if(cipheredAlphabet.getMap().get(x) != null)
+                   enocdeValue = enocdeValue + cipheredAlphabet.getMap().get(x)+ " " + it.current() +"\n\n";
+               else 
+                    enocdeValue = enocdeValue + it.current()+"\n\n\n";
+               it.next();
         
         }
     }
