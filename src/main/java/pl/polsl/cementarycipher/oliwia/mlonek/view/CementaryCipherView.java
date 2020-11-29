@@ -6,21 +6,24 @@
 package pl.polsl.cementarycipher.oliwia.mlonek.view;
 
 
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 import java.util.TreeMap;
-import pl.polsl.cementarycipher.oliwia.mlonek.model.WrongInputException;
+
 
 
 /**
  *
  * @author roza
  */
-public class CementaryCipherView {
+public class CementaryCipherView   {
     
     
+    
+     
 
     public void printMainMenu() {
         System.out.println("Welcome in the program");
@@ -40,10 +43,6 @@ public class CementaryCipherView {
 
         return str;
         
-    }
-    
-     interface CheckPerson {
-        boolean test(int p);
     }
 
     public List<String> getTextToDecode(HashMap<String, String> decodeTableAlphabet) {
@@ -103,13 +102,8 @@ public class CementaryCipherView {
 
     }
 
-   public void printError(WrongInputException errorText) {
-        System.out.println("There is an error: "); 
-        System.err.println(errorText.getMessage());
-        long start = System.currentTimeMillis();
-        long end = start + 20*100;
-        while (System.currentTimeMillis() < end) {
-        }
+    public void printError(String what) {
+        System.out.println("There is an error: " + what); 
     }
 
     public String getUserChoice() {
@@ -117,6 +111,14 @@ public class CementaryCipherView {
         String choice = scanner.nextLine();  
         return choice;
     }
-        
+
+  
+		
+    }
+
+  
+
     
-}
+    
+    
+

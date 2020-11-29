@@ -5,7 +5,7 @@
     <artifactId>CementaryCipher</artifactId>
     <version>1.0</version>
     <packaging>jar</packaging>
-    <name>CementaryCipherP2</name>
+    <name>CementaryCipherP3</name>
      <build>
         <plugins>
             <plugin>

@@ -2,7 +2,7 @@
 package pl.polsl.cementarycipher.oliwia.mlonek.model;
 
 /**
- * Exception class thrown when attempting to proccess invalid user input.
+ * Exception classthrown when attempting to proccess invalid user input.
  *
  * @author Oliwia Mlonek
  * @version 1.0

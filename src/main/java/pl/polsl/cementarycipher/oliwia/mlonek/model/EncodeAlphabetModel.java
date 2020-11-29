@@ -16,9 +16,9 @@ public class EncodeAlphabetModel {
     
     private HashMap<String, String> cipheredAlphabet = new HashMap<String, String>()
     {{
-        put("A", " \u2022|\n \u203E");
+        put("A", " \u2022|\n \u203E ");
         put("a", " \u2022|\n \u203E");
-        put("B", "|\u2022|\n \u203E");
+        put("B", "|\u2022|\n \u203E ");
         put("b", "|\u2022|\n \u203E");
         put("C", "|\u2022\n \u203E");
         put("c", "|\u2022\n \u203E");

@@ -21,12 +21,29 @@ import java.util.stream.Collectors;
  * @author roza
  */
 public class CementaryCipherModel {
-    private String encodedValue = "";
+    private String enocdeValue = "";
     private String decodedValue = "";
     private EncodeAlphabetModel cipheredAlphabet;
+    private DecodeAlphabetModel decodeModel = new DecodeAlphabetModel();
+    
 
     public CementaryCipherModel() {
         this.cipheredAlphabet = new EncodeAlphabetModel();
+    }
+    
+    public String checkInput(String word) throws WrongInputException
+    {
+            if (word.isBlank())
+                return(" ");
+            else if (!word.matches("\\d+"))
+            {
+                throw new WrongInputException("Invalid character");
+            }
+            else if  ( 9 < (Integer.parseInt(word)) && (Integer.parseInt(word)) < 36  ) 
+               return decodeModel.getMap().get(word);
+            else if( !(9 < (Integer.parseInt(word)) && (Integer.parseInt(word)) < 36))
+                throw new WrongInputException("Invalid character");
+        return "";
     }
 
  
@@ -37,8 +54,8 @@ public class CementaryCipherModel {
         
         list.remove(0);
  
-        userMessageString = list.stream().collect(Collectors.joining(" "));
-        String after = userMessageString.trim().replaceAll(" +", " ");
+       userMessageString = list.stream().collect(Collectors.joining(" "));
+       String after = userMessageString.trim().replaceAll(" +", " ");
         return after;
     }
     
@@ -51,7 +68,7 @@ public class CementaryCipherModel {
         CharacterIterator it = new StringCharacterIterator(userInput);
          if (userInput.isBlank())
          {
-              throw new WrongInputException();
+              throw new WrongInputException("Message is empty!");
          }
 
         while (it.current() != CharacterIterator.DONE) {
@@ -61,29 +78,26 @@ public class CementaryCipherModel {
                 }
             }
            String x = Character.toString(it.current());
-            encodedValue += cipheredAlphabet.getMap()
+            enocdeValue += cipheredAlphabet.getMap()
                    .entrySet()
                    .stream()
                    .filter(entry -> entry.getKey().equals(x))
                    .map(Map.Entry::getValue)
                    .collect(Collectors.joining());
-           encodedValue += "\n\n";
+           enocdeValue += " " + it.current() +"\n\n";
            it.next();
         }
     }
       
     public String decodeMessage(List<String> decodeText) throws WrongInputException {
-        
-        
-        final int [] count = {0};
-          int i = 0;
+           
+          
            if(decodeText == null || decodeText.isEmpty() )
            {
                throw new WrongInputException();
            }
            
          decodedValue = decodeText.stream().map(v ->{
-             
                if (v.isBlank() != true) {
                    return cipheredAlphabet.getMap()
                             .entrySet()
@@ -96,7 +110,6 @@ public class CementaryCipherModel {
                   
                    return " ";
                }
-             
  
            }).collect(Collectors.joining());
           
@@ -109,7 +122,7 @@ public class CementaryCipherModel {
     
     public String getEncodedValue()
     {
-        return encodedValue;
+        return enocdeValue;
     }
     
     public String getDecodedValue()
@@ -117,9 +130,9 @@ public class CementaryCipherModel {
         return decodedValue;
     }
     
-    public void resetEncodedValue()
+    public void resetValue()
     {
-        encodedValue = "";
+        enocdeValue = "";
     }
     
     public void resetDecodedValue()

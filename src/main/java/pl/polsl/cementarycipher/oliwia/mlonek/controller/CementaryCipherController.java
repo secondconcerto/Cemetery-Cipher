@@ -5,11 +5,11 @@
  */
 package pl.polsl.cementarycipher.oliwia.mlonek.controller;
 
-import java.util.Arrays;
 import pl.polsl.cementarycipher.oliwia.mlonek.model.CementaryCipherModel;
 import pl.polsl.cementarycipher.oliwia.mlonek.model.DecodeAlphabetModel;
 import pl.polsl.cementarycipher.oliwia.mlonek.model.WrongInputException;
 import pl.polsl.cementarycipher.oliwia.mlonek.view.CementaryCipherView;
+import pl.polsl.cementarycipher.oliwia.mlonek.view.GUIView;
 
 /**
  *
@@ -19,103 +19,92 @@ public class CementaryCipherController {
    
     private CementaryCipherModel model;
     private CementaryCipherView view;
+    private GUIView guiView;
     private DecodeAlphabetModel decodeTableAlphabet = new DecodeAlphabetModel();
 
-    public CementaryCipherController (CementaryCipherModel model, CementaryCipherView view) {
+    public CementaryCipherController (CementaryCipherModel model, CementaryCipherView view, GUIView guiView) {
         this.model = model;
         this.view = view;
+        this.guiView = guiView;
     }
     
-    public void getInput(String ... values)
+    public void getInput()
     {
-        
         while (true) {
-            String choice = "";
-            if (values.length == 0)
-                {
-                    view.printMainMenu();
-                    choice = view.getUserChoice();
-                }
-                else if(values[0].equals("en"))
-                    choice = "1";
-                else if(values[0].equals("de"))
-                    choice = "2";
+        
             
+        guiView.start();
+        //view.printMainMenu();
 
+        switch (view.getUserChoice()) {
 
-            switch (choice) {
-
-                case "1":
-                    try {
-                        if(values.length == 0)
-                            model.encodeMessage(view.getTextToEncode());
-                        else 
-                           model.encodeMessage(model.convertToString(values));
-
+            case "1":
+                try {
+                    model.encodeMessage(view.getTextToEncode());
                     view.showResult(model.getEncodedValue());
+                
+                } catch (WrongInputException e) {
+                    model.resetValue();
+                    //view.printError(e.what());
+                }
 
-                    } catch (WrongInputException e) {
-                        model.resetEncodedValue();
-                        view.printError(e);
-                    }
+                model.resetValue();
 
-                    model.resetEncodedValue();
-                    Arrays.fill(values, null);
+                break;
 
-                    break;
-
-                case "2":
-                    view.showCodeMap(decodeTableAlphabet.getMap());
-                    try {
-                        view.showResult(model.decodeMessage(view.getTextToDecode(decodeTableAlphabet.getMap())));
-                    } catch (WrongInputException e) {
-                        model.resetDecodedValue();
-                        view.printError(e);
-                    }
-
+            case "2":
+                view.showCodeMap(decodeTableAlphabet.getMap());
+                try {
+                    view.showResult(model.decodeMessage(view.getTextToDecode(decodeTableAlphabet.getMap())));
+                } catch (WrongInputException e) {
                     model.resetDecodedValue();
-                    break;
+                    //view.printError(e.what());
+                }
+                
+                model.resetDecodedValue();
+                break;
 
-                case "3":
-                    return;
-
-                default:
-                    getInput();
-                    return;
-
-            }
+            case "3":
+                
+                return;
+                
+            default:
+                getInput();
+                return;
+                
+        }
         }
     }
     
-//    public void encodeText(String[] textFromConsole)
-//    {
-//        try {
-//            model.encodeMessage(model.convertToString(textFromConsole));
-//            view.showResult(model.getEncodedValue());
-//           
-//            
-//        } catch (WrongInputException e) {
-//            view.printError(e.what());
-//        }
-//        
-//            model.resetEncodedValue();
-//            getInput();
-//        
-//        return;
-//    }
-//
-//    public void decodeText() {
-//        view.showCodeMap(decodeTableAlphabet.getMap());
-//        try {
-//            view.showResult(model.decodeMessage(view.getTextToDecode(decodeTableAlphabet.getMap())));
-//        } catch (WrongInputException e) {
-//            view.printError(e.what());
-//        }
-//
-//        model.resetDecodedValue();
-//        getInput();
-//        return;
-//    }
+    public void encodeText(String[] textFromConsole)
+    {
+        try {
+            model.encodeMessage(model.convertToString(textFromConsole));
+            view.showResult(model.getEncodedValue());
+           
+            
+        } catch (WrongInputException e) {
+           // view.printError(e.what());
+        }
+        
+            model.resetValue();
+            getInput();
+        
+        return;
+    }
+
+    public void decodeText() {
+        view.showCodeMap(decodeTableAlphabet.getMap());
+        try {
+            view.showResult(model.decodeMessage(view.getTextToDecode(decodeTableAlphabet.getMap())));
+        } catch (WrongInputException e) {
+           // view.printError(e.what());
+        }
+
+        model.resetDecodedValue();
+        getInput();
+        return;
+    }
 
 
 }

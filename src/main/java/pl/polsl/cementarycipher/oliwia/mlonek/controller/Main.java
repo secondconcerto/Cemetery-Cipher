@@ -7,6 +7,8 @@ package pl.polsl.cementarycipher.oliwia.mlonek.controller;
 
 import pl.polsl.cementarycipher.oliwia.mlonek.model.CementaryCipherModel;
 import pl.polsl.cementarycipher.oliwia.mlonek.view.CementaryCipherView;
+import pl.polsl.cementarycipher.oliwia.mlonek.view.GUIView;
+
 
 /**
  *
@@ -23,19 +25,25 @@ public class Main {
         //Make a view
         CementaryCipherView view = new CementaryCipherView();
         //Make a contorller and assign a model and view to it
-        CementaryCipherController controller = new CementaryCipherController(model, view);
+        GUIView guiView = new GUIView(model);
+        CementaryCipherController controller = new CementaryCipherController(model, view, guiView);
+        
+        
+        
+
         
         //PRZENIESC DO KONTROLERA
         if(args.length == 0)
-          controller.getInput();
+            controller.getInput();
         else if ( args.length > 1 && args[0].contentEquals("en"))
-            controller.getInput(args);
+            controller.encodeText(args);
         else if (args[0].contentEquals("de"))
-            controller.getInput(args);
+            controller.decodeText();
         else
             controller.getInput();
         
-                    
+        
+   
 
         
     }

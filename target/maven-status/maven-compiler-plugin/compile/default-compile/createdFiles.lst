@@ -1,8 +1,6 @@
-pl/polsl/cementarycipher/oliwia/mlonek/model/DecodeAlphabetModel.class
-pl/polsl/cementarycipher/oliwia/mlonek/controller/Main.class
 pl/polsl/cementarycipher/oliwia/mlonek/model/WrongInputException.class
 pl/polsl/cementarycipher/oliwia/mlonek/model/EncodeAlphabetModel.class
 pl/polsl/cementarycipher/oliwia/mlonek/model/CementaryCipherModel.class
 pl/polsl/cementarycipher/oliwia/mlonek/model/DecodeAlphabetModel$1.class
+pl/polsl/cementarycipher/oliwia/mlonek/model/DecodeAlphabetModel.class
 pl/polsl/cementarycipher/oliwia/mlonek/model/EncodeAlphabetModel$1.class
-pl/polsl/cementarycipher/oliwia/mlonek/view/CementaryCipherView.class
