@@ -1,7 +1,7 @@
-/Users/roza/NetBeansProjects/CementaryCipher/src/main/java/pl/polsl/cementarycipher/oliwia/mlonek/view/CementaryCipherView.java
-/Users/roza/NetBeansProjects/CementaryCipher/src/main/java/pl/polsl/cementarycipher/oliwia/mlonek/model/DecodeAlphabet.java
-/Users/roza/NetBeansProjects/CementaryCipher/src/main/java/pl/polsl/cementarycipher/oliwia/mlonek/model/EncodeAlphabet.java
-/Users/roza/NetBeansProjects/CementaryCipher/src/main/java/pl/polsl/cementarycipher/oliwia/mlonek/controller/CementaryCipherController.java
-/Users/roza/NetBeansProjects/CementaryCipher/src/main/java/pl/polsl/cementarycipher/oliwia/mlonek/model/WrongInputException.java
-/Users/roza/NetBeansProjects/CementaryCipher/src/main/java/pl/polsl/cementarycipher/oliwia/mlonek/controller/Main.java
-/Users/roza/NetBeansProjects/CementaryCipher/src/main/java/pl/polsl/cementarycipher/oliwia/mlonek/model/CementaryCipherModel.java
+/Users/roza/NetBeansProjects/CementaryCipherF2 2/src/main/java/pl/polsl/cementarycipher/oliwia/mlonek/model/EncodeAlphabetModel.java
+/Users/roza/NetBeansProjects/CementaryCipherF2 2/src/main/java/pl/polsl/cementarycipher/oliwia/mlonek/model/WrongInputException.java
+/Users/roza/NetBeansProjects/CementaryCipherF2 2/src/main/java/pl/polsl/cementarycipher/oliwia/mlonek/controller/Main.java
+/Users/roza/NetBeansProjects/CementaryCipherF2 2/src/main/java/pl/polsl/cementarycipher/oliwia/mlonek/model/CementaryCipherModel.java
+/Users/roza/NetBeansProjects/CementaryCipherF2 2/src/main/java/pl/polsl/cementarycipher/oliwia/mlonek/model/DecodeAlphabetModel.java
+/Users/roza/NetBeansProjects/CementaryCipherF2 2/src/main/java/pl/polsl/cementarycipher/oliwia/mlonek/view/CementaryCipherView.java
+/Users/roza/NetBeansProjects/CementaryCipherF2 2/src/main/java/pl/polsl/cementarycipher/oliwia/mlonek/controller/CementaryCipherController.java
