@@ -32,7 +32,7 @@ public class ModelTest {
     
     @ParameterizedTest
     @MethodSource("stringListProvider")
-    void testConvertingToString( String[] array, String expectedString) {
+    void testConvertingToString( List<String> array, String expectedString) {
         String codeValue = model.convertToString(array);
         assertEquals(expectedString, codeValue, "Something wrong!");
         
@@ -40,10 +40,13 @@ public class ModelTest {
 
     static Stream<Arguments> stringListProvider() {
         return Stream.of(
-            arguments(new String[] { "en", "a" , "b"}, "a b"),
-            arguments(new String[] {"en", " ","cats", " ", "black"}, "cats black"),
-            arguments(new String[] {"en", "world"}, "world"),
-            arguments(new String[] {"en", " "}, "")
+            arguments(Arrays.asList( "en", "a" , "b"), "a b"),
+            arguments(Arrays.asList("en", " ","cats", " ", "black"), "cats black"),
+            arguments(Arrays.asList("en", "world"), "world"),
+            arguments(Arrays.asList("en", " "), ""),
+            arguments(Arrays.asList("", ""), ""),
+            arguments(Arrays.asList(""), "")
+           
         );
     }
     
@@ -78,7 +81,8 @@ public class ModelTest {
             arguments("a7 B"," \u2022|\n \u203E\n\n\n\n|\u2022|\n \u203E\n\n"),
             arguments("Ąćęcż B"," \u2022|\n \u203E\n\n\n\n|\u2022|\n \u203E\n\n"),
             arguments("    . ??     "," \u2022|\n \u203E\n\n\n\n|\u2022|\n \u203E\n\n"),
-            arguments("                 "," \u2022|\n \u203E\n\n\n\n|\u2022|\n \u203E\n\n")
+            arguments("                 "," \u2022|\n \u203E\n\n\n\n|\u2022|\n \u203E\n\n"),
+            arguments(null," \u2022|\n \u203E\n\n|\u2022|\n \u203E\n\n")
      
         
         
@@ -117,8 +121,10 @@ public class ModelTest {
             arguments(Arrays.asList("\u2022|\n \u203E"," ","\u2022|\n \u203E"),"a B"),
             arguments(Arrays.asList("\u2022|\n \u203E"," ","\u2022|\n \u203E"),"A b"),
             arguments(Arrays.asList("        "),"a b"),
-            arguments(Arrays.asList("ą","ę","\u2022|\n \u203E"),""),
-            arguments(Arrays.asList("!?      "),"a b")
+            arguments(Arrays.asList(""),"a b"),
+            arguments(Arrays.asList("ą","ę","\u2022|\n \u203E"),"a b"),
+            arguments(Arrays.asList("!?      "),"a b"),
+            arguments(null,"a b")
 //         
         );
     }
@@ -144,7 +150,7 @@ public class ModelTest {
     void testResetDecoded(String candidate) throws NoSuchFieldException, 
       SecurityException, IllegalArgumentException, IllegalAccessException{
         try {
-            model.decodeMessage(Arrays.asList("candidate"));
+            model.decodeMessage(Arrays.asList(candidate));
             model.resetDecodedValue();
             Field field = CementaryCipherModel.class.getDeclaredField("decodedValue");
             field.setAccessible(true);

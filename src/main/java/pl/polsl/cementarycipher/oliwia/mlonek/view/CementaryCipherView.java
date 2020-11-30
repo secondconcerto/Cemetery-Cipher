@@ -103,13 +103,13 @@ public class CementaryCipherView {
 
     }
 
-   public void printError(WrongInputException errorText) {
-        System.out.println("There is an error: "); 
-        System.err.println(errorText.getMessage());
-        long start = System.currentTimeMillis();
-        long end = start + 20*100;
-        while (System.currentTimeMillis() < end) {
-        }
+   public void printError(String errorText) {
+        System.out.println("There is an error: " + errorText); 
+         long start = System.currentTimeMillis();
+         long end = start + 20*100;
+         while (System.currentTimeMillis() < end) {
+         }
+        
     }
 
     public String getUserChoice() {
