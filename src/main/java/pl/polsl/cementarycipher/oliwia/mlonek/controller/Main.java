@@ -8,7 +8,7 @@ import pl.polsl.cementarycipher.oliwia.mlonek.view.CementaryCipherView;
  * message with Cemetary Cipher.
  * 
  * @author Oliwia Mlonek
- * @version 1.0
+ * @version 2.0
  */
 public class Main {
 

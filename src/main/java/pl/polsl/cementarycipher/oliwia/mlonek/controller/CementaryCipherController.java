@@ -14,7 +14,7 @@ import pl.polsl.cementarycipher.oliwia.mlonek.view.CementaryCipherView;
  * into actions that the model will perform. 
  * 
  * @author Oliwia Mlonek
- * @version 1.0
+ * @version 2.0
  */
 public class CementaryCipherController {
   

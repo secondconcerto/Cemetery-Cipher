@@ -4,7 +4,6 @@ package pl.polsl.cementarycipher.oliwia.mlonek.model;
 import java.text.CharacterIterator;
 import java.text.StringCharacterIterator;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -16,7 +15,7 @@ import java.util.stream.Collectors;
  * Model class of the application representing rules that govern access to and updates of data. 
  * 
  * @author Oliwia Mlonek
- * @version 1.0
+ * @version 2.0
  */
 public class CementaryCipherModel {
     
