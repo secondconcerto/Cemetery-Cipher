@@ -74,8 +74,6 @@ public class CementaryCipherModel {
       
     public String decodeMessage(List<String> decodeText) throws WrongInputException {
         
-        
-        final int [] count = {0};
           int i = 0;
            if(decodeText == null || decodeText.isEmpty() )
            {
