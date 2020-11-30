@@ -6,11 +6,11 @@
                 <packaging>*</packaging>
             </packagings>
             <goals>
-                <goal>generate-sources</goal>
-                <goal>javadoc:javadoc</goal>
+                <goal>javadoc:test-aggregate</goal>
             </goals>
             <properties>
-                <private></private>
+                <show>private</show>
+                
             </properties>
         </action>
     </actions>

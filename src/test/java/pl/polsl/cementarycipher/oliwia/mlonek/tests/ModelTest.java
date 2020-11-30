@@ -173,7 +173,6 @@ public class ModelTest {
      * Checks if private field in model class, that stores the encoded message
      * is correctly cleaned before starting next operation.
      * @param candidate exemplary value holded by the field
-     * @param expectedString variable we expect to get at the end, after reseting.
      * @throws java.lang.NoSuchFieldException thrown when an attempt is made to access a field that does not exist
      * @throws WrongInputException when user input cannot be processed
      * @throws java.lang.IllegalAccessException thrown when an application tries to set or get a field but the currently executing method does not have access to the definition of the specified class, field, method or constructor.
@@ -199,7 +198,6 @@ public class ModelTest {
      * Checks if private field in model class, that stores the decoded message
      * is correctly cleaned before starting next operation.
      * @param candidate exemplary value holded by the field
-     * @param expectedString variable we expect to get at the end, after reseting.
      * @throws java.lang.NoSuchFieldException thrown when an attempt is made to access a field that does not exist
      * @throws WrongInputException when user input cannot be processed
      * @throws java.lang.IllegalAccessException thrown when an application tries to set or get a field but the currently executing method does not have access to the definition of the specified class, field, method or constructor.
@@ -207,7 +205,8 @@ public class ModelTest {
     @ParameterizedTest
     @ValueSource(strings = {"a", "ab", "ąą22"}) 
     void testResetDecoded(String candidate) throws NoSuchFieldException, 
-      SecurityException, IllegalArgumentException, IllegalAccessException{
+      SecurityException, IllegalArgumentException, IllegalAccessException,WrongInputException
+    {
         try {
             model.decodeMessage(Arrays.asList(candidate));
             model.resetDecodedValue();
