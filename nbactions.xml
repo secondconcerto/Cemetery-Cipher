@@ -6,7 +6,7 @@
                 <packaging>*</packaging>
             </packagings>
             <goals>
-                <goal>javadoc:test-aggregate</goal>
+                <goal>javadoc:javadoc</goal>
             </goals>
             <properties>
                 <show>private</show>
