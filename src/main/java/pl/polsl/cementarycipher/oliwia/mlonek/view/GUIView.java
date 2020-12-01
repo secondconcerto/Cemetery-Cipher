@@ -5,11 +5,13 @@
  */
 package pl.polsl.cementarycipher.oliwia.mlonek.view;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.event.*; 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
 import javax.swing.*; 
+import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 import javax.swing.table.DefaultTableModel;
 import pl.polsl.cementarycipher.oliwia.mlonek.model.CementaryCipherModel;
 import pl.polsl.cementarycipher.oliwia.mlonek.model.DecodeAlphabetModel;
@@ -45,9 +47,12 @@ public class GUIView extends JFrame implements ActionListener {
     { 
         var menuBar = new JMenuBar();
         var operationsMenu = new JMenu("Operations");
+        operationsMenu.setPreferredSize(new Dimension(150, 50));
         operationsMenu.setMnemonic(KeyEvent.VK_F);
+     
 
         var EnocdeMenuItem = new JMenuItem("Encode text");
+        EnocdeMenuItem.setPreferredSize(new Dimension(200, EnocdeMenuItem.getPreferredSize().height));
         EnocdeMenuItem.setMnemonic(KeyEvent.VK_E);
         EnocdeMenuItem.addActionListener(new ActionListener() {
             @Override
@@ -57,6 +62,7 @@ public class GUIView extends JFrame implements ActionListener {
         });
         
         var DecodeMenuItem = new JMenuItem("Decode text");
+        DecodeMenuItem.setPreferredSize(new Dimension(200, DecodeMenuItem.getPreferredSize().height));
         DecodeMenuItem.setMnemonic(KeyEvent.VK_D);
         DecodeMenuItem.addActionListener(new ActionListener() {
             @Override
@@ -68,8 +74,13 @@ public class GUIView extends JFrame implements ActionListener {
         operationsMenu.add(EnocdeMenuItem);
         operationsMenu.add(DecodeMenuItem);
         menuBar.add(operationsMenu);
+
+        enocdeButton = new JButton("Encode"); 
+        outputToUser = new JTextArea();
+        //frame.add(enocdeButton);
+        frame.add(new JLabel(new ImageIcon("src/logo.png")));
+        frame.setSize(1000, 1000); 
         
-        frame.setSize(1000, 500); 
 
         frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
@@ -122,7 +133,7 @@ public class GUIView extends JFrame implements ActionListener {
         frame.pack ();
         frame.repaint();             //Ensures that the frame swaps to the next panel and doesn't get stuck.
         frame.revalidate(); 
-        frame.setSize(1000, 500); 
+        frame.setSize(1000, 1000); 
         frame.setVisible(true);
     } 
     
@@ -195,7 +206,7 @@ public class GUIView extends JFrame implements ActionListener {
         //frame.add(scroll2); //panel = panel you want to change too.
         frame.repaint();             //Ensures that the frame swaps to the next panel and doesn't get stuck.
         frame.revalidate(); 
-        frame.setSize(1000, 500); 
+        frame.setSize(1000, 1000); 
         frame.setVisible(true);
 //       
     }
