@@ -26,12 +26,14 @@ public class GUIView extends JFrame implements ActionListener {
 
     static JTextArea userInput; 
     static JTextArea outputToUser; 
+    static JTextArea historyArea; 
     static JFrame frame = new JFrame("Cemetry Cipher"); ; 
     static JButton enocdeButton; 
     static JButton addButton; 
     static JLabel label; 
     JPanel panelToEncode = new JPanel(); 
     JPanel panelToDecode = new JPanel(); 
+    JPanel panelToHistory = new JPanel(); 
     List<String> listWithNumbers = new ArrayList<>();
     List<String> listWithCipher = new ArrayList<>();
     
@@ -77,6 +79,8 @@ public class GUIView extends JFrame implements ActionListener {
 
         enocdeButton = new JButton("Encode"); 
         outputToUser = new JTextArea();
+        
+        
         //frame.add(enocdeButton);
         frame.add(new JLabel(new ImageIcon("src/logo.png")));
         frame.setSize(1000, 1000); 
@@ -93,6 +97,7 @@ public class GUIView extends JFrame implements ActionListener {
     { 
         
         panelToEncode.removeAll();
+        panelToHistory.removeAll();
         frame.getContentPane().removeAll();
         
         label = new JLabel("Result: "); 
@@ -115,26 +120,41 @@ public class GUIView extends JFrame implements ActionListener {
                  }
              }
          });
-        
+        historyArea = new JTextArea(10,10);
+        historyArea.setText("Hello world");
         userInput = new JTextArea(1,10); 
-        outputToUser = new JTextArea(16,58); 
-        outputToUser = new JTextArea(); 
+        outputToUser = new JTextArea();  
+        
         panelToEncode.add(userInput); 
         panelToEncode.add(enocdeButton); 
         panelToEncode.add(label); 
         panelToEncode.add(outputToUser);
+        panelToEncode.setLayout(new BoxLayout(panelToEncode, BoxLayout.Y_AXIS));
+    
+        panelToHistory.add(historyArea);
+        panelToHistory.setLayout(new BoxLayout(panelToHistory, BoxLayout.Y_AXIS));
+       
+        JSplitPane splitPane = new JSplitPane(SwingConstants.VERTICAL, panelToEncode, panelToHistory); 
+       splitPane.setOrientation(SwingConstants.VERTICAL); 
+      // splitPane.setSize(100, 100);
+       splitPane.setOneTouchExpandable(true);
+       splitPane.setResizeWeight(1);        
+       //Dimension minimumSize = new Dimension(100, 50);
         
-       
+       // panelToEncode.setMinimumSize(minimumSize);
+      //  panelToHistory.setMinimumSize(minimumSize); 
         frame.setJMenuBar(menu);     
-        JScrollPane scroll = new JScrollPane(panelToEncode); 
+        JScrollPane scroll = new JScrollPane(splitPane); 
        
-         frame.getContentPane().add(scroll);
+        frame.getContentPane().add(scroll);
         //frame.add(scroll); //panel = panel you want to change too. 
         frame.pack ();
         frame.repaint();             //Ensures that the frame swaps to the next panel and doesn't get stuck.
         frame.revalidate(); 
         frame.setSize(1000, 1000); 
         frame.setVisible(true);
+        
+      
     } 
     
     public void decodeView(JMenuBar menu)

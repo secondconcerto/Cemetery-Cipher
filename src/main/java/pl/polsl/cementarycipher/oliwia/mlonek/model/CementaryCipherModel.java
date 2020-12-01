@@ -74,7 +74,7 @@ public class CementaryCipherModel {
         while (it.current() != CharacterIterator.DONE) {
             if ( (Character.toString(it.current()).isBlank()) == false ){
                 if( !(it.current() >= 'a' && it.current() <= 'z') && !(it.current() >= 'A' && it.current() <= 'Z')) {
-                   throw new WrongInputException();
+                   throw new WrongInputException("Input contains invalid characters!");
                 }
             }
            String x = Character.toString(it.current());
