@@ -94,7 +94,7 @@ public class CementaryCipherModel {
           
            if(decodeText == null || decodeText.isEmpty() )
            {
-               throw new WrongInputException();
+               throw new WrongInputException("Message is empty!");
            }
            
          decodedValue = decodeText.stream().map(v ->{
@@ -115,7 +115,7 @@ public class CementaryCipherModel {
           
 
         if(decodedValue.isBlank())
-            throw new WrongInputException();
+            throw new WrongInputException("Message is empty!");
         else
          return decodedValue;
     }

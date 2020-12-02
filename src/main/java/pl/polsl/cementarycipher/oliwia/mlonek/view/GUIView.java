@@ -4,20 +4,26 @@
  * and open the template in the editor.
  */
 package pl.polsl.cementarycipher.oliwia.mlonek.view;
+import com.sun.jdi.IntegerType;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.*; 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.TreeMap;
 import javax.swing.*; 
 import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
+import javax.swing.border.TitledBorder;
+import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
 import pl.polsl.cementarycipher.oliwia.mlonek.model.CementaryCipherModel;
 import pl.polsl.cementarycipher.oliwia.mlonek.model.DecodeAlphabetModel;
 import pl.polsl.cementarycipher.oliwia.mlonek.model.WrongInputException;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableModel;
+import javax.swing.table.AbstractTableModel;
 /**
  *
  * @author roza
@@ -31,14 +37,19 @@ public class GUIView extends JFrame implements ActionListener {
     static JButton enocdeButton; 
     static JButton addButton; 
     static JLabel label; 
+    static JTable table = new JTable();
     JPanel panelToEncode = new JPanel(); 
     JPanel panelToDecode = new JPanel(); 
     JPanel panelToHistory = new JPanel(); 
     List<String> listWithNumbers = new ArrayList<>();
     List<String> listWithCipher = new ArrayList<>();
+    private HashMap<Integer, String> encodingHistoryMap = new HashMap<Integer, String>();
+
     
     CementaryCipherModel model;
     DecodeAlphabetModel modelDecode = new DecodeAlphabetModel();
+    private DefaultTableModel tableModel;
+
   
     public GUIView(CementaryCipherModel model) 
     { 
@@ -83,7 +94,7 @@ public class GUIView extends JFrame implements ActionListener {
         
         //frame.add(enocdeButton);
         frame.add(new JLabel(new ImageIcon("src/logo.png")));
-        frame.setSize(1000, 1000); 
+        frame.setSize(1200, 800); 
         
 
         frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -100,6 +111,8 @@ public class GUIView extends JFrame implements ActionListener {
         panelToHistory.removeAll();
         frame.getContentPane().removeAll();
         
+        table = new  JTable();
+        
         label = new JLabel("Result: "); 
         
         enocdeButton = new JButton("Encode"); 
@@ -109,9 +122,11 @@ public class GUIView extends JFrame implements ActionListener {
                  try {
                     model.encodeMessage(userInput.getText());
                     outputToUser.setText(model.getEncodedValue() );
+                    int count = tableModel.getRowCount()+1;
+                    encodingHistoryMap.put(count, userInput.getText());
+                    tableModel.addRow(new Object[]{count, userInput.getText()});
                     userInput.setText("");
                     model.resetValue();
-                     
                  } catch (WrongInputException error) {
                       JOptionPane.showMessageDialog(frame, error.getMessage());
                       userInput.setText("");
@@ -120,8 +135,10 @@ public class GUIView extends JFrame implements ActionListener {
                  }
              }
          });
-        historyArea = new JTextArea(10,10);
-        historyArea.setText("Hello world");
+         
+
+         
+        
         userInput = new JTextArea(1,10); 
         outputToUser = new JTextArea();  
         
@@ -129,29 +146,32 @@ public class GUIView extends JFrame implements ActionListener {
         panelToEncode.add(enocdeButton); 
         panelToEncode.add(label); 
         panelToEncode.add(outputToUser);
-        panelToEncode.setLayout(new BoxLayout(panelToEncode, BoxLayout.Y_AXIS));
-    
-        panelToHistory.add(historyArea);
-        panelToHistory.setLayout(new BoxLayout(panelToHistory, BoxLayout.Y_AXIS));
-       
-        JSplitPane splitPane = new JSplitPane(SwingConstants.VERTICAL, panelToEncode, panelToHistory); 
-       splitPane.setOrientation(SwingConstants.VERTICAL); 
-      // splitPane.setSize(100, 100);
-       splitPane.setOneTouchExpandable(true);
-       splitPane.setResizeWeight(1);        
-       //Dimension minimumSize = new Dimension(100, 50);
+        tableModel = new DefaultTableModel(new Object[]{"column1","column2"},0);
+        TreeMap<Integer, String> sorted = new TreeMap<>(encodingHistoryMap);   
+        sorted.entrySet().forEach(entry -> {
+            tableModel.addRow(new Object[] {entry.getValue(), entry.getKey() });
+        }); 
+        table.setModel(tableModel);
+        panelToHistory.setBorder (BorderFactory.createTitledBorder (BorderFactory.createEtchedBorder (),
+                                                            "History of encoding",
+                                                            TitledBorder.CENTER,
+                                                            TitledBorder.TOP));
+        panelToHistory.add(table);
         
-       // panelToEncode.setMinimumSize(minimumSize);
-      //  panelToHistory.setMinimumSize(minimumSize); 
+        JScrollPane scrollHistory = new JScrollPane(panelToHistory); 
+
+       
+        JSplitPane splitPane = new JSplitPane(SwingConstants.HORIZONTAL, panelToEncode, scrollHistory); 
+       splitPane.setOrientation(SwingConstants.HORIZONTAL); 
+       splitPane.setOneTouchExpandable(true);
+       splitPane.setDividerLocation(500);      
         frame.setJMenuBar(menu);     
         JScrollPane scroll = new JScrollPane(splitPane); 
-       
         frame.getContentPane().add(scroll);
-        //frame.add(scroll); //panel = panel you want to change too. 
         frame.pack ();
         frame.repaint();             //Ensures that the frame swaps to the next panel and doesn't get stuck.
         frame.revalidate(); 
-        frame.setSize(1000, 1000); 
+        frame.setSize(1200, 800); 
         frame.setVisible(true);
         
       
@@ -226,7 +246,7 @@ public class GUIView extends JFrame implements ActionListener {
         //frame.add(scroll2); //panel = panel you want to change too.
         frame.repaint();             //Ensures that the frame swaps to the next panel and doesn't get stuck.
         frame.revalidate(); 
-        frame.setSize(1000, 1000); 
+        frame.setSize(1200, 800); 
         frame.setVisible(true);
 //       
     }
