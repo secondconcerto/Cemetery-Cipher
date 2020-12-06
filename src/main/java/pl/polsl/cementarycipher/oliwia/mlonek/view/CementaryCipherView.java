@@ -125,7 +125,7 @@ public class CementaryCipherView   {
     /** 
     * Print the error message on the user screen.
     * 
-    * @param errorText text to be displayed
+    * @param what text to be displayed
     */
     public void printError(String what) {
         System.out.println("There is an error: " + what); 

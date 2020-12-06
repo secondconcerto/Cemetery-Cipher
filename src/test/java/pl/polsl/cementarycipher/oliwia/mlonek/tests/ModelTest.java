@@ -27,7 +27,7 @@ import pl.polsl.cementarycipher.oliwia.mlonek.model.WrongInputException;
  * and decoding user message and reseting variables that stores ouput messages.
  * 
  * @author Oliwia Mlonek
- * @version 2.0
+ * @version 3.0
  */
 public class ModelTest {
     
@@ -332,6 +332,7 @@ public class ModelTest {
     /** 
      * Checks if private field in model class, that stores the decoded message
      * is correctly cleaned before starting next operation.
+     * @param candidate exemplary value holded by the field
      * @throws NoSuchFieldException thrown when an attempt is made to access a field that does not exist
      * @throws SecurityException thrown by the security manager to indicate a security violation.
      * @throws WrongInputException when user input cannot be processed

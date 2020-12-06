@@ -17,56 +17,96 @@ import pl.polsl.cementarycipher.oliwia.mlonek.model.DecodeAlphabetModel;
 import pl.polsl.cementarycipher.oliwia.mlonek.model.WrongInputException;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
-import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
 
-/**
- *
- * @author roza
+/** 
+ * View class represents the visualization of the data as a form of SWING GUI. 
+ * Provides interaction with the user.
+ * 
+ * @author Oliwia Mlonek
+ * @version 3.0
  */
 public class GUIView extends JFrame implements ActionListener { 
     
+     /** Variable stores menu bar */
     private JMenuBar menuBar;
+      /** Variable stores operation menu */
     private JMenu operationsMenu;
+     /** Variable stores menu item for encoding */
     private JMenuItem EnocdeMenuItem;
+     /** Variable stores menu item for decoding */
     private JMenuItem DecodeMenuItem;
+     /** Variable stores text area for user input*/
     private JTextArea userInput; 
+     /** Variable stores text area for user output*/
     private JTextArea outputToUser; 
-    private JTextArea historyArea; 
-    private JFrame frame = new JFrame("Cemetry Cipher"); ; 
-    private JButton enocdeButton; 
+    /** Variable stores main frame of the program*/
+    private JFrame frame = new JFrame("Cemetry Cipher"); 
+    /** Variable stores button to perform operations, encode lub decode*/
+    private JButton codingButton; 
+    /** Variable stores button to add user input to list*/
     private JButton addButton; 
+    /** Variable stores label*/
     private JLabel label; 
+    /** Variable stores table for decoding alphabet for user*/
     private JTable tableDecodeNumbers = new JTable();
+    /** Variable stores table for history of encoding*/
     private JTable historyEncodeTable = new JTable();
+    /** Variable stores table for history of decoding*/
     private JTable historyDecodeTable = new JTable();
-    private JPanel panelToEncode = new JPanel(); 
+    /** Variable stores encoding panel */
+    private JPanel panelToEncode = new JPanel();
+    /** Variable stores decoding panel */
     private JPanel panelToDecode = new JPanel(); 
+     /** Variable stores encoding history panel */
     private JPanel panelEncodeHistory = new JPanel(); 
+     /** Variable stores decoding history panel */
     private  JPanel panelDecodeHistory = new JPanel(); 
+     /** Variable stores list with user input numbers from decoding */
     private List<String> listWithNumbers = new ArrayList<>();
+    /** Variable stores list with user input numbers translated to pictograms from decoding */
     private  List<String> listWithCipher = new ArrayList<>();
+      /** Variable stores map of encoding history  */
     private HashMap<Integer, String> encodingHistoryMap = new HashMap<Integer, String>();
+     /** Variable stores map of decoding history  */
     private HashMap<Integer, String> decodingHistoryMap = new HashMap<Integer, String>();
+    /** Variable stores scroll for HistoryEncode panel  */
     private JScrollPane scrollHistoryEncode;
+     /** Variable stores scroll for Encode panel  */
     private JScrollPane scrollEncode;
+    /** Variable stores scroll for PanelToDecode  */
     private JScrollPane scrollPanelToDecode;
+     /** Variable stores scroll for HistoryDecode panel  */
     private JScrollPane scrollHistoryDecode;
+    /** Variable stores split panel for encoding */
     private JSplitPane splitPaneEncode;
+    /** Variable stores split panel for decoding */
     private JSplitPane splitPaneDecode;
-    //private JScrollPane spli
+   /** model used to perform actions */
     private CementaryCipherModel model;
+    /** Model of decoding alphabet to decode message */
     private DecodeAlphabetModel modelDecode = new DecodeAlphabetModel();
+    /** Table model used when encoding */
     private DefaultTableModel tableModelEncode;
+     /** Table model used when decoding */
     private DefaultTableModel tableModelDecode;
 
   
+    /**
+     * Costructor of the class
+     * 
+     * @param model used model
+     */
     public GUIView(CementaryCipherModel model) 
     { 
         this.model = model;
     } 
   
+    /**
+     * 
+     * Displayes main menu of the program
+     */
     public void start() 
     { 
         menuBar = new JMenuBar();
@@ -99,7 +139,7 @@ public class GUIView extends JFrame implements ActionListener {
         operationsMenu.add(DecodeMenuItem);
         menuBar.add(operationsMenu);
 
-        enocdeButton = new JButton("Encode"); 
+        codingButton = new JButton("Encode"); 
         outputToUser = new JTextArea();
         frame.add(new JLabel(new ImageIcon("src/logo.png")));
         frame.setSize(1200, 800); 
@@ -108,6 +148,9 @@ public class GUIView extends JFrame implements ActionListener {
         frame.setVisible(true);
     }
 
+    /**
+     * Displayes encoding view.
+     */
     public void encodeView() 
     { 
         
@@ -118,9 +161,9 @@ public class GUIView extends JFrame implements ActionListener {
         
         label = new JLabel("Result: "); 
         
-        enocdeButton = new JButton("Encode"); 
+        codingButton = new JButton("Encode"); 
         
-         enocdeButton.addActionListener(new ActionListener() {
+         codingButton.addActionListener(new ActionListener() {
              public void actionPerformed(ActionEvent e) {
                  try {
                     model.encodeMessage(userInput.getText());
@@ -147,7 +190,7 @@ public class GUIView extends JFrame implements ActionListener {
         outputToUser = new JTextArea();  
         
         panelToEncode.add(userInput); 
-        panelToEncode.add(enocdeButton); 
+        panelToEncode.add(codingButton); 
         panelToEncode.add(label); 
         panelToEncode.add(outputToUser);
         tableModelEncode = new DefaultTableModel(new Object[]{"column1","column2"},0);
@@ -186,7 +229,9 @@ public class GUIView extends JFrame implements ActionListener {
       
     } 
    
-
+    /**
+     * Displayes decoding view.
+     */
     public void decodeView()
     {
         panelDecodeHistory.removeAll();
@@ -227,9 +272,9 @@ public class GUIView extends JFrame implements ActionListener {
         
         label = new JLabel("Result: "); 
         
-        enocdeButton = new JButton("Decode"); 
-        enocdeButton.addActionListener(this);
-        enocdeButton.addActionListener(new ActionListener() {
+        codingButton = new JButton("Decode"); 
+        codingButton.addActionListener(this);
+        codingButton.addActionListener(new ActionListener() {
              public void actionPerformed(ActionEvent e) {
                  try {
                     model.decodeMessage(listWithCipher);
@@ -252,7 +297,7 @@ public class GUIView extends JFrame implements ActionListener {
         panelToDecode.add(tableDecodeNumbers);
         panelToDecode.add(userInput); 
         panelToDecode.add(addButton);
-        panelToDecode.add(enocdeButton); 
+        panelToDecode.add(codingButton); 
         panelToDecode.add(label); 
         panelToDecode.add(outputToUser);
         tableModelDecode = new DefaultTableModel(new Object[]{"column1","column2"},0);
@@ -287,21 +332,30 @@ public class GUIView extends JFrame implements ActionListener {
     
     
 
-
+    /**
+     * Basic method for performing actions with GUI components.
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
     }
 
+    /**
+     * Inside class to resize particular parts of table, depending on size of input inside of table's cells.
+     */
      private class JTextAreaColumn extends AbstractCellEditor implements TableCellRenderer,TableCellEditor {
 
+       /** Variable stores text area  */
         private JTextArea area = new JTextArea();
+        /** Variable stores scroll panel  */
         private JScrollPane pane = new JScrollPane(area);
 
+        /** Gets cell value*/
         @Override
         public Object getCellEditorValue() {
             return area.getText();
         }
 
+         /** Gets cell value end modify it */
         @Override
         public Component getTableCellEditorComponent(JTable table,
                 Object value, boolean isSelected, int row, int column) {
@@ -309,11 +363,17 @@ public class GUIView extends JFrame implements ActionListener {
             return pane;
         }
 
+        /** 
+        * Gets cell value put right background color 
+        * @param isSelected check if component was selected
+        * @param table table to be modified
+        */
         private void setColor(boolean isSelected, JTable table) {
             area.setBackground(isSelected ? table.getSelectionBackground() : table.getBackground());
             area.setForeground(isSelected ? table.getSelectionForeground() : table.getForeground());
         }
 
+        /** Gets cell, modify it and render */
         @Override
         public Component getTableCellRendererComponent(JTable table,
                 Object value, boolean isSelected, boolean hasFocus, int row,
@@ -325,6 +385,10 @@ public class GUIView extends JFrame implements ActionListener {
 
     }
 
+     /**
+     * Resize column of a given table.
+     * @param table table to be modified
+     */
     private void resizeColumnWidth(JTable table) {
     final TableColumnModel columnModel = table.getColumnModel();
     for (int column = 0; column < table.getColumnCount(); column++) {
