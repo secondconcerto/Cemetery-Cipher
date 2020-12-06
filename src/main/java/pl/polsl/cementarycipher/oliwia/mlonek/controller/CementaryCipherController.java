@@ -5,6 +5,9 @@
  */
 package pl.polsl.cementarycipher.oliwia.mlonek.controller;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import pl.polsl.cementarycipher.oliwia.mlonek.model.CementaryCipherModel;
 import pl.polsl.cementarycipher.oliwia.mlonek.model.DecodeAlphabetModel;
 import pl.polsl.cementarycipher.oliwia.mlonek.model.WrongInputException;
@@ -28,83 +31,67 @@ public class CementaryCipherController {
         this.guiView = guiView;
     }
     
-    public void getInput()
+    public void getInput(String ... values)
     {
-        while (true) {
+        if(values.length == 0)
+            guiView.start();
+        else  if (values.length > 0 && values[0].equals("en")){
+            guiView.start();
+            guiView.encodeView();
+        }
+        else  if (values.length > 0 && values[0].equals("de")){
+            guiView.start();
+            guiView.decodeView();
+        }
+        else 
+            guiView.start();
+        
+        //else 
+            
         
             
-        guiView.start();
-        //view.printMainMenu();
-
-        switch (view.getUserChoice()) {
-
-            case "1":
-                try {
-                    model.encodeMessage(view.getTextToEncode());
-                    view.showResult(model.getEncodedValue());
-                
-                } catch (WrongInputException e) {
-                    model.resetValue();
-                    //view.printError(e.what());
-                }
-
-                model.resetValue();
-
-                break;
-
-            case "2":
-                view.showCodeMap(decodeTableAlphabet.getMap());
-                try {
-                    view.showResult(model.decodeMessage(view.getTextToDecode(decodeTableAlphabet.getMap())));
-                } catch (WrongInputException e) {
-                    model.resetDecodedValue();
-                    //view.printError(e.what());
-                }
-                
-                model.resetDecodedValue();
-                break;
-
-            case "3":
-                
-                return;
-                
-            default:
-                getInput();
-                return;
-                
-        }
-        }
-    }
-    
-    public void encodeText(String[] textFromConsole)
-    {
-        try {
-            model.encodeMessage(model.convertToString(textFromConsole));
-            view.showResult(model.getEncodedValue());
-           
-            
-        } catch (WrongInputException e) {
-           // view.printError(e.what());
-        }
+       
         
-            model.resetValue();
-            getInput();
-        
-        return;
     }
-
-    public void decodeText() {
-        view.showCodeMap(decodeTableAlphabet.getMap());
-        try {
-            view.showResult(model.decodeMessage(view.getTextToDecode(decodeTableAlphabet.getMap())));
-        } catch (WrongInputException e) {
-           // view.printError(e.what());
-        }
-
-        model.resetDecodedValue();
-        getInput();
-        return;
-    }
-
-
 }
+   
+    //view.printMainMenu();
+
+//        switch (view.getUserChoice()) {
+//
+//            case "1":
+//                try {mmo
+//                    model.encodeMessage(view.getTextToEncode());
+//                    view.showResult(model.getEncodedValue());
+//                
+//                } catch (WrongInputException e) {
+//                    model.resetValue();
+//                    //view.printError(e.what());
+//                }
+//
+//                model.resetValue();
+//
+//                break;
+//
+//            case "2":
+//                view.showCodeMap(decodeTableAlphabet.getMap());
+//                try {
+//                    view.showResult(model.decodeMessage(view.getTextToDecode(decodeTableAlphabet.getMap())));
+//                } catch (WrongInputException e) {
+//                    model.resetDecodedValue();
+//                    //view.printError(e.what());
+//                }
+//                
+//                model.resetDecodedValue();
+//                break;
+//
+//            case "3":
+//                
+//                return;
+//                
+//            default:
+//                getInput();
+//                return;
+//                
+        
+  

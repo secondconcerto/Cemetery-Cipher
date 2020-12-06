@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package pl.polsl.cementarycipher.oliwia.mlonek.view;
-import com.sun.jdi.IntegerType;
+
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.*; 
@@ -15,40 +15,55 @@ import java.util.TreeMap;
 import javax.swing.*; 
 import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 import javax.swing.border.TitledBorder;
-import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
 import pl.polsl.cementarycipher.oliwia.mlonek.model.CementaryCipherModel;
 import pl.polsl.cementarycipher.oliwia.mlonek.model.DecodeAlphabetModel;
 import pl.polsl.cementarycipher.oliwia.mlonek.model.WrongInputException;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
-import javax.swing.table.TableModel;
-import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
+
+
 /**
  *
  * @author roza
  */
 public class GUIView extends JFrame implements ActionListener { 
-
-    static JTextArea userInput; 
-    static JTextArea outputToUser; 
-    static JTextArea historyArea; 
-    static JFrame frame = new JFrame("Cemetry Cipher"); ; 
-    static JButton enocdeButton; 
-    static JButton addButton; 
-    static JLabel label; 
-    static JTable table = new JTable();
-    JPanel panelToEncode = new JPanel(); 
-    JPanel panelToDecode = new JPanel(); 
-    JPanel panelToHistory = new JPanel(); 
-    List<String> listWithNumbers = new ArrayList<>();
-    List<String> listWithCipher = new ArrayList<>();
-    private HashMap<Integer, String> encodingHistoryMap = new HashMap<Integer, String>();
-
     
-    CementaryCipherModel model;
-    DecodeAlphabetModel modelDecode = new DecodeAlphabetModel();
-    private DefaultTableModel tableModel;
+    private JMenuBar menuBar;
+    private JMenu operationsMenu;
+    private JMenuItem EnocdeMenuItem;
+    private JMenuItem DecodeMenuItem;
+    private JTextArea userInput; 
+    private JTextArea outputToUser; 
+    private JTextArea historyArea; 
+    private JFrame frame = new JFrame("Cemetry Cipher"); ; 
+    private JButton enocdeButton; 
+    private JButton addButton; 
+    private JLabel label; 
+    private JTable tableDecodeNumbers = new JTable();
+    private JTable historyEncodeTable = new JTable();
+    private JTable historyDecodeTable = new JTable();
+    private JPanel panelToEncode = new JPanel(); 
+    private JPanel panelToDecode = new JPanel(); 
+    private JPanel panelEncodeHistory = new JPanel(); 
+    private  JPanel panelDecodeHistory = new JPanel(); 
+    private List<String> listWithNumbers = new ArrayList<>();
+    private  List<String> listWithCipher = new ArrayList<>();
+    private HashMap<Integer, String> encodingHistoryMap = new HashMap<Integer, String>();
+    private HashMap<Integer, String> decodingHistoryMap = new HashMap<Integer, String>();
+    private JScrollPane scrollHistoryEncode;
+    private JScrollPane scrollEncode;
+    private JScrollPane scrollPanelToDecode;
+    private JScrollPane scrollHistoryDecode;
+    private JSplitPane splitPaneEncode;
+    private JSplitPane splitPaneDecode;
+    //private JScrollPane spli
+    private CementaryCipherModel model;
+    private DecodeAlphabetModel modelDecode = new DecodeAlphabetModel();
+    private DefaultTableModel tableModelEncode;
+    private DefaultTableModel tableModelDecode;
 
   
     public GUIView(CementaryCipherModel model) 
@@ -58,29 +73,29 @@ public class GUIView extends JFrame implements ActionListener {
   
     public void start() 
     { 
-        var menuBar = new JMenuBar();
-        var operationsMenu = new JMenu("Operations");
+        menuBar = new JMenuBar();
+        operationsMenu = new JMenu("Operations");
         operationsMenu.setPreferredSize(new Dimension(150, 50));
         operationsMenu.setMnemonic(KeyEvent.VK_F);
      
 
-        var EnocdeMenuItem = new JMenuItem("Encode text");
+        EnocdeMenuItem = new JMenuItem("Encode text");
         EnocdeMenuItem.setPreferredSize(new Dimension(200, EnocdeMenuItem.getPreferredSize().height));
         EnocdeMenuItem.setMnemonic(KeyEvent.VK_E);
         EnocdeMenuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                encodeView(menuBar);
+                encodeView();
             }
         });
         
-        var DecodeMenuItem = new JMenuItem("Decode text");
+        DecodeMenuItem = new JMenuItem("Decode text");
         DecodeMenuItem.setPreferredSize(new Dimension(200, DecodeMenuItem.getPreferredSize().height));
         DecodeMenuItem.setMnemonic(KeyEvent.VK_D);
         DecodeMenuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                decodeView(menuBar);
+                decodeView();
             }
         });
        
@@ -90,28 +105,20 @@ public class GUIView extends JFrame implements ActionListener {
 
         enocdeButton = new JButton("Encode"); 
         outputToUser = new JTextArea();
-        
-        
-        //frame.add(enocdeButton);
         frame.add(new JLabel(new ImageIcon("src/logo.png")));
         frame.setSize(1200, 800); 
-        
-
         frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
-
         frame.setJMenuBar(menuBar);
-        
         frame.setVisible(true);
     }
 
-    public void encodeView(JMenuBar menu) 
+    public void encodeView() 
     { 
         
         panelToEncode.removeAll();
-        panelToHistory.removeAll();
+        panelEncodeHistory.removeAll();
         frame.getContentPane().removeAll();
-        
-        table = new  JTable();
+
         
         label = new JLabel("Result: "); 
         
@@ -122,9 +129,10 @@ public class GUIView extends JFrame implements ActionListener {
                  try {
                     model.encodeMessage(userInput.getText());
                     outputToUser.setText(model.getEncodedValue() );
-                    int count = tableModel.getRowCount()+1;
+                    int count = tableModelEncode.getRowCount()+1;
                     encodingHistoryMap.put(count, userInput.getText());
-                    tableModel.addRow(new Object[]{count, userInput.getText()});
+                    tableModelEncode.addRow(new Object[]{count, userInput.getText()});
+                    resizeColumnWidth(historyEncodeTable);
                     userInput.setText("");
                     model.resetValue();
                  } catch (WrongInputException error) {
@@ -146,28 +154,33 @@ public class GUIView extends JFrame implements ActionListener {
         panelToEncode.add(enocdeButton); 
         panelToEncode.add(label); 
         panelToEncode.add(outputToUser);
-        tableModel = new DefaultTableModel(new Object[]{"column1","column2"},0);
+        tableModelEncode = new DefaultTableModel(new Object[]{"column1","column2"},0);
         TreeMap<Integer, String> sorted = new TreeMap<>(encodingHistoryMap);   
         sorted.entrySet().forEach(entry -> {
-            tableModel.addRow(new Object[] {entry.getValue(), entry.getKey() });
+            tableModelEncode.addRow(new Object[] {entry.getKey(), entry.getValue() });
         }); 
-        table.setModel(tableModel);
-        panelToHistory.setBorder (BorderFactory.createTitledBorder (BorderFactory.createEtchedBorder (),
+        scrollEncode =  new JScrollPane(panelToEncode);
+        historyEncodeTable.setModel(tableModelEncode);
+        resizeColumnWidth(historyEncodeTable);
+        panelEncodeHistory.setBorder (BorderFactory.createTitledBorder (BorderFactory.createEtchedBorder (),
                                                             "History of encoding",
                                                             TitledBorder.CENTER,
                                                             TitledBorder.TOP));
-        panelToHistory.add(table);
+        panelEncodeHistory.add(historyEncodeTable);
         
-        JScrollPane scrollHistory = new JScrollPane(panelToHistory); 
+        scrollHistoryEncode = new JScrollPane(panelEncodeHistory); 
 
        
-        JSplitPane splitPane = new JSplitPane(SwingConstants.HORIZONTAL, panelToEncode, scrollHistory); 
-       splitPane.setOrientation(SwingConstants.HORIZONTAL); 
-       splitPane.setOneTouchExpandable(true);
-       splitPane.setDividerLocation(500);      
-        frame.setJMenuBar(menu);     
-        JScrollPane scroll = new JScrollPane(splitPane); 
-        frame.getContentPane().add(scroll);
+        splitPaneEncode = new JSplitPane(SwingConstants.VERTICAL, scrollEncode, scrollHistoryEncode); 
+
+
+        
+        splitPaneEncode.setOrientation(SwingConstants.VERTICAL); 
+        splitPaneEncode.setOneTouchExpandable(true);
+        splitPaneEncode.setDividerLocation(800);      
+        frame.setJMenuBar(menuBar);     
+        scrollEncode = new JScrollPane(splitPaneEncode); 
+        frame.getContentPane().add(scrollEncode);
         frame.pack ();
         frame.repaint();             //Ensures that the frame swaps to the next panel and doesn't get stuck.
         frame.revalidate(); 
@@ -176,24 +189,26 @@ public class GUIView extends JFrame implements ActionListener {
         
       
     } 
-    
-    public void decodeView(JMenuBar menu)
+   
+
+    public void decodeView()
     {
-       panelToDecode.removeAll();
-       frame.getContentPane().removeAll();
-       TreeMap<String, String> sorted = new TreeMap<>(modelDecode.getMap());    
-        DefaultTableModel jtableModel = new DefaultTableModel(
+        panelDecodeHistory.removeAll();
+        panelToDecode.removeAll();
+        frame.getContentPane().removeAll();
+        TreeMap<String, String> sorted = new TreeMap<>(modelDecode.getMap());    
+        tableModelDecode = new DefaultTableModel(
             new String[] { "Key", "Value" }, 0
         );
        
         sorted.entrySet().forEach(entry -> {
-            jtableModel.addRow(new String[] {entry.getValue(), entry.getKey() });
+            tableModelDecode.addRow(new String[] {entry.getKey(), entry.getValue() });
         }); 
         
-        JTable table = new JTable(jtableModel); 
-        table.getColumnModel().getColumn(0).setCellRenderer(new JTextAreaColumn());
-        table.getColumnModel().getColumn(0).setCellEditor(new JTextAreaColumn());
-        table.setRowHeight(40);
+        tableDecodeNumbers = new JTable(tableModelDecode); 
+        tableDecodeNumbers.getColumnModel().getColumn(0).setCellRenderer(new JTextAreaColumn());
+        tableDecodeNumbers.getColumnModel().getColumn(0).setCellEditor(new JTextAreaColumn());
+        tableDecodeNumbers.setRowHeight(40);
         
         userInput = new JTextArea(1,2); 
         addButton = new JButton("Add");
@@ -221,8 +236,12 @@ public class GUIView extends JFrame implements ActionListener {
         enocdeButton.addActionListener(new ActionListener() {
              public void actionPerformed(ActionEvent e) {
                  try {
-                     model.decodeMessage(listWithCipher);
-                     outputToUser.setText(model.getEncodedValue());  
+                    model.decodeMessage(listWithCipher);
+                    outputToUser.setText(model.getEncodedValue());
+                    int count = tableModelDecode.getRowCount()+1;
+                    decodingHistoryMap.put(count, listWithNumbers.toString());
+                    tableModelDecode.addRow(new Object[]{count, listWithNumbers.toString()});
+                    resizeColumnWidth(historyDecodeTable);
                  } catch (WrongInputException error) {
                       JOptionPane.showMessageDialog(frame, error.getMessage());
                       userInput.setText("");
@@ -234,16 +253,35 @@ public class GUIView extends JFrame implements ActionListener {
              }
          });
         outputToUser = new JTextArea(1,10); 
-        panelToDecode.add(table);
+        panelToDecode.add(tableDecodeNumbers);
         panelToDecode.add(userInput); 
         panelToDecode.add(addButton);
         panelToDecode.add(enocdeButton); 
         panelToDecode.add(label); 
         panelToDecode.add(outputToUser);
-        JScrollPane scroll2 = new JScrollPane(panelToDecode); 
-        frame.setJMenuBar(menu);   
-        frame.getContentPane().add(scroll2);
-        //frame.add(scroll2); //panel = panel you want to change too.
+        tableModelDecode = new DefaultTableModel(new Object[]{"column1","column2"},0);
+        TreeMap<Integer, String> sortedHistory = new TreeMap<>(decodingHistoryMap);   
+        sortedHistory.entrySet().forEach(entry -> {
+            tableModelDecode.addRow(new Object[] {entry.getKey(), entry.getValue() });
+        }); 
+        scrollPanelToDecode = new JScrollPane(panelToDecode); 
+        historyDecodeTable.setModel(tableModelDecode);
+        resizeColumnWidth(historyDecodeTable);
+        
+        panelDecodeHistory.setBorder (BorderFactory.createTitledBorder (BorderFactory.createEtchedBorder (),
+                                                            "History of decoding",
+                                                            TitledBorder.CENTER,
+                                                            TitledBorder.TOP));
+        panelDecodeHistory.add(historyDecodeTable);
+        
+        scrollHistoryDecode = new JScrollPane(panelDecodeHistory); 
+       
+        splitPaneDecode = new JSplitPane(SwingConstants.VERTICAL, scrollPanelToDecode, scrollHistoryDecode); 
+        splitPaneDecode.setOrientation(SwingConstants.VERTICAL); 
+        splitPaneDecode.setOneTouchExpandable(true);
+        splitPaneDecode.setDividerLocation(800);       
+        frame.setJMenuBar(menuBar);   
+        frame.getContentPane().add(splitPaneDecode);
         frame.repaint();             //Ensures that the frame swaps to the next panel and doesn't get stuck.
         frame.revalidate(); 
         frame.setSize(1200, 800); 
@@ -252,17 +290,7 @@ public class GUIView extends JFrame implements ActionListener {
     }
     
     
-  
 
-//    @Override
-//    public void actionPerformed(ActionEvent e) 
-//    { 
-//        String s = e.getActionCommand(); 
-//        if (s.equals("Encode")) { 
-//            decodeView();
-// 
-//        } 
-//    } 
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -301,6 +329,20 @@ public class GUIView extends JFrame implements ActionListener {
 
     }
 
+    private void resizeColumnWidth(JTable table) {
+    final TableColumnModel columnModel = table.getColumnModel();
+    for (int column = 0; column < table.getColumnCount(); column++) {
+        int width = 15; // Min width
+        for (int row = 0; row < table.getRowCount(); row++) {
+            TableCellRenderer renderer = table.getCellRenderer(row, column);
+            Component comp = table.prepareRenderer(renderer, row, column);
+            width = Math.max(comp.getPreferredSize().width +1 , width);
+        }
+        if(width > 300)
+            width=300;
+        columnModel.getColumn(column).setPreferredWidth(width);
+    }
+}
 
 } 
 
