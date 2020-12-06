@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
  * Model class of the application representing rules that govern access to and updates of data. 
  * 
  * @author Oliwia Mlonek
- * @version 2.0
+ * @version 3.0
  */
 public class CementaryCipherModel {
     

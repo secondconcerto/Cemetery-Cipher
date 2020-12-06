@@ -1,17 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package pl.polsl.cementarycipher.oliwia.mlonek.model;
 
 import java.util.HashMap;
 
-/**
- *
- * @author roza
+/** 
+ * Model class represents data in the form of an alphabet (number - pictogram).
+ * @author Oliwia Mlonek
+ * @version 3.0
  */
 public class DecodeAlphabetModel {
+      /** Map to store collection of the numbers and the corresponding pictograms */
     private HashMap<String, String> cipheredTableMap = new HashMap<String, String>()
     {{
         put("10", " \u2022|\n \u203E");
@@ -70,6 +68,11 @@ public class DecodeAlphabetModel {
                 
     }};
     
+      /** 
+     * Getter of alphabet to encoding.
+     * 
+     * @return access to data structre which stores the alphabet
+     */
     public HashMap<String, String> getMap()
             {
                 return cipheredTableMap;

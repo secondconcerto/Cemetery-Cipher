@@ -1,36 +1,47 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
+
 package pl.polsl.cementarycipher.oliwia.mlonek.controller;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+
 import pl.polsl.cementarycipher.oliwia.mlonek.model.CementaryCipherModel;
 import pl.polsl.cementarycipher.oliwia.mlonek.model.DecodeAlphabetModel;
-import pl.polsl.cementarycipher.oliwia.mlonek.model.WrongInputException;
 import pl.polsl.cementarycipher.oliwia.mlonek.view.CementaryCipherView;
 import pl.polsl.cementarycipher.oliwia.mlonek.view.GUIView;
 
-/**
- *
- * @author roza
+/** 
+ * Controller class of the application realizing user's interactions with the view 
+ * into actions that the model will perform. 
+ * 
+ * @author Oliwia Mlonek
+ * @version 3.0
  */
 public class CementaryCipherController {
-   
+    /** model used to perform actions */
     private CementaryCipherModel model;
+     /** view used interact with user */
     private CementaryCipherView view;
+     /** GUI view used interact with user */
     private GUIView guiView;
+     /** Model of decoding alphabet to decode message */
     private DecodeAlphabetModel decodeTableAlphabet = new DecodeAlphabetModel();
 
+    /**
+     * Costructor of the class
+     * 
+     * @param model used model
+     * @param view used view
+     * @param guiView used GUI view
+     */
     public CementaryCipherController (CementaryCipherModel model, CementaryCipherView view, GUIView guiView) {
         this.model = model;
         this.view = view;
         this.guiView = guiView;
     }
     
+     /**
+     * Displayes menu of the program and passes user actions from view to model.
+     * @param values optional users initial parameters from the command line
+     */
     public void getInput(String ... values)
     {
         if(values.length == 0)
@@ -45,12 +56,7 @@ public class CementaryCipherController {
         }
         else 
             guiView.start();
-        
-        //else 
-            
-        
-            
-       
+
         
     }
 }

@@ -5,7 +5,7 @@ package pl.polsl.cementarycipher.oliwia.mlonek.model;
  * Exception classthrown when attempting to proccess invalid user input.
  *
  * @author Oliwia Mlonek
- * @version 1.0
+ * @version 3.0
  */
 public class WrongInputException extends Exception{
 
