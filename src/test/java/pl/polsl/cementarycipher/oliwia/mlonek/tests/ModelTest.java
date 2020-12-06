@@ -7,9 +7,11 @@ import java.util.List;
 import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit
 .jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -67,9 +69,11 @@ public class ModelTest {
      * 
      * @param userInput user text to be encoded
      * @param cipheredValue variable we expect to get after encoding
-     * @throws java.lang.NoSuchFieldException thrown when an attempt is made to access a field that does not exist
+     * @throws NoSuchFieldException thrown when an attempt is made to access a field that does not exist
+     * @throws SecurityException thrown by the security manager to indicate a security violation.
      * @throws WrongInputException when user input cannot be processed
-     * @throws java.lang.IllegalAccessException thrown when an application tries to set or get a field but the currently executing method does not have access to the definition of the specified class, field, method or constructor.
+     * @throws IllegalArgumentException thrown to indicate that a method has been passed an illegal or inappropriate argument.
+     * @throws IllegalAccessException thrown when an application tries to set or get a field but the currently executing method does not have access to the definition of the specified class, field, method or constructor.
      */
     @ParameterizedTest
     @MethodSource("stringListProvider2")
@@ -95,7 +99,7 @@ public class ModelTest {
      */
     static Stream<Arguments> stringListProvider2() {
         return Stream.of(
-            arguments("ab"," \u2022|\n \u203E\n\n|\u2022|\n \u203E\n\n"),
+             arguments("ab"," \u2022|\n \u203E\n\n|\u2022|\n \u203E\n\n"),
             arguments("AB"," \u2022|\n \u203E\n\n|\u2022|\n \u203E\n\n"),
             arguments("Ab"," \u2022|\n \u203E\n\n|\u2022|\n \u203E\n\n"),
             arguments("aB"," \u2022|\n \u203E\n\n|\u2022|\n \u203E\n\n"),
@@ -115,6 +119,133 @@ public class ModelTest {
         );
     }
     
+    /** 
+     * Checks if encoding function works fine with valid input.
+     * @param userInput user input
+     * @throws WrongInputException when user input cannot be processed
+     */
+    @ParameterizedTest
+    @CsvSource({"abc", "qwer", "rwu fwu oyw", "aaaaaaaaa"})
+    public void testEnocdeValidInput(String userInput) throws WrongInputException
+    {
+        try {
+            model.encodeMessage(userInput);
+        } catch (WrongInputException e) {
+            fail("An exception should not appear since input is correct!");
+        }
+    }
+    
+     /** 
+     * Checks if encoding function works fine with invalid input.
+     * @param userInput user input
+     * @throws WrongInputException when user input cannot be processed
+     */
+    @ParameterizedTest
+    @CsvSource({"123", "ą3ć", "!!! fwu oyw", "aaaaęaaaa"})
+    public void testEncodeInvalidInput(String userInput) throws WrongInputException
+    {
+        try {
+            model.encodeMessage(userInput);
+            fail("An exception should appear since input is incorrect!");
+        } catch (WrongInputException e) {
+            
+        }
+    }
+    
+    /** 
+     * Checks if user message is correctly inspected before decoding when input is valid.
+     * @param userInput user input
+     * @throws WrongInputException when user input cannot be processed
+     */
+    @ParameterizedTest
+    @CsvSource({"12", "13","34", "35", "10", "11"})
+    public void testCheckDecodeValidInput(String userInput) throws WrongInputException
+    {
+        try {
+            model.checkInput(userInput);
+        } catch (WrongInputException e) {
+            fail("An exception should not appear since input is correct!");
+        }
+    }
+    /** 
+     * Checks if user message is correctly inspected before decoding when input is invalid.
+     * @param userInput user input
+     * @throws WrongInputException when user input cannot be processed
+     */
+    @ParameterizedTest
+    @CsvSource({"1", "1!3","3 6", "3,7", "9", "111", "12."})
+    public void testCheckDecodeInvalidInput(String userInput) throws WrongInputException
+    {
+        try {
+            model.checkInput(userInput);
+             fail("An exception should appear since input is incorrect!");
+        } catch (WrongInputException e) {
+           
+        }
+    }
+    
+    /** 
+     * Checks if user message inside decodingfunction is correctly read when input is valid.
+     * @param userInput user input
+     * @throws WrongInputException when user input cannot be processed
+     */
+    @ParameterizedTest
+    @MethodSource("stringListProvider4")
+    public void testDecodeValidInput(List<String> userInput) throws WrongInputException
+    {
+        try {
+            model.decodeMessage(userInput);
+        } catch (WrongInputException e) {
+            fail("An exception should not appear since input is correct!");
+        }
+    }
+    
+     /** 
+     * Function is responsible for passing list and strings to testDecodeValidInput test as the arguments.
+     * @return Stream of arguments to be passed to test
+     */
+     static Stream<Arguments> stringListProvider4() {
+        return Stream.of(
+            arguments(Arrays.asList(" _\n :|")),
+            arguments(Arrays.asList(" \u2022|\n \u203E", " _\n :|")),
+            arguments(Arrays.asList(" _\n|\u2022|\n \u203E", "\u2022|\n \u203E")),
+            arguments(Arrays.asList(" \u2022|\n \u203E", " \u2022|\n \u203E"))
+
+        );
+    }
+     
+    /** 
+     * Checks if user message inside decoding function is correctly read when input is invalid.
+     * @param userInput user input
+     * @throws WrongInputException when user input cannot be processed
+     */
+    @ParameterizedTest
+   @MethodSource("stringListProvider5")
+    public void testDecodeInvalidInput(List <String> userInput) throws WrongInputException
+    {
+        try {
+            model.decodeMessage(userInput);
+             fail("An exception should appear since input is incorrect!");
+        } catch (WrongInputException e) {
+           
+        }
+    }
+     /** 
+     * Function is responsible for passing list and strings to testDecodeInvalidInput test as the arguments.
+     * @return Stream of arguments to be passed to test
+     */
+     static Stream<Arguments> stringListProvider5() {
+        return Stream.of(
+            arguments(Arrays.asList(" ")),
+            arguments(Arrays.asList(" "
+                    + ""
+                    + "")),
+            arguments(Arrays.asList(" !")),
+            arguments(Arrays.asList(" _\n :|  "))
+
+        );
+    }
+    
     
     /** 
      * Checks if user message is correctly encoded to Cemetry Cipher.If user message
@@ -122,9 +253,11 @@ public class ModelTest {
      * 
      * @param userInput user text to be decoded
      * @param cipheredValue variable we expect to get after decoding
-     * @throws java.lang.NoSuchFieldException thrown when an attempt is made to access a field that does not exist
+     * @throws NoSuchFieldException thrown when an attempt is made to access a field that does not exist
+     * @throws SecurityException thrown by the security manager to indicate a security violation.
      * @throws WrongInputException when user input cannot be processed
-     * @throws java.lang.IllegalAccessException thrown when an application tries to set or get a field but the currently executing method does not have access to the definition of the specified class, field, method or constructor.
+     * @throws IllegalArgumentException thrown to indicate that a method has been passed an illegal or inappropriate argument.
+     * @throws IllegalAccessException thrown when an application tries to set or get a field but the currently executing method does not have access to the definition of the specified class, field, method or constructor.
      */
     @ParameterizedTest
     @MethodSource("stringListProvider3")
@@ -173,9 +306,11 @@ public class ModelTest {
      * Checks if private field in model class, that stores the encoded message
      * is correctly cleaned before starting next operation.
      * @param candidate exemplary value holded by the field
-     * @throws java.lang.NoSuchFieldException thrown when an attempt is made to access a field that does not exist
+     * @throws NoSuchFieldException thrown when an attempt is made to access a field that does not exist
+     * @throws SecurityException thrown by the security manager to indicate a security violation.
      * @throws WrongInputException when user input cannot be processed
-     * @throws java.lang.IllegalAccessException thrown when an application tries to set or get a field but the currently executing method does not have access to the definition of the specified class, field, method or constructor.
+     * @throws IllegalArgumentException thrown to indicate that a method has been passed an illegal or inappropriate argument.
+     * @throws IllegalAccessException thrown when an application tries to set or get a field but the currently executing method does not have access to the definition of the specified class, field, method or constructor.
      */
     @ParameterizedTest
     @ValueSource(strings = {"a", "ab", "ę45!"}) 
@@ -197,11 +332,12 @@ public class ModelTest {
     /** 
      * Checks if private field in model class, that stores the decoded message
      * is correctly cleaned before starting next operation.
-     * @param candidate exemplary value holded by the field
-     * @throws java.lang.NoSuchFieldException thrown when an attempt is made to access a field that does not exist
+     * @throws NoSuchFieldException thrown when an attempt is made to access a field that does not exist
+     * @throws SecurityException thrown by the security manager to indicate a security violation.
      * @throws WrongInputException when user input cannot be processed
-     * @throws java.lang.IllegalAccessException thrown when an application tries to set or get a field but the currently executing method does not have access to the definition of the specified class, field, method or constructor.
-     */
+     * @throws IllegalArgumentException thrown to indicate that a method has been passed an illegal or inappropriate argument.
+     * @throws IllegalAccessException thrown when an application tries to set or get a field but the currently executing method does not have access to the definition of the specified class, field, method or constructor.
+      */
     @ParameterizedTest
     @ValueSource(strings = {"a", "ab", "ąą22"}) 
     void testResetDecoded(String candidate) throws NoSuchFieldException, 

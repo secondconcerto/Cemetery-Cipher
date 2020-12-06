@@ -14,11 +14,11 @@ import java.util.HashMap;
 public class DecodeAlphabetModel {
     private HashMap<String, String> cipheredTableMap = new HashMap<String, String>()
     {{
-        put("10", " \u2022|\n \u203E ");
+        put("10", " \u2022|\n \u203E");
         
-        put("11", "|\u2022|\n \u203E ");
+        put("11", "|\u2022|\n \u203E");
         
-        put("12", "|\u2022\n \u203E");
+        put("12", "|\u2022|\n \u203E");
         
         put("13", " _\n \u2022|\n \u203E");
         

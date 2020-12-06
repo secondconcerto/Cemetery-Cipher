@@ -27,9 +27,8 @@ public class CementaryCipherModel {
      /** Model of alphabet to encode message */
     private EncodeAlphabetModel cipheredAlphabet;
     
-     /** Model of decoding alphabet to decode message */
+    /** Model of decoding alphabet to decode message */
     private DecodeAlphabetModel decodeModel = new DecodeAlphabetModel();
-
      /**
      * Constructor of the class
      */
@@ -55,8 +54,7 @@ public class CementaryCipherModel {
         String after = userMessageString.trim().replaceAll(" +", " ");
         return after;
     }
-    
-     /** 
+      /** 
      * Checks correctnnes of a given message.
      * 
      * @param word user input 
@@ -77,6 +75,8 @@ public class CementaryCipherModel {
                 throw new WrongInputException("Invalid character");
         return "";
     }
+
+    
 
     /** 
      * Encodes user input using cemetary cipher written as the alphabet in EncodeAlphabetModel.
