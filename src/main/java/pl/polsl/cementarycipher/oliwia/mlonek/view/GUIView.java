@@ -134,12 +134,12 @@ public class GUIView extends JFrame implements ActionListener {
                     tableModelEncode.addRow(new Object[]{count, userInput.getText()});
                     resizeColumnWidth(historyEncodeTable);
                     userInput.setText("");
-                    model.resetValue();
+                    model.resetEncodedValue();
                  } catch (WrongInputException error) {
                       JOptionPane.showMessageDialog(frame, error.getMessage());
                       userInput.setText("");
                       outputToUser.setText("");
-                      model.resetValue();
+                      model.resetEncodedValue();
                  }
              }
          });
