@@ -103,7 +103,7 @@ public class ModelTest {
             arguments("A B"," \u2022|\n \u203E\n\n\n\n|\u2022|\n \u203E\n\n"),
             arguments("A b"," \u2022|\n \u203E\n\n\n\n|\u2022|\n \u203E\n\n"),
             arguments("a B"," \u2022|\n \u203E\n\n\n\n|\u2022|\n \u203E\n\n"),
-            arguments("a B"," \u2022|\n \u203E\n\n\n\n|\u2022|\n \u203E\n\n"),
+            arguments("a7 B"," \u2022|\n \u203E\n\n\n\n|\u2022|\n \u203E\n\n"),
             arguments("Ąćęcż B"," \u2022|\n \u203E\n\n\n\n|\u2022|\n \u203E\n\n"),
             arguments("    . ??     "," \u2022|\n \u203E\n\n\n\n|\u2022|\n \u203E\n\n"),
             arguments("                 "," \u2022|\n \u203E\n\n\n\n|\u2022|\n \u203E\n\n"),
