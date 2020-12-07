@@ -8,6 +8,7 @@ package pl.polsl.cementarycipher.oliwia.mlonek.severlets;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.StringTokenizer;
 import javax.servlet.ServletException;
@@ -23,12 +24,12 @@ import pl.polsl.cementarycipher.oliwia.mlonek.model.WrongInputException;
  *
  * @author roza
  */
-@WebServlet(name = "TextToDecode", urlPatterns = {"/TextToDecode"})
+@WebServlet(name = "DecodeServlet", urlPatterns = {"/DecodeServlet"})
 public class DecodeServlet extends HttpServlet {
 
     private CementaryCipherModel model = new CementaryCipherModel();
-    private List<String> userInputNumbers = new ArrayList<>();
     private DecodeAlphabetModel decodeModel = new DecodeAlphabetModel();
+
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -68,16 +69,8 @@ public class DecodeServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        PrintWriter writer = response.getWriter();
-         
-        String ouput = model.getDecodedValue();
-         String htmlRespone = "<html>";
-            htmlRespone += "<h2>Your ciphered text is:<p> </p>"  + ouput + "</h2>";
-            htmlRespone += "</html>";
-
-            writer.println(htmlRespone);
-            model.resetValue();
-          
+       
+           processRequest(request, response);
         
     }
 
@@ -92,19 +85,54 @@ public class DecodeServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String output = "";
+        String textToDecode = "";
+        
         try {
             response.setContentType("text/html;charset = UTF-8");
-            String textToDecode = request.getParameter("textToDecode");
-            StringTokenizer tokenizer = new StringTokenizer(textToDecode, ",");
-             while (tokenizer.hasMoreTokens()) {
-               userInputNumbers.add(decodeModel.getMap().get(tokenizer.nextToken()));
-            }       
-           model.decodeMessage(userInputNumbers);
+            textToDecode = request.getParameter("textToDecode");
+            List<String> numbersList =  new ArrayList<String>(Arrays.asList(textToDecode.split(",")));
+            List<String>  userInputNumbers =  new ArrayList<String>();
+            String temp = "";    
+            for (String listElement : numbersList) 
+            {
+                
+                if(listElement.isBlank() == true)
+                    userInputNumbers.add(" ");
+                else {
+                    temp = listElement.replaceAll("\\s", "");
+                    model.checkInput(temp);
+                    userInputNumbers.add(decodeModel.getMap().get(temp));
+                }
+                
+            }
+            
+            PrintWriter writer = response.getWriter();
+         
+            output = model.decodeMessage(userInputNumbers);
+            String htmlRespone = "<html>";
+            htmlRespone += "<h2>Your ciphered text is:<p> </p>"  + output + "</h2>";
+            htmlRespone += "</html>";
+
+            writer.println(htmlRespone);
+            model.resetDecodedValue();
+            
+            temp = "";  
+            output = "";
+            textToDecode = "";
+            numbersList.clear();
+            userInputNumbers.clear();
+
            
             } catch (WrongInputException ex) {
-                 response.sendError(response.SC_BAD_REQUEST, ex.getMessage());
+                response.sendError(response.SC_BAD_REQUEST, ex.getMessage());
+                model.resetDecodedValue();
+                output = "";
+                textToDecode = "";
+
 
             }
+        
     }
 
     /**

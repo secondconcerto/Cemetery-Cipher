@@ -5,6 +5,7 @@
  */
 package pl.polsl.cementarycipher.oliwia.mlonek.model;
 
+import static java.lang.System.in;
 import java.text.CharacterIterator;
 import java.text.StringCharacterIterator;
 import java.util.ArrayList;
@@ -31,19 +32,13 @@ public class CementaryCipherModel {
         this.cipheredAlphabet = new EncodeAlphabetModel();
     }
     
-    public String checkInput(String word) throws WrongInputException
+    public void checkInput(String word) throws WrongInputException
     {
-            if (word.isBlank())
-                return(" ");
-            else if (!word.matches("\\d+"))
-            {
-                throw new WrongInputException("Invalid character");
-            }
-            else if  ( 9 < (Integer.parseInt(word)) && (Integer.parseInt(word)) < 36  ) 
-               return decodeModel.getMap().get(word);
+            if (!word.matches("\\d+"))
+                throw new WrongInputException(" Invalid character!");
             else if( !(9 < (Integer.parseInt(word)) && (Integer.parseInt(word)) < 36))
-                throw new WrongInputException("Invalid character");
-        return "";
+                 throw new WrongInputException(" Invalid character!");
+        
     }
 
  
@@ -91,12 +86,11 @@ public class CementaryCipherModel {
       
     public String decodeMessage(List<String> decodeText) throws WrongInputException {
            
-          
-           if(decodeText == null || decodeText.isEmpty() )
+        if(decodeText == null || decodeText.isEmpty() )
            {
                throw new WrongInputException();
            }
-           
+         
          decodedValue = decodeText.stream().map(v ->{
                if (v.isBlank() != true) {
                    return cipheredAlphabet.getMap()
