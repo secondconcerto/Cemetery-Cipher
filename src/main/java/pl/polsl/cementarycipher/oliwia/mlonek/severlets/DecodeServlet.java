@@ -70,8 +70,50 @@ public class DecodeServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
        
-           processRequest(request, response);
+          String output = "";
+          String textToDecode = "";
         
+        try {
+            response.setContentType("text/html;charset = UTF-8");
+            textToDecode = request.getParameter("textToDecode");
+            List<String> numbersList =  new ArrayList<String>(Arrays.asList(textToDecode.split(",")));
+            List<String>  userInputNumbers =  new ArrayList<String>();
+            String temp = "";    
+            for (String listElement : numbersList) 
+            {
+                
+                if(listElement.isBlank() == true)
+                    userInputNumbers.add(" ");
+                else {
+                    temp = listElement.replaceAll("\\s", "");
+                    model.checkInput(temp);
+                    userInputNumbers.add(decodeModel.getMap().get(temp));
+                }
+                
+            }
+            
+            PrintWriter writer = response.getWriter();
+         
+            output = model.decodeMessage(userInputNumbers);
+            String htmlRespone = "<html>";
+            htmlRespone += "<h2>Your ciphered text is:<p> </p>"  + output + "</h2>";
+            htmlRespone += "</html>";
+
+            writer.println(htmlRespone);
+            model.resetDecodedValue();
+            
+ 
+            numbersList.clear();
+            userInputNumbers.clear();
+
+           
+            } catch (WrongInputException ex) {
+                response.sendError(HttpServletResponse.SC_BAD_REQUEST, ex.getMessage());
+                model.resetDecodedValue();
+
+
+
+            }
     }
 
     /**

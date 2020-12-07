@@ -8,6 +8,14 @@
         <servlet-name>DecodeServlet</servlet-name>
         <servlet-class>pl.polsl.cementarycipher.oliwia.mlonek.severlets.DecodeServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>MapDecodeServlet</servlet-name>
+        <servlet-class>pl.polsl.cementarycipher.oliwia.mlonek.severlets.MapDecodeServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RedirectToDecodeServlet</servlet-name>
+        <servlet-class>pl.polsl.cementarycipher.oliwia.mlonek.severlets.RedirectToDecodeServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>EncodeServlet</servlet-name>
         <url-pattern>/EncodeServlet</url-pattern>
@@ -15,5 +23,13 @@
     <servlet-mapping>
         <servlet-name>DecodeServlet</servlet-name>
         <url-pattern>/DecodeServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MapDecodeServlet</servlet-name>
+        <url-pattern>/MapDecodeServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RedirectToDecodeServlet</servlet-name>
+        <url-pattern>/RedirectToDecodeServlet</url-pattern>
     </servlet-mapping>
 </web-app>

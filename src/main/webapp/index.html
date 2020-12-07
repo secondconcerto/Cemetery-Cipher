@@ -5,14 +5,20 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     </head>
     <body>
-       <form name="TextToEnocde" method="POST" action="EncodeServlet">
+        <h1>Encoding</h1>
+       <form name="TextToEnocde" method="GET" action="EncodeServlet">
         Text to encode: <input type="text" name="textToEnocde"/> <br/>
          <input type="submit" value="Run encoding" />
         </form>
+        <form method="GET" action="RedirectToDecodeServlet">
+        <h1>Decoding</h1>
+<!--         <br>Separate your input with commas, eg: 10,11, ,23<br/>
+        <form name="TextToDecode" method="GET" action="DecodeServlet">
+        Text to decode: <input type="text" name="textToDecode"/> <br/>-->
+         <input type="submit" value="Show map to decode!" />
         
-        <form name="TextToDecode" method="post" action="DecodeServlet">
-        Text to decode: <input type="text" name="textToDecode"/> <br/>
-         <input type="submit" value="Run decoding" />
+<!--        </form>-->
         </form>
-    </body>
+         
+    </body>    
 </html>

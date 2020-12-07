@@ -7,22 +7,25 @@ package pl.polsl.cementarycipher.oliwia.mlonek.severlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Map;
+import java.util.TreeMap;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import pl.polsl.cementarycipher.oliwia.mlonek.model.CementaryCipherModel;
-import pl.polsl.cementarycipher.oliwia.mlonek.model.WrongInputException;
+import pl.polsl.cementarycipher.oliwia.mlonek.model.DecodeAlphabetModel;
 
 /**
  *
  * @author roza
  */
-@WebServlet(name = "EncodeServlet", urlPatterns = {"/EncodeServlet"})
-public class EncodeServlet extends HttpServlet {
-    
+@WebServlet(name = "MapDecodeServlet", urlPatterns = {"/MapDecodeServlet"})
+public class MapDecodeServlet extends HttpServlet {
+
     private CementaryCipherModel model = new CementaryCipherModel();
+    private DecodeAlphabetModel decodeModel = new DecodeAlphabetModel();
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,10 +44,10 @@ public class EncodeServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet TextToEnocde</title>");            
+            out.println("<title>Servlet MapDecodeServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet TextToEnocde at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet MapDecodeServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -63,27 +66,28 @@ public class EncodeServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-          String textToEncode = "";
-        try {
-            response.setContentType("text/html;charset = UTF-8");
-            textToEncode = request.getParameter("textToEnocde");
-            model.encodeMessage(textToEncode);
-            PrintWriter writer = response.getWriter();
-            
-            String ouput = model.getEncodedValue().replace("\n", "<br/>");
-            String htmlRespone = "<html>";
-            htmlRespone += "<h2>Your ciphered text is:<p> </p>"  + ouput  + "</h2>";
-            htmlRespone += "</html>";
-
-            writer.println(htmlRespone);
-            model.resetValue();
-          
-        } catch (WrongInputException ex) {
-           response.sendError(response.SC_BAD_REQUEST, ex.getMessage());
-            textToEncode = "";
+        response.setContentType("text/html;charset=UTF-8");
+      
+        TreeMap<String, String> sorted = new TreeMap<>(decodeModel.getMap()); 
+        for (Map.Entry<String, String> entry : sorted.entrySet()) {
+        String key = entry.getKey();
+        String value = entry.getValue();
+        String value2 = value.replace("\n", "<br/>");
+        String value3 = value2.replace(" ", "\u00A0");
+        String htmlRespone = "<html> <table><tr> ";
+        htmlRespone += "<th>" +value3+ "<th/><br/>";
+        htmlRespone +="<th>" +key+ "<th/>";
+        htmlRespone += " </tr></table></html>";
+        PrintWriter writer = response.getWriter();
+        writer.println(htmlRespone);
+        
 
         }
+        PrintWriter out = response.getWriter();
+        
     }
+       
+    
 
     /**
      * Handles the HTTP <code>POST</code> method.
@@ -96,30 +100,21 @@ public class EncodeServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        String textToEncode = "";
-        try {
-            response.setContentType("text/html;charset = UTF-8");
-            textToEncode = request.getParameter("textToEnocde");
-            model.encodeMessage(textToEncode);
-            PrintWriter writer = response.getWriter();
-            
-            String ouput = model.getEncodedValue().replace("\n", "<br/>");
-            String htmlRespone = "<html>";
-            htmlRespone += "<h2>Your ciphered text is:<p> </p>"  + ouput  + "</h2>";
-            htmlRespone += "</html>";
-
-            writer.println(htmlRespone);
-            model.resetValue();
-          
-        } catch (WrongInputException ex) {
-           response.sendError(response.SC_BAD_REQUEST, ex.getMessage());
-            textToEncode = "";
-
+         response.setContentType("text/html;charset=UTF-8");
+      
+        TreeMap<String, String> sorted = new TreeMap<>(decodeModel.getMap()); 
+        for (Map.Entry<String, String> entry : sorted.entrySet()) {
+        String key = entry.getKey();
+        String value = entry.getValue();
+        String value2 = value.replace("\n", "<br/>");
+        String value3 = value2.replace(" ", "\u00A0");
+        String htmlRespone = "<html> <table><tr> ";
+        htmlRespone += "<th>" +value3+ "<th/><br/>";
+        htmlRespone +="<th>" +key+ "<th/>";
+        htmlRespone += " </tr></table></html>";
+        PrintWriter writer = response.getWriter();
+        writer.println(htmlRespone);
         }
-       
-        
-
     }
 
     /**
