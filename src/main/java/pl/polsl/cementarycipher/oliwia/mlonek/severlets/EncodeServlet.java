@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,7 +22,7 @@ import pl.polsl.cementarycipher.oliwia.mlonek.model.WrongInputException;
  */
 @WebServlet(name = "EncodeServlet", urlPatterns = {"/EncodeServlet"})
 public class EncodeServlet extends HttpServlet {
-    
+    private int count;
     private CementaryCipherModel model = new CementaryCipherModel();
 
     /**
@@ -64,6 +65,7 @@ public class EncodeServlet extends HttpServlet {
             throws ServletException, IOException {
         
           String textToEncode = "";
+          
         try {
             response.setContentType("text/html;charset = UTF-8");
             textToEncode = request.getParameter("textToEnocde");
@@ -79,8 +81,22 @@ public class EncodeServlet extends HttpServlet {
             model.resetValue();
           
         } catch (WrongInputException ex) {
-           response.sendError(response.SC_BAD_REQUEST, ex.getMessage());
+             Cookie[] cookies = request.getCookies();
+            count = 1;
+            if (cookies != null) {
+                for (Cookie cookie : cookies)
+                {
+                    if (cookie.getName().equals("EncodeErrorCounter")) {
+                        count = Integer.parseInt(cookie.getValue());
+                        break;
+                    }
+                }
+                }
+                Cookie ck = new Cookie( "EncodeErrorCounter" , Integer.toString(++count)); 
+                response.addCookie(ck);
             textToEncode = "";
+            response.sendError(response.SC_BAD_REQUEST, ex.getMessage());
+            
 
         }
     }
@@ -113,8 +129,22 @@ public class EncodeServlet extends HttpServlet {
             model.resetValue();
           
         } catch (WrongInputException ex) {
-           response.sendError(response.SC_BAD_REQUEST, ex.getMessage());
+            
+             Cookie[] cookies = request.getCookies();
+             count = 1;;
+            if (cookies != null) {
+                for (Cookie cookie : cookies)
+                {
+                    if (cookie.getName().equals("EncodeErrorCounter")) {
+                        count = Integer.parseInt(cookie.getValue());
+                        break;
+                    }
+                }
+                }
+                Cookie ck = new Cookie( "EncodeErrorCounter" , Integer.toString(++count)); 
+                response.addCookie(ck);
             textToEncode = "";
+            response.sendError(response.SC_BAD_REQUEST, ex.getMessage());
 
         }
        

@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.StringTokenizer;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,6 +28,7 @@ import pl.polsl.cementarycipher.oliwia.mlonek.model.WrongInputException;
 @WebServlet(name = "DecodeServlet", urlPatterns = {"/DecodeServlet"})
 public class DecodeServlet extends HttpServlet {
 
+    private int count;
     private CementaryCipherModel model = new CementaryCipherModel();
     private DecodeAlphabetModel decodeModel = new DecodeAlphabetModel();
 
@@ -72,6 +74,7 @@ public class DecodeServlet extends HttpServlet {
        
           String output = "";
           String textToDecode = "";
+          int cookieCount = 0;
         
         try {
             response.setContentType("text/html;charset = UTF-8");
@@ -108,6 +111,20 @@ public class DecodeServlet extends HttpServlet {
 
            
             } catch (WrongInputException ex) {
+               Cookie[] cookies = request.getCookies();
+            count = 1;
+            if (cookies != null) {
+                for (Cookie cookie : cookies)
+                {
+                    if (cookie.getName().equals("DecodeErrorCounter")) {
+                        count = Integer.parseInt(cookie.getValue());
+                        break;
+                    }
+                }
+                }
+                Cookie ck = new Cookie( "DecodeErrorCounter" , Integer.toString(++count)); 
+                response.addCookie(ck);
+            textToDecode = "";
                 response.sendError(HttpServletResponse.SC_BAD_REQUEST, ex.getMessage());
                 model.resetDecodedValue();
 
@@ -167,10 +184,24 @@ public class DecodeServlet extends HttpServlet {
 
            
             } catch (WrongInputException ex) {
+                
+                Cookie[] cookies = request.getCookies();
+             count = 1;
+            if (cookies != null) {
+                for (Cookie cookie : cookies)
+                {
+                    if (cookie.getName().equals("DecodeErrorCounter")) {
+                        count = Integer.parseInt(cookie.getValue());
+                        break;
+                    }
+                }
+                }
+                Cookie ck = new Cookie( "DecodeErrorCounter" , Integer.toString(++count)); 
+                response.addCookie(ck);response.addCookie(ck);
+                textToDecode = "";
                 response.sendError(response.SC_BAD_REQUEST, ex.getMessage());
                 model.resetDecodedValue();
-                output = "";
-                textToDecode = "";
+  
 
 
             }

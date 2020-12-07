@@ -16,6 +16,10 @@
         <servlet-name>RedirectToDecodeServlet</servlet-name>
         <servlet-class>pl.polsl.cementarycipher.oliwia.mlonek.severlets.RedirectToDecodeServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CookiesServlet</servlet-name>
+        <servlet-class>pl.polsl.cementarycipher.oliwia.mlonek.severlets.CookiesServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>EncodeServlet</servlet-name>
         <url-pattern>/EncodeServlet</url-pattern>
@@ -31,5 +35,9 @@
     <servlet-mapping>
         <servlet-name>RedirectToDecodeServlet</servlet-name>
         <url-pattern>/RedirectToDecodeServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CookiesServlet</servlet-name>
+        <url-pattern>/CookiesServlet</url-pattern>
     </servlet-mapping>
 </web-app>
