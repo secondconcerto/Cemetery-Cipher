@@ -21,8 +21,8 @@ import pl.polsl.cementarycipher.oliwia.mlonek.model.WrongInputException;
  *
  * @author roza
  */
-@WebServlet(name = "TextToEnocde", urlPatterns = {"/TextToEnocde"})
-public class TextToEnocde extends HttpServlet {
+@WebServlet(name = "EncodeServlet", urlPatterns = {"/EncodeServlet"})
+public class EncodeServlet extends HttpServlet {
     
     private CementaryCipherModel model = new CementaryCipherModel();
 
@@ -64,7 +64,8 @@ public class TextToEnocde extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
+         processRequest(request, response);
     }
 
     /**
@@ -78,23 +79,28 @@ public class TextToEnocde extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset = UTF-8");
-        String textToEnocde = request.getParameter("textToEnocde");
-        PrintWriter writer = response.getWriter();
         
+        String textToEncode = "";
         try {
-            model.encodeMessage(textToEnocde);
+            response.setContentType("text/html;charset = UTF-8");
+            textToEncode = request.getParameter("textToEnocde");
+            model.encodeMessage(textToEncode);
+            PrintWriter writer = response.getWriter();
+            
+            String ouput = model.getEncodedValue().replace("\n", "<br/>");
+            String htmlRespone = "<html>";
+            htmlRespone += "<h2>Your ciphered text is:<p> </p>"  + ouput  + "</h2>";
+            htmlRespone += "</html>";
+
+            writer.println(htmlRespone);
+            model.resetValue();
+          
         } catch (WrongInputException ex) {
-            Logger.getLogger(TextToEnocde.class.getName()).log(Level.SEVERE, null, ex);
+           response.sendError(response.SC_BAD_REQUEST, ex.getMessage());
+            textToEncode = "";
+
         }
-        String ouput = model.getEncodedValue().replace("\n", "<br/>");
-        String htmlRespone = "<html>";
-        htmlRespone += "<h2>Your ciphered text is:<p> </p>"  + ouput  + "</h2>";
-        htmlRespone += "</html>";
- 
-        writer.println(htmlRespone);
-        model.resetValue();
-        textToEnocde = "";
+       
         
 
     }
