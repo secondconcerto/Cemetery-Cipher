@@ -7,18 +7,28 @@ package pl.polsl.cementarycipher.oliwia.mlonek.severlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.StringTokenizer;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import pl.polsl.cementarycipher.oliwia.mlonek.model.CementaryCipherModel;
+import pl.polsl.cementarycipher.oliwia.mlonek.model.DecodeAlphabetModel;
+import pl.polsl.cementarycipher.oliwia.mlonek.model.WrongInputException;
 
 /**
  *
  * @author roza
  */
 @WebServlet(name = "TextToDecode", urlPatterns = {"/TextToDecode"})
-public class TextToDecode extends HttpServlet {
+public class DecodeServlet extends HttpServlet {
+
+    private CementaryCipherModel model = new CementaryCipherModel();
+    private List<String> userInputNumbers = new ArrayList<>();
+    private DecodeAlphabetModel decodeModel = new DecodeAlphabetModel();
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -58,7 +68,17 @@ public class TextToDecode extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        PrintWriter writer = response.getWriter();
+         
+        String ouput = model.getDecodedValue();
+         String htmlRespone = "<html>";
+            htmlRespone += "<h2>Your ciphered text is:<p> </p>"  + ouput + "</h2>";
+            htmlRespone += "</html>";
+
+            writer.println(htmlRespone);
+            model.resetValue();
+          
+        
     }
 
     /**
@@ -72,7 +92,19 @@ public class TextToDecode extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            response.setContentType("text/html;charset = UTF-8");
+            String textToDecode = request.getParameter("textToDecode");
+            StringTokenizer tokenizer = new StringTokenizer(textToDecode, ",");
+             while (tokenizer.hasMoreTokens()) {
+               userInputNumbers.add(decodeModel.getMap().get(tokenizer.nextToken()));
+            }       
+           model.decodeMessage(userInputNumbers);
+           
+            } catch (WrongInputException ex) {
+                 response.sendError(response.SC_BAD_REQUEST, ex.getMessage());
+
+            }
     }
 
     /**
