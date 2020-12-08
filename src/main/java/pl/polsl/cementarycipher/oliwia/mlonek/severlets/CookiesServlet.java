@@ -28,14 +28,14 @@ public class CookiesServlet extends HttpServlet {
      */
     public void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         PrintWriter writer = response.getWriter();
+       PrintWriter writer = response.getWriter();
          
         Cookie[] cookies = request.getCookies();
          
         if (cookies == null) {
             writer.println("No cookies found");
         } else {
-            writer.println("Number of cookies: ");
+            writer.println("Number of cookies: " + cookies.length);
              
             for (Cookie aCookie : cookies) {
                 String name = aCookie.getName();
