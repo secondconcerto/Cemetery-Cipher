@@ -6,7 +6,6 @@
 package pl.polsl.cementarycipher.oliwia.mlonek.severlets;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -15,7 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author roza
+ * Servlet is responsible for switching the appropriate html page 
+ * to display the decoding result.
  */
 public class RedirectToDecodeServlet extends HttpServlet {
 
@@ -28,7 +28,7 @@ public class RedirectToDecodeServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+    public void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         RequestDispatcher ds = request.getRequestDispatcher("decode.html");
@@ -46,7 +46,7 @@ public class RedirectToDecodeServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
         processRequest(request, response);
@@ -61,7 +61,7 @@ public class RedirectToDecodeServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }

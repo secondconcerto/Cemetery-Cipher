@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -18,8 +17,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
+ * Servlet responsible for managing and displaying history of operations.
  *
- * @author roza
+ * @author Oliwia Mlonek
+ * @version 4.0
  */
 public class HistoryServlet extends HttpServlet {
 
@@ -32,15 +33,16 @@ public class HistoryServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+    public void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession(true);
-       // Date createTime = new Date(session.getCreationTime());
-      response.setContentType("text/html");
-      PrintWriter out = response.getWriter();
-      List<String> encodeHistory = (List<String>) session.getAttribute("encodeList");
-      List<String> decodeHistory = (List<String>) session.getAttribute("decodeList");
+        response.setContentType("text/html");
+        PrintWriter out = response.getWriter();
+        List<String> encodeHistory = (List<String>) session.getAttribute("encodeList");
+        List<String> decodeHistory = (List<String>) session.getAttribute("decodeList");
+      
         if (encodeHistory == null && decodeHistory == null) {
             PrintWriter writer = response.getWriter();
             String htmlRespone = "<html>";
@@ -49,7 +51,6 @@ public class HistoryServlet extends HttpServlet {
             writer.println(htmlRespone);
         }
         else{
-           
             out.println("<!doctype html public \"-//w3c//dtd html 4.0 " +"transitional//en\">\n" 
                           + "<html>\n" +"<head><title>" + "History" + "</title></head>\n" +
 
@@ -107,14 +108,10 @@ public class HistoryServlet extends HttpServlet {
                   "</table>\n" +
                "</body></html>"
                );
-            }
-            
-        }
-          
-   }
-                
-        
- }
+            }  
+        }    
+    }   
+}
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -126,7 +123,7 @@ public class HistoryServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
@@ -140,7 +137,7 @@ public class HistoryServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
@@ -152,7 +149,7 @@ public class HistoryServlet extends HttpServlet {
      */
     @Override
     public String getServletInfo() {
-        return "Short description";
+        return "Manages history of operations";
     }// </editor-fold>
 
 }

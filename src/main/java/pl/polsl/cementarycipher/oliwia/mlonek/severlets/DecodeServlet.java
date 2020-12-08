@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package pl.polsl.cementarycipher.oliwia.mlonek.severlets;
 
 import java.io.IOException;
@@ -10,7 +6,6 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.StringTokenizer;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
@@ -23,15 +18,21 @@ import pl.polsl.cementarycipher.oliwia.mlonek.model.DecodeAlphabetModel;
 import pl.polsl.cementarycipher.oliwia.mlonek.model.WrongInputException;
 
 /**
+ * Servlet responsible for decoding user message.
  *
- * @author roza
+ * @author Oliwia Mlonek
+ * @version 4.0
  */
 @WebServlet(name = "DecodeServlet", urlPatterns = {"/DecodeServlet"})
 public class DecodeServlet extends HttpServlet {
 
+     /** Variable to count cookies  */
     private int count;
+    /** Variable stores model which performs coding operations  */
     private CementaryCipherModel model = new CementaryCipherModel();
+     /** Variable stores model which holds decoding alphabet */
     private DecodeAlphabetModel decodeModel = new DecodeAlphabetModel();
+      /** Variable stores history of decoding */
     private List<String> decodeList = new ArrayList<>();
 
 
@@ -44,13 +45,13 @@ public class DecodeServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+    public void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
          HttpSession session = request.getSession(true);
          
         String output = "";
-          String textToDecode = "";
-          int cookieCount = 0;
+        String textToDecode = "";
+        int cookieCount = 0;
         
         try {
             response.setContentType("text/html;charset = UTF-8");
@@ -78,7 +79,7 @@ public class DecodeServlet extends HttpServlet {
             htmlRespone += "<h2>Your ciphered text is:<p> </p>"  + output + "</h2>";
             htmlRespone += "</html>";
             decodeList.add(new java.util.Date()+"//"+textToDecode+"//"+output);
-           session.setAttribute("decodeList", decodeList);
+            session.setAttribute("decodeList", decodeList);
  
 
             writer.println(htmlRespone);
@@ -89,29 +90,26 @@ public class DecodeServlet extends HttpServlet {
             userInputNumbers.clear();
 
            
-            } catch (WrongInputException ex) {
-               Cookie[] cookies = request.getCookies();
-            count = 1;
-            if (cookies != null) {
-                for (Cookie cookie : cookies)
-                {
-                    if (cookie.getName().equals("DecodeErrorCounter")) {
-                        count = Integer.parseInt(cookie.getValue());
-                        break;
-                    }
+        } catch (WrongInputException ex) {
+           Cookie[] cookies = request.getCookies();
+        count = 1;
+        if (cookies != null) {
+            for (Cookie cookie : cookies)
+            {
+                if (cookie.getName().equals("DecodeErrorCounter")) {
+                    count = Integer.parseInt(cookie.getValue());
+                    break;
                 }
-                }
-                Cookie ck = new Cookie( "DecodeErrorCounter" , Integer.toString(++count)); 
-                response.addCookie(ck);
-            textToDecode = "";
-                response.sendError(HttpServletResponse.SC_BAD_REQUEST, ex.getMessage());
-                model.resetDecodedValue();
-
-
-
             }
+            }
+            Cookie ck = new Cookie( "DecodeErrorCounter" , Integer.toString(++count)); 
+            response.addCookie(ck);
+            textToDecode = "";
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, ex.getMessage());
+            model.resetDecodedValue();
         }
-    
+    }
+
 
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -122,7 +120,7 @@ public class DecodeServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
@@ -136,7 +134,7 @@ public class DecodeServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
@@ -148,7 +146,7 @@ public class DecodeServlet extends HttpServlet {
      */
     @Override
     public String getServletInfo() {
-        return "Short description";
+        return "Performs decoding operation";
     }// </editor-fold>
 
 }

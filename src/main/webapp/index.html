@@ -6,11 +6,11 @@
     </head>
     <body>
         <h1>Encoding</h1>
-       <form name="TextToEnocde" method="GET" action="EncodeServlet">
+       <form name="TextToEnocde" method="post" action="EncodeServlet">
         Text to encode: <input type="text" name="textToEnocde"/> <br/>
          <input type="submit" value="Run encoding" />
         </form>
-        <form method="GET" action="RedirectToDecodeServlet">
+        <form method="post" action="RedirectToDecodeServlet">
         <h1>Decoding</h1>
 <!--         <br>Separate your input with commas, eg: 10,11, ,23<br/>
         <form name="TextToDecode" method="GET" action="DecodeServlet">

@@ -1,15 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package pl.polsl.cementarycipher.oliwia.mlonek.severlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
@@ -21,13 +16,18 @@ import pl.polsl.cementarycipher.oliwia.mlonek.model.CementaryCipherModel;
 import pl.polsl.cementarycipher.oliwia.mlonek.model.WrongInputException;
 
 /**
+ * Servlet responsible for decoding user message.
  *
- * @author roza
+ * @author Oliwia Mlonek
+ * @version 4.0
  */
 @WebServlet(name = "EncodeServlet", urlPatterns = {"/EncodeServlet"})
 public class EncodeServlet extends HttpServlet {
+    /** Variable to count cookies  */
     private int count;
+    /** Variable stores model which performs coding operations  */
     private CementaryCipherModel model = new CementaryCipherModel();
+     /** Variable stores history of encoding */
     private List<String> encodeList = new ArrayList<>();
 
     /**
@@ -39,11 +39,12 @@ public class EncodeServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+    public void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+       
         HttpSession session = request.getSession(true);
          
-         String textToEncode = "";
+        String textToEncode = "";
         try {
             response.setContentType("text/html;charset = UTF-8");
             textToEncode = request.getParameter("textToEnocde");
@@ -58,14 +59,12 @@ public class EncodeServlet extends HttpServlet {
             htmlRespone += "</html>";
             
             encodeList.add(new java.util.Date()+"//"+textToEncode+"//"+output);
-           session.setAttribute("encodeList", encodeList);
+            session.setAttribute("encodeList", encodeList);
  
-
             writer.println(htmlRespone);
              
 
-            model.resetValue();
-    
+            model.resetEncodedValue();
           
         } catch (WrongInputException ex) {
             
@@ -85,7 +84,6 @@ public class EncodeServlet extends HttpServlet {
             textToEncode = "";
             response.sendError(response.SC_BAD_REQUEST, ex.getMessage());
 
-        
         }
           
     }
@@ -100,7 +98,7 @@ public class EncodeServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
@@ -114,7 +112,7 @@ public class EncodeServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
@@ -126,7 +124,7 @@ public class EncodeServlet extends HttpServlet {
      */
     @Override
     public String getServletInfo() {
-        return "Short description";
+        return "Performs encoding operation";
     }// </editor-fold>
 
 }

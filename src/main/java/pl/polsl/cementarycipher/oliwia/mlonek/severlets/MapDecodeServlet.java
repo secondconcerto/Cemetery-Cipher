@@ -18,13 +18,17 @@ import pl.polsl.cementarycipher.oliwia.mlonek.model.CementaryCipherModel;
 import pl.polsl.cementarycipher.oliwia.mlonek.model.DecodeAlphabetModel;
 
 /**
+ * Servlet downloads and prepares data to be dedoded.
  *
- * @author roza
+ * @author Oliwia Mlonek
+ * @version 4.0
  */
 @WebServlet(name = "MapDecodeServlet", urlPatterns = {"/MapDecodeServlet"})
 public class MapDecodeServlet extends HttpServlet {
 
+     /** Variable stores model which performs coding operations  */
     private CementaryCipherModel model = new CementaryCipherModel();
+    /** Variable stores model which holds decoding alphabet */
     private DecodeAlphabetModel decodeModel = new DecodeAlphabetModel();
 
     /**
@@ -36,7 +40,7 @@ public class MapDecodeServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+    public void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
        
@@ -70,7 +74,7 @@ public class MapDecodeServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
         processRequest(request, response);
@@ -88,7 +92,7 @@ public class MapDecodeServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
@@ -100,7 +104,7 @@ public class MapDecodeServlet extends HttpServlet {
      */
     @Override
     public String getServletInfo() {
-        return "Short description";
+        return "Displays decoding map and get user input";
     }// </editor-fold>
 
 }
