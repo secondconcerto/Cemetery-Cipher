@@ -20,6 +20,10 @@
         <servlet-name>CookiesServlet</servlet-name>
         <servlet-class>pl.polsl.cementarycipher.oliwia.mlonek.severlets.CookiesServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>HistoryServlet</servlet-name>
+        <servlet-class>pl.polsl.cementarycipher.oliwia.mlonek.severlets.HistoryServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>EncodeServlet</servlet-name>
         <url-pattern>/EncodeServlet</url-pattern>
@@ -39,5 +43,9 @@
     <servlet-mapping>
         <servlet-name>CookiesServlet</servlet-name>
         <url-pattern>/CookiesServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>HistoryServlet</servlet-name>
+        <url-pattern>/HistoryServlet</url-pattern>
     </servlet-mapping>
 </web-app>

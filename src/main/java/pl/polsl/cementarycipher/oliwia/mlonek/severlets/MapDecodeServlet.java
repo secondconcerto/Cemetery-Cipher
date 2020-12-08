@@ -39,34 +39,7 @@ public class MapDecodeServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet MapDecodeServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet MapDecodeServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        
-        response.setContentType("text/html;charset=UTF-8");
+       
       
         TreeMap<String, String> sorted = new TreeMap<>(decodeModel.getMap()); 
         for (Map.Entry<String, String> entry : sorted.entrySet()) {
@@ -86,6 +59,23 @@ public class MapDecodeServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         
     }
+
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    /**
+     * Handles the HTTP <code>GET</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        
+        processRequest(request, response);
+        
+    }
        
     
 
@@ -100,21 +90,7 @@ public class MapDecodeServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         response.setContentType("text/html;charset=UTF-8");
-      
-        TreeMap<String, String> sorted = new TreeMap<>(decodeModel.getMap()); 
-        for (Map.Entry<String, String> entry : sorted.entrySet()) {
-        String key = entry.getKey();
-        String value = entry.getValue();
-        String value2 = value.replace("\n", "<br/>");
-        String value3 = value2.replace(" ", "\u00A0");
-        String htmlRespone = "<html> <table><tr> ";
-        htmlRespone += "<th>" +value3+ "<th/><br/>";
-        htmlRespone +="<th>" +key+ "<th/>";
-        htmlRespone += " </tr></table></html>";
-        PrintWriter writer = response.getWriter();
-        writer.println(htmlRespone);
-        }
+        processRequest(request, response);
     }
 
     /**
