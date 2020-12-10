@@ -3,8 +3,11 @@ package pl.polsl.cementarycipher.oliwia.mlonek.severlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import static java.lang.System.out;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.Persistence;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
@@ -13,6 +16,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import pl.polsl.cementarycipher.oliwia.mlonek.model.CementaryCipherModel;
+import pl.polsl.cementarycipher.oliwia.mlonek.model.HistoryEntity;
+import pl.polsl.cementarycipher.oliwia.mlonek.model.OperationsEntity;
 import pl.polsl.cementarycipher.oliwia.mlonek.model.WrongInputException;
 
 /**
@@ -62,10 +67,28 @@ public class EncodeServlet extends HttpServlet {
             session.setAttribute("encodeList", encodeList);
  
             writer.println(htmlRespone);
-             
-
             model.resetEncodedValue();
-          
+            
+            List<OperationsEntity> operations;
+            OperationsEntity operation = new OperationsEntity(textToEncode, output);
+            
+            EntityManager em = Persistence.createEntityManagerFactory("LabPU").createEntityManager(); 
+            em.getTransaction().begin();
+            em.persist(operation);
+            em.getTransaction().commit();
+            
+            HistoryEntity operationH = new HistoryEntity(operation);
+            em.getTransaction().begin();
+            em.persist(operationH);
+            em.getTransaction().commit();
+            
+            PrintWriter writer2 = response.getWriter();
+            
+            operations = em.createQuery("SELECT s FROM OperationsEntity s", OperationsEntity.class).getResultList();
+            for(OperationsEntity o : operations) {
+                writer2.println(o + "<br>");
+            }
+//          
         } catch (WrongInputException ex) {
             
              Cookie[] cookies = request.getCookies();

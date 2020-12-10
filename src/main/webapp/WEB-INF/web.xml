@@ -24,6 +24,10 @@
         <servlet-name>HistoryServlet</servlet-name>
         <servlet-class>pl.polsl.cementarycipher.oliwia.mlonek.severlets.HistoryServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>HistoryDBServlet</servlet-name>
+        <servlet-class>pl.polsl.cementarycipher.oliwia.mlonek.severlets.HistoryDBServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>EncodeServlet</servlet-name>
         <url-pattern>/EncodeServlet</url-pattern>
@@ -47,5 +51,9 @@
     <servlet-mapping>
         <servlet-name>HistoryServlet</servlet-name>
         <url-pattern>/HistoryServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>HistoryDBServlet</servlet-name>
+        <url-pattern>/HistoryDBServlet</url-pattern>
     </servlet-mapping>
 </web-app>
