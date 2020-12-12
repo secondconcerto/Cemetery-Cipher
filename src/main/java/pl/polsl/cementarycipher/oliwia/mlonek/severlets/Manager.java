@@ -6,8 +6,11 @@
 package pl.polsl.cementarycipher.oliwia.mlonek.severlets;
 
 import java.util.*;
+import java.util.logging.Logger;
 import javax.persistence.*;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.ws.rs.core.Response;
+import static org.graalvm.compiler.hotspot.amd64.AMD64HotSpotMathIntrinsicOp.IntrinsicOpcode.LOG;
 import pl.polsl.cementarycipher.oliwia.mlonek.model.HistoryEntity;
 import pl.polsl.cementarycipher.oliwia.mlonek.model.OperationsEntity;
 
@@ -17,7 +20,7 @@ public class Manager {
     private  EntityManager em;
 
 
-    void addRecord(String textToEncode, String output, EntityManager em) {
+    Boolean addRecord(String textToEncode, String output, EntityManager em) {
         try {
              OperationsEntity oe = new OperationsEntity(textToEncode, output);
             em.getTransaction().begin();
@@ -27,9 +30,9 @@ public class Manager {
             em.getTransaction().begin();
             em.persist(he);
             em.getTransaction().commit();
-            
-        } catch (Exception e) {
-            String error = e.getMessage();
+            return true;
+        } catch (PersistenceException e) {
+              throw e;
         }
        
      }
@@ -42,9 +45,8 @@ public class Manager {
 
             return resultList;
             
-        } catch (Exception e) {
+        } catch (PersistenceException e) {
             return null;
-            
         }
         
          
@@ -57,9 +59,9 @@ public class Manager {
 
             return resultList;
             
-        } catch (Exception e) {
-            return null;
-            
+        } catch (PersistenceException e) {
+
+             return null;
         }
         
          

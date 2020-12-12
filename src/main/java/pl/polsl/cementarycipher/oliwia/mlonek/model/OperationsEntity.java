@@ -31,8 +31,8 @@ public class OperationsEntity implements Serializable {
     @Column(name = "userInput", nullable = false)
     public String userInput;
    
-    @Lob
-    @Column(name = "userOuput", nullable = false, length = 10000)
+    //@Lob
+    @Column(name = "userOuput", nullable = false)
     private String userOuput;
     
     @OneToOne(mappedBy = "operationsEntity", cascade = CascadeType.ALL,

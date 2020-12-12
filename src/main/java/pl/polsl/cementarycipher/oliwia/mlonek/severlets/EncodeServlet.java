@@ -6,6 +6,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
@@ -69,7 +70,12 @@ public class EncodeServlet extends HttpServlet {
             List<OperationsEntity> operations;
             Manager manager = new Manager();
             EntityManager em = (EntityManager) getServletContext().getAttribute("DbCon");
-            manager.addRecord(textToEncode, output, em);
+            try {
+                 manager.addRecord(textToEncode, output, em);
+            } catch (PersistenceException e) {
+                 response.sendError(response.SC_BAD_REQUEST, e.getMessage());
+            }
+           
 
             
             PrintWriter writer2 = response.getWriter();
@@ -95,7 +101,7 @@ public class EncodeServlet extends HttpServlet {
                 Cookie ck = new Cookie( "EncodeErrorCounter" , Integer.toString(++count)); 
                 response.addCookie(ck);
             textToEncode = "";
-            response.sendError(response.SC_BAD_REQUEST, ex.getMessage());
+            response.sendError(response.SC_BAD_REQUEST, ex.getLocalizedMessage());
 
         }
           
