@@ -13,6 +13,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.OneToOne;
 
 /**
@@ -30,7 +31,8 @@ public class OperationsEntity implements Serializable {
     @Column(name = "userInput", nullable = false)
     public String userInput;
    
-    @Column(name = "userOuput", nullable = false)
+    @Lob
+    @Column(name = "userOuput", nullable = false, length = 10000)
     private String userOuput;
     
     @OneToOne(mappedBy = "operationsEntity", cascade = CascadeType.ALL,

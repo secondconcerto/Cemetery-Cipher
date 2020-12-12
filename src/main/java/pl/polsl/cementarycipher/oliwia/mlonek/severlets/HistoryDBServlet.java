@@ -5,17 +5,23 @@
  */
 package pl.polsl.cementarycipher.oliwia.mlonek.severlets;
 
+import static java.awt.PageAttributes.MediaType.A;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Enumeration;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
-import javax.persistence.Persistence;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import pl.polsl.cementarycipher.oliwia.mlonek.model.HistoryEntity;
-import pl.polsl.cementarycipher.oliwia.mlonek.model.OperationsEntity;
 
 /**
  *
@@ -37,25 +43,57 @@ public class HistoryDBServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
            
-            List<HistoryEntity> operations;
-//            HistoryEntity operation = new HistoryEntity();
+            List<HistoryEntity> operations = new ArrayList<>();
             EntityManager em = (EntityManager) getServletContext().getAttribute("DbCon");
-            Manager ocrud;
-            OperationsEntity operationsEntity;
-          //  ocrud.get()
-//            
-//            em.getTransaction().begin();
-//            em.persist(operation);
-//            em.getTransaction().commit();
+            Manager manager = new Manager();
+            operations = manager.selectHistory(em);
             
-            PrintWriter writer2 = response.getWriter();
-            operations = em.createQuery("SELECT s FROM HistoryEntity s", HistoryEntity.class).getResultList();
-            for(HistoryEntity o : operations) {
-                writer2.println(o + "<br>");
+            if (operations != null){
+                out.println("<!doctype html public \"-//w3c//dtd html 4.0 " +"transitional//en\">\n" 
+                          + "<html>\n" +"<head><title>" + "Database history" + "</title></head>\n" +
+
+            "<body bgcolor = \"#f0f0f0\">\n" +
+               "<h1 align = \"center\">" + "History" + "</h1>\n" +
+               "<h2 align = \"center\">Session Infomation</h2>\n"
+               );
+                    
+            for(int i = 0; i < operations.size(); i++)
+
+
+                   out.println("<table border = \"1\"  align = \"center\">\n"+"<tr bgcolor = \"#949494\">\n" +
+                      "  <th></th><th></th></tr>\n"+
+                   "<tr>\n" +
+                      "  <td>Creation Time</td>\n" +
+                      "  <td>" + operations.get(i).getNow() + "</td></tr>\n" +
+
+                   "<tr>\n" +
+                      "  <td>User Input</td>\n" +
+                      "  <td>" + operations.get(i).getOperationsEntity().getUserInput().toString()+ "  </td> </tr>\n" +
+
+                   "<tr>\n" +
+                      "  <td>Program Output</td>\n" +
+                      "  <td>" + operations.get(i).getOperationsEntity().getUserOuput().toString() + "  </td> </tr>\n" +
+
+                "</table>\n" +
+                "</body></html>"
+             );
             }
-             
+            else{
+                PrintWriter writer = response.getWriter();
+                String htmlRespone = "<html>";
+                htmlRespone += "<h2>Database is empty!</h2>";
+                htmlRespone += "</html>";
+                writer.println(htmlRespone);
+            }
         }
-    }
+
+
+
+        }
+
+             
+        
+    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

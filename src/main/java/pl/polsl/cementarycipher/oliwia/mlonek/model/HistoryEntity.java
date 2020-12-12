@@ -40,14 +40,14 @@ public class HistoryEntity implements Serializable {
     private int id;
 
     @Column(name = "dateOf", nullable = false)
-    Calendar now = Calendar.getInstance();
+    Date date = java.util.Calendar.getInstance().getTime();  
 
-    public Calendar getNow() {
-        return now;
+    public Date getNow() {
+        return date;
     }
 
-    public void setNow(Calendar now) {
-        this.now = now;
+    public void setNow(Date now) {
+        this.date = now;
     }
 
 

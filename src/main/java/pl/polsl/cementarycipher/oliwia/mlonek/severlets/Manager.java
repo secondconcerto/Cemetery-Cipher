@@ -29,7 +29,39 @@ public class Manager {
             em.getTransaction().commit();
             
         } catch (Exception e) {
+            String error = e.getMessage();
         }
        
      }
+    
+    
+    List<HistoryEntity> selectHistory(EntityManager em) {
+        try {
+       
+            List<HistoryEntity> resultList = em.createQuery("Select h from HistoryEntity h ", HistoryEntity.class).getResultList();
+
+            return resultList;
+            
+        } catch (Exception e) {
+            return null;
+            
+        }
+        
+         
+    }
+    
+    List<OperationsEntity> selectOperations(EntityManager em) {
+        try {
+       
+            List<OperationsEntity> resultList = em.createQuery("Select o from OperationsEntity o ", OperationsEntity.class).getResultList();
+
+            return resultList;
+            
+        } catch (Exception e) {
+            return null;
+            
+        }
+        
+         
+    }
 }
