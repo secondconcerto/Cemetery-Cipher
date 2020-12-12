@@ -6,6 +6,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import javax.persistence.EntityManager;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
@@ -72,9 +73,12 @@ public class DecodeServlet extends HttpServlet {
                 
             }
             
+            
             PrintWriter writer = response.getWriter();
-         
             output = model.decodeMessage(userInputNumbers);
+            Manager manager = new Manager();
+            EntityManager em = (EntityManager) getServletContext().getAttribute("DbCon");
+            manager.addRecord(textToDecode, output, em);
             String htmlRespone = "<html>";
             htmlRespone += "<h2>Your ciphered text is:<p> </p>"  + output + "</h2>";
             htmlRespone += "</html>";

@@ -39,7 +39,10 @@ public class HistoryDBServlet extends HttpServlet {
            
             List<HistoryEntity> operations;
 //            HistoryEntity operation = new HistoryEntity();
-            EntityManager em = Persistence.createEntityManagerFactory("LabPU").createEntityManager();
+            EntityManager em = (EntityManager) getServletContext().getAttribute("DbCon");
+            Manager ocrud;
+            OperationsEntity operationsEntity;
+          //  ocrud.get()
 //            
 //            em.getTransaction().begin();
 //            em.persist(operation);

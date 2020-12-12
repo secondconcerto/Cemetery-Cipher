@@ -6,14 +6,22 @@
 package pl.polsl.cementarycipher.oliwia.mlonek.model;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import org.apache.derby.client.am.DateTime;
+
 
 /**
  *
@@ -21,11 +29,35 @@ import javax.persistence.OneToOne;
  */
 @Entity
 public class HistoryEntity implements Serializable {
-
+   
+   // DateFormat df = new SimpleDateFormat("ddMMyyyyHHmm");
+    
+    
+ 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+
+    @Column(name = "dateOf", nullable = false)
+    Calendar now = Calendar.getInstance();
+
+    public Calendar getNow() {
+        return now;
+    }
+
+    public void setNow(Calendar now) {
+        this.now = now;
+    }
+
+
+    public OperationsEntity getOperationsEntity() {
+        return operationsEntity;
+    }
+
+    public void setOperationsEntity(OperationsEntity operationsEntity) {
+        this.operationsEntity = operationsEntity;
+    }
     
      
     @OneToOne
