@@ -71,12 +71,6 @@ public class EncodeServlet extends HttpServlet {
  
             writer.println(htmlRespone);
             model.resetEncodedValue();
-//            PrintWriter writer2 = response.getWriter();
-//            
-//            operations = em.createQuery("SELECT s FROM OperationsEntity s", OperationsEntity.class).getResultList();
-//            for(OperationsEntity o : operations) {
-//                writer2.println(o + "<br>");
-//            }
           
         } catch (WrongInputException ex) {
             

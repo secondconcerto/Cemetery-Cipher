@@ -47,7 +47,7 @@ public class ShowDatabase extends HttpServlet {
         List<OperationsEntity> operations = new ArrayList<>();
         EntityManager em2 = (EntityManager) getServletContext().getAttribute("DbCon");
         Manager manager2 = new Manager();
-        operations = manager2.selectOperations(em);
+        operations = manager2.selectOperations(em2);
         
         PrintWriter out = response.getWriter();
         
@@ -87,10 +87,6 @@ public class ShowDatabase extends HttpServlet {
                     "<tr>\n" +
                          "<td> ID of record</td>\n" +
                          "<td>" + listElement.getId() + "</td> </tr>\n");
-
-                      "<tr>\n" +
-                         "<td> Key to history</td>\n" +
-                         "<td>" + listElement.getHistoryEntity().getId() + "</td> </tr>\n");
                 }
                 
                 out.println(
@@ -123,9 +119,7 @@ public class ShowDatabase extends HttpServlet {
         }catch (PersistenceException e) {
                  response.sendError(response.SC_CONFLICT, e.getMessage());
         }
-        catch (Exception e) {
-                 response.sendError(response.SC_CONFLICT, e.getMessage());
-        }
+
 
 }
 

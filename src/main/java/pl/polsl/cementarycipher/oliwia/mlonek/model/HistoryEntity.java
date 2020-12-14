@@ -14,6 +14,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -42,7 +43,7 @@ public class HistoryEntity implements Serializable {
     @Column(name = "dateOf", nullable = false)
     Date date = java.util.Calendar.getInstance().getTime();  
     
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn
     private OperationsEntity operationsEntity;
     

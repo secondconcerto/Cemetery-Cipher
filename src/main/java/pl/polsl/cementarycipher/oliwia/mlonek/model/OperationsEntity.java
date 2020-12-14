@@ -35,8 +35,8 @@ public class OperationsEntity implements Serializable {
     @Column(name = "userOuput", nullable = false, length = 1000)
     private String userOuput;
     
-    @OneToOne(mappedBy = "operationsEntity", cascade = CascadeType.ALL,
-              optional = false)
+      @OneToOne(mappedBy = "operationsEntity", cascade = CascadeType.ALL,
+              fetch = FetchType.EAGER, optional = false)
     private HistoryEntity history;
     
     

@@ -68,9 +68,6 @@ public class HistoryDBServlet extends HttpServlet {
                       "  <td>Program Output</td>\n" +
                       "  <td>" + operations.get(i).getOperationsEntity().getUserOuput() + "  </td> </tr>\n" +
 
-                     "<tr>\n" +
-                      "  <td>Program Output</td>\n" +
-                      "  <td>" + operations.get(i).getOperationsEntity().getUserOuput() + "  </td> </tr>\n" +
 
                 "</table>\n" +
                 "</body></html>"

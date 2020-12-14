@@ -16,7 +16,7 @@ public class Manager {
     private  EntityManager em;
 
 
-    Boolean addRecord(String textToEncode, String output, EntityManager em) {
+    public void addRecord(String textToEncode, String output, EntityManager em) {
         try {
              OperationsEntity oe = new OperationsEntity(textToEncode, output);
             em.getTransaction().begin();
@@ -26,7 +26,8 @@ public class Manager {
             em.getTransaction().begin();
             em.persist(he);
             em.getTransaction().commit();
-            return true;
+            em.detach(oe);
+            
         } catch (PersistenceException e) {
               throw e;
         }
