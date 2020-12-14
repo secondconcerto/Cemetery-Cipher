@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
@@ -111,6 +112,9 @@ public class DecodeServlet extends HttpServlet {
             textToDecode = "";
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, ex.getMessage());
             model.resetDecodedValue();
+        }
+        catch (PersistenceException e) {
+                 response.sendError(response.SC_CONFLICT, e.getMessage());
         }
     }
 

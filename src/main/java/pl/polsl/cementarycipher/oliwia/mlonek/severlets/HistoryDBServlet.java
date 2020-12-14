@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -85,6 +86,9 @@ public class HistoryDBServlet extends HttpServlet {
                 htmlRespone += "</html>";
                 writer.println(htmlRespone);
             }
+        }
+        catch (PersistenceException e) {
+                 response.sendError(response.SC_CONFLICT, e.getMessage());
         }
 
 

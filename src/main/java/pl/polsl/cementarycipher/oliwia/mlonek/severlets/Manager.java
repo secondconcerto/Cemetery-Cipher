@@ -6,11 +6,7 @@
 package pl.polsl.cementarycipher.oliwia.mlonek.severlets;
 
 import java.util.*;
-import java.util.logging.Logger;
 import javax.persistence.*;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.ws.rs.core.Response;
-import static org.graalvm.compiler.hotspot.amd64.AMD64HotSpotMathIntrinsicOp.IntrinsicOpcode.LOG;
 import pl.polsl.cementarycipher.oliwia.mlonek.model.HistoryEntity;
 import pl.polsl.cementarycipher.oliwia.mlonek.model.OperationsEntity;
 
@@ -46,7 +42,7 @@ public class Manager {
             return resultList;
             
         } catch (PersistenceException e) {
-            return null;
+             throw e;
         }
         
          
@@ -61,7 +57,7 @@ public class Manager {
             
         } catch (PersistenceException e) {
 
-             return null;
+              throw e;
         }
         
          

@@ -5,8 +5,6 @@
  */
 package pl.polsl.cementarycipher.oliwia.mlonek.listeners;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -29,14 +27,6 @@ public class DbConnectionInitializer implements ServletContextListener  {
                 Persistence.createEntityManagerFactory("LabPU").createEntityManager());
     }
     
-//    public  EntityManager getEntityManager() {
-//        EntityManager em = (EntityManager) getServletContext().getAttribute("DbCon");
-//		if(em == null){
-//			EntityManagerFactory emFactory = Persistence.createEntityManagerFactory("jpa-example");
-//			return emFactory.createEntityManager();
-//		}
-//		return entityManager;
-//	}
 
     @Override
     public void contextDestroyed(ServletContextEvent sce) {

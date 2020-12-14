@@ -97,7 +97,7 @@ public class EncodeServlet extends HttpServlet {
         }
         catch (PersistenceException e) {
                  response.sendError(response.SC_CONFLICT, e.getMessage());
-            }
+        }
           
     }
 
