@@ -60,24 +60,15 @@ public class EncodeServlet extends HttpServlet {
             String htmlRespone = "<html>";
             htmlRespone += "<h2>Your ciphered text is:<p> </p>"  + output  + "</h2>";
             htmlRespone += "</html>";
-            
+            List<OperationsEntity> operations;
+            Manager manager = new Manager();
+            EntityManager em = (EntityManager) getServletContext().getAttribute("DbCon");
+            manager.addRecord(textToEncode, output, em);
             encodeList.add(new java.util.Date()+"//"+textToEncode+"//"+output);
             session.setAttribute("encodeList", encodeList);
  
             writer.println(htmlRespone);
             model.resetEncodedValue();
-            
-            List<OperationsEntity> operations;
-            Manager manager = new Manager();
-            EntityManager em = (EntityManager) getServletContext().getAttribute("DbCon");
-            try {
-                 manager.addRecord(textToEncode, output, em);
-            } catch (PersistenceException e) {
-                 response.sendError(response.SC_BAD_REQUEST, e.getMessage());
-            }
-           
-
-            
             PrintWriter writer2 = response.getWriter();
             
             operations = em.createQuery("SELECT s FROM OperationsEntity s", OperationsEntity.class).getResultList();
@@ -104,6 +95,9 @@ public class EncodeServlet extends HttpServlet {
             response.sendError(response.SC_BAD_REQUEST, ex.getLocalizedMessage());
 
         }
+        catch (PersistenceException e) {
+                 response.sendError(response.SC_CONFLICT, e.getMessage());
+            }
           
     }
 
