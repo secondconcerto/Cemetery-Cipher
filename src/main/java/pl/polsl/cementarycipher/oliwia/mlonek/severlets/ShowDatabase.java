@@ -8,13 +8,15 @@ package pl.polsl.cementarycipher.oliwia.mlonek.severlets;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import pl.polsl.cementarycipher.oliwia.mlonek.model.HistoryEntity;
+import pl.polsl.cementarycipher.oliwia.mlonek.model.OperationsEntity;
 
 /**
  * Servlet responsible for managing and displaying history of operations.
@@ -22,7 +24,7 @@ import javax.servlet.http.HttpSession;
  * @author Oliwia Mlonek
  * @version 4.0
  */
-public class HistoryServlet extends HttpServlet {
+public class ShowDatabase extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,19 +37,23 @@ public class HistoryServlet extends HttpServlet {
      */
     public void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
         response.setContentType("text/html;charset=UTF-8");
-        HttpSession session = request.getSession(true);
-        response.setContentType("text/html");
-        PrintWriter out = response.getWriter();
-        List<String> encodeHistory = (List<String>) session.getAttribute("encodeList");
-        List<String> decodeHistory = (List<String>) session.getAttribute("decodeList");
+        try{
+        List<HistoryEntity> histories = new ArrayList<>();
+        EntityManager em = (EntityManager) getServletContext().getAttribute("DbCon");
+        Manager manager = new Manager();
+        histories = manager.selectHistory(em);
+
+        List<OperationsEntity> operations = new ArrayList<>();
+        EntityManager em2 = (EntityManager) getServletContext().getAttribute("DbCon");
+        Manager manager2 = new Manager();
+        operations = manager2.selectOperations(em);
         
-  
+        PrintWriter out = response.getWriter();
         
 
       
-        if (encodeHistory == null && decodeHistory == null) {
+        if (operations == null && histories == null) {
             PrintWriter writer = response.getWriter();
             String htmlRespone = "<html>";
             htmlRespone += "<h2>Your history is empty!</h2>";
@@ -56,67 +62,71 @@ public class HistoryServlet extends HttpServlet {
         }
         else{
             out.println("<!doctype html public \"-//w3c//dtd html 4.0 " +"transitional//en\">\n" 
-                          + "<html>\n" +"<head><title>" + "History" + "</title></head>\n" +
+                          + "<html>\n" +"<head><title>" + "Database" + "</title></head>\n" +
 
             "<body bgcolor = \"#f0f0f0\">\n" +
-               "<h1 align = \"center\">" + "History" + "</h1>\n" +
-               "<h2 align = \"center\">Session Infomation</h2>\n"
+               "<h1 align = \"center\">" + "Database" + "</h1>\n" +
+               "<h2 align = \"center\">All records</h2>\n"
                );
-            if (encodeHistory != null){
+            if (operations.size() > 0){
                 out.println("<table style=\"float: left; margin-right:10px; margin-left:400px\" border = \"1\"  align = \"center\">\n"+"<tr bgcolor = \"#949494\">\n" +
-                         "  <th></th><th></th></tr>\n");
+                         " <caption>Operations Entities Table</caption>  <th></th><th></th></tr>\n");
 
-                for (String listElement : encodeHistory) 
+                for (OperationsEntity listElement : operations) 
                 {
-                    List<String> numbersList =  new ArrayList<String>(Arrays.asList(listElement.split("//")));
-
-
+                   
                      
                      out.println(  "<tr>\n" +
-                         "  <td>Creation Time</td>\n" +
-                         "  <td>" + numbersList.get(0) + "</td></tr>\n" +
-
-                      "<tr>\n" +
-                         "  <td>User Input</td>\n" +
-                         "  <td>" + numbersList.get(1) + "  </td> </tr>\n" +
+                         "  <td>User input</td>\n" +
+                         "  <td>" + listElement.getUserInput() + "</td></tr>\n" +
 
                       "<tr>\n" +
                          "  <td>Program Output</td>\n" +
-                         "  <td>" + numbersList.get(2) + "  </td> </tr>\n");
+                         "  <td>" + listElement.getUserOuput()+ "</td> </tr>\n" +
+                                 
+                    "<tr>\n" +
+                         "<td> ID of record</td>\n" +
+                         "<td>" + listElement.getId() + "</td> </tr>\n");
+
+                      "<tr>\n" +
+                         "<td> Key to history</td>\n" +
+                         "<td>" + listElement.getHistoryEntity().getId() + "</td> </tr>\n");
                 }
                 
                 out.println(
                  "</table>\n" + "</body></html>");
             }
-             if (decodeHistory != null){
-                  out.println("<table style=\"float: left\" border = \"1\" align = \"center\">\n"+"<tr bgcolor = \"#949494\">\n" +
-                        "  <th></th><th></th></tr>\n");
+             if (histories.size()>0){
+                  out.println("<table  style=\"float: left\" border = \"1\" align = \"center\">\n"+"<tr bgcolor = \"#949494\">\n" +
+                        " <caption>Histories Entities Table</caption> <th></th><th></th></tr>\n");
                   
-               for (String listElement : decodeHistory) 
+               for (HistoryEntity listElement : histories) 
                {
-                   List<String> numbersList =  new ArrayList<String>(Arrays.asList(listElement.split("//")));
-
-
-                    
+                  
                     out.println(  "<tr>\n" +
                         "  <td>Creation Time</td>\n" +
-                        "  <td>" + numbersList.get(0) + "</td></tr>\n" +
+                        "  <td>" + listElement.getNow() + "</td></tr>\n" +
 
                      "<tr>\n" +
-                        "  <td>User Input</td>\n" +
-                        "  <td>" + numbersList.get(1) + "  </td> </tr>\n" +
-
-                     "<tr>\n" +
-                        "  <td>Program Output</td>\n" +
-                        "  <td>" + numbersList.get(2) + "  </td> </tr>\n" );
-
-               
+                        "  <td>ID of record</td>\n" +
+                        "  <td>" + listElement.getId() + "  </td> </tr>\n"+
+                    
+                    "<tr>\n" +
+                         "<td> Key to operation</td>\n" +
+                         "<td>" + listElement.getOperationsEntity().getId() + "</td> </tr>\n");
+                }
 
             } 
                out.println(
                  "</table>\n" + "</body></html>");
-        }    
-    }   
+        }   
+        }catch (PersistenceException e) {
+                 response.sendError(response.SC_CONFLICT, e.getMessage());
+        }
+        catch (Exception e) {
+                 response.sendError(response.SC_CONFLICT, e.getMessage());
+        }
+
 }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

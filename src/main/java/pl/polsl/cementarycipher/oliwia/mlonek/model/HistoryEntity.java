@@ -37,10 +37,18 @@ public class HistoryEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Integer id;
 
     @Column(name = "dateOf", nullable = false)
     Date date = java.util.Calendar.getInstance().getTime();  
+    
+    @OneToOne
+    @JoinColumn
+    private OperationsEntity operationsEntity;
+    
+    public HistoryEntity() {  
+    super();  
+    }  
 
     public Date getNow() {
         return date;
@@ -59,16 +67,6 @@ public class HistoryEntity implements Serializable {
         this.operationsEntity = operationsEntity;
     }
     
-     
-    @OneToOne
-    @JoinColumn
-    private OperationsEntity operationsEntity;
-    
-    public HistoryEntity() {  
-    super();  
-      
-}  
-
     
      public HistoryEntity(OperationsEntity operation)
      {
@@ -85,8 +83,8 @@ public class HistoryEntity implements Serializable {
    
 
 
-    public int getId() {
-        return id;
+     public Integer getId() {
+        return id.intValue();
     }
 
     public void setId(int id) {
@@ -113,9 +111,9 @@ public class HistoryEntity implements Serializable {
         return true;
     }
 
-     @Override
-    public String toString() {
-        return "pl.polsl.cementarycipher.oliwia.mlonek.model.OperationsEntity[ id=" + id + "]";
-    }
+//     @Override
+//    public String toString() {
+//        return "pl.polsl.cementarycipher.oliwia.mlonek.model.OperationsEntity[ id=" + id + "]";
+//    }
     
 }

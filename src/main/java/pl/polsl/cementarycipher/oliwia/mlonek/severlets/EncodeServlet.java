@@ -60,21 +60,23 @@ public class EncodeServlet extends HttpServlet {
             String htmlRespone = "<html>";
             htmlRespone += "<h2>Your ciphered text is:<p> </p>"  + output  + "</h2>";
             htmlRespone += "</html>";
+            
             List<OperationsEntity> operations;
             Manager manager = new Manager();
             EntityManager em = (EntityManager) getServletContext().getAttribute("DbCon");
             manager.addRecord(textToEncode, output, em);
+          
             encodeList.add(new java.util.Date()+"//"+textToEncode+"//"+output);
             session.setAttribute("encodeList", encodeList);
  
             writer.println(htmlRespone);
             model.resetEncodedValue();
-            PrintWriter writer2 = response.getWriter();
-            
-            operations = em.createQuery("SELECT s FROM OperationsEntity s", OperationsEntity.class).getResultList();
-            for(OperationsEntity o : operations) {
-                writer2.println(o + "<br>");
-            }
+//            PrintWriter writer2 = response.getWriter();
+//            
+//            operations = em.createQuery("SELECT s FROM OperationsEntity s", OperationsEntity.class).getResultList();
+//            for(OperationsEntity o : operations) {
+//                writer2.println(o + "<br>");
+//            }
           
         } catch (WrongInputException ex) {
             

@@ -5,17 +5,10 @@
  */
 package pl.polsl.cementarycipher.oliwia.mlonek.severlets;
 
-import static java.awt.PageAttributes.MediaType.A;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Enumeration;
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceException;
 import javax.servlet.ServletException;
@@ -42,8 +35,8 @@ public class HistoryDBServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-           
+        try {
+           PrintWriter out = response.getWriter();
             List<HistoryEntity> operations = new ArrayList<>();
             EntityManager em = (EntityManager) getServletContext().getAttribute("DbCon");
             Manager manager = new Manager();
@@ -54,11 +47,11 @@ public class HistoryDBServlet extends HttpServlet {
                           + "<html>\n" +"<head><title>" + "Database history" + "</title></head>\n" +
 
             "<body bgcolor = \"#f0f0f0\">\n" +
-               "<h1 align = \"center\">" + "History" + "</h1>\n" +
-               "<h2 align = \"center\">Session Infomation</h2>\n"
+               "<h1 align = \"center\">" + "Database history" + "</h1>\n" +
+               "<h2 align = \"center\">History records from databse</h2>\n"
                );
                     
-            for(int i = 0; i < operations.size(); i++)
+            for(int i = operations.size()-1; i >= 0; i--)
 
 
                    out.println("<table border = \"1\"  align = \"center\">\n"+"<tr bgcolor = \"#949494\">\n" +
@@ -69,11 +62,15 @@ public class HistoryDBServlet extends HttpServlet {
 
                    "<tr>\n" +
                       "  <td>User Input</td>\n" +
-                      "  <td>" + operations.get(i).getOperationsEntity().getUserInput().toString()+ "  </td> </tr>\n" +
+                      "  <td>" + operations.get(i).getOperationsEntity().getUserInput()+ "  </td> </tr>\n" +
 
                    "<tr>\n" +
                       "  <td>Program Output</td>\n" +
-                      "  <td>" + operations.get(i).getOperationsEntity().getUserOuput().toString() + "  </td> </tr>\n" +
+                      "  <td>" + operations.get(i).getOperationsEntity().getUserOuput() + "  </td> </tr>\n" +
+
+                     "<tr>\n" +
+                      "  <td>Program Output</td>\n" +
+                      "  <td>" + operations.get(i).getOperationsEntity().getUserOuput() + "  </td> </tr>\n" +
 
                 "</table>\n" +
                 "</body></html>"
@@ -90,7 +87,7 @@ public class HistoryDBServlet extends HttpServlet {
         catch (PersistenceException e) {
                  response.sendError(response.SC_CONFLICT, e.getMessage());
         }
-
+        
 
 
         }

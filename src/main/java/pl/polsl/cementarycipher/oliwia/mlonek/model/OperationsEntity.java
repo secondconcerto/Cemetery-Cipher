@@ -36,7 +36,7 @@ public class OperationsEntity implements Serializable {
     private String userOuput;
     
     @OneToOne(mappedBy = "operationsEntity", cascade = CascadeType.ALL,
-              fetch = FetchType.LAZY, optional = false)
+              optional = false)
     private HistoryEntity history;
     
     
@@ -78,7 +78,7 @@ public class OperationsEntity implements Serializable {
     
 
     public Integer getId() {
-        return id;
+        return id.intValue();
     }
 
     public void setId(Integer id) {
@@ -105,9 +105,9 @@ public class OperationsEntity implements Serializable {
         return true;
     }
 
-    @Override
-    public String toString() {
-        return "pl.polsl.cementarycipher.oliwia.mlonek.model.OperationsEntity[ id=" + id + userInput + userOuput + "]";
-    }
+//    @Override
+//    public String toString() {
+//        return "pl.polsl.cementarycipher.oliwia.mlonek.model.OperationsEntity[ id=" + id + userInput + userOuput + "]";
+//    }
     
 }
