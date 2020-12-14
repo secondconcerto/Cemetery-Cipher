@@ -27,7 +27,7 @@ import pl.polsl.cementarycipher.oliwia.mlonek.model.WrongInputException;
  * and decoding user message and reseting variables that stores ouput messages.
  * 
  * @author Oliwia Mlonek
- * @version 3.0
+ * @version 5.0
  */
 public class ModelTest {
     

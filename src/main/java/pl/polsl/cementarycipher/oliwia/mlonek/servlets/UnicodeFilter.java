@@ -1,4 +1,4 @@
-package pl.polsl.cementarycipher.oliwia.mlonek.severlets;
+package pl.polsl.cementarycipher.oliwia.mlonek.servlets;
 
 import java.io.IOException;
 
@@ -11,7 +11,7 @@ import javax.servlet.annotation.*;
  * or header before sending it to servlet.
  *
  * @author Oliwia Mlonek
- * @version 4.0
+ * @version 5.0
  */
 @WebFilter(filterName = "SecondsFilter", urlPatterns = {"/*"})
 public class UnicodeFilter implements Filter {

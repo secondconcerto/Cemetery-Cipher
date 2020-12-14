@@ -2,35 +2,35 @@
 <web-app version="4.0" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd">
     <servlet>
         <servlet-name>EncodeServlet</servlet-name>
-        <servlet-class>pl.polsl.cementarycipher.oliwia.mlonek.severlets.EncodeServlet</servlet-class>
+        <servlet-class>pl.polsl.cementarycipher.oliwia.mlonek.servlets.EncodeServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>DecodeServlet</servlet-name>
-        <servlet-class>pl.polsl.cementarycipher.oliwia.mlonek.severlets.DecodeServlet</servlet-class>
+        <servlet-class>pl.polsl.cementarycipher.oliwia.mlonek.servlets.DecodeServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>MapDecodeServlet</servlet-name>
-        <servlet-class>pl.polsl.cementarycipher.oliwia.mlonek.severlets.MapDecodeServlet</servlet-class>
+        <servlet-class>pl.polsl.cementarycipher.oliwia.mlonek.servlets.MapDecodeServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>RedirectToDecodeServlet</servlet-name>
-        <servlet-class>pl.polsl.cementarycipher.oliwia.mlonek.severlets.RedirectToDecodeServlet</servlet-class>
+        <servlet-class>pl.polsl.cementarycipher.oliwia.mlonek.servlets.RedirectToDecodeServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>CookiesServlet</servlet-name>
-        <servlet-class>pl.polsl.cementarycipher.oliwia.mlonek.severlets.CookiesServlet</servlet-class>
+        <servlet-class>pl.polsl.cementarycipher.oliwia.mlonek.servlets.CookiesServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>HistoryServlet</servlet-name>
-        <servlet-class>pl.polsl.cementarycipher.oliwia.mlonek.severlets.HistoryServlet</servlet-class>
+        <servlet-class>pl.polsl.cementarycipher.oliwia.mlonek.servlets.HistoryServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>HistoryDBServlet</servlet-name>
-        <servlet-class>pl.polsl.cementarycipher.oliwia.mlonek.severlets.HistoryDBServlet</servlet-class>
+        <servlet-class>pl.polsl.cementarycipher.oliwia.mlonek.servlets.HistoryDBServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ShowDatabase</servlet-name>
-        <servlet-class>pl.polsl.cementarycipher.oliwia.mlonek.severlets.ShowDatabase</servlet-class>
+        <servlet-class>pl.polsl.cementarycipher.oliwia.mlonek.servlets.ShowDatabase</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>EncodeServlet</servlet-name>

@@ -1,5 +1,5 @@
 
-package pl.polsl.cementarycipher.oliwia.mlonek.severlets;
+package pl.polsl.cementarycipher.oliwia.mlonek.servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -23,7 +23,7 @@ import pl.polsl.cementarycipher.oliwia.mlonek.model.WrongInputException;
  * Servlet responsible for decoding user message.
  *
  * @author Oliwia Mlonek
- * @version 4.0
+ * @version 5.0
  */
 @WebServlet(name = "DecodeServlet", urlPatterns = {"/DecodeServlet"})
 public class DecodeServlet extends HttpServlet {
@@ -114,7 +114,7 @@ public class DecodeServlet extends HttpServlet {
             model.resetDecodedValue();
         }
         catch (PersistenceException e) {
-                 response.sendError(response.SC_CONFLICT, e.getMessage());
+                 response.sendError(response.SC_INTERNAL_SERVER_ERROR , e.getMessage());
         }
     }
 

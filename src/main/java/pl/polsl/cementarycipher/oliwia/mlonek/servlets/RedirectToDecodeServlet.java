@@ -1,21 +1,21 @@
 
-package pl.polsl.cementarycipher.oliwia.mlonek.severlets;
+package pl.polsl.cementarycipher.oliwia.mlonek.servlets;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet responsible for the count and displaying cookies.
  *
+ * Servlet is responsible for switching the appropriate html page 
+ * to display the decoding result.
  * @author Oliwia Mlonek
- * @version 4.0
+ * @version 5.0
  */
-public class CookiesServlet extends HttpServlet {
+public class RedirectToDecodeServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -28,22 +28,10 @@ public class CookiesServlet extends HttpServlet {
      */
     public void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       PrintWriter writer = response.getWriter();
-         
-        Cookie[] cookies = request.getCookies();
-         
-        if (cookies == null) {
-            writer.println("No cookies found");
-        } else {
-            writer.println("Number of cookies: " + cookies.length);
-             
-            for (Cookie aCookie : cookies) {
-                String name = aCookie.getName();
-                String value = aCookie.getValue();
-                 
-                writer.println(name + " = " + value);
-            }
-        }
+        response.setContentType("text/html;charset=UTF-8");
+        RequestDispatcher ds = request.getRequestDispatcher("decode.html");
+        ds.include(request, response);
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -58,6 +46,7 @@ public class CookiesServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
         processRequest(request, response);
     }
 
@@ -82,7 +71,7 @@ public class CookiesServlet extends HttpServlet {
      */
     @Override
     public String getServletInfo() {
-        return " Servlet responsible for managing cookies.";
+        return "Short description";
     }// </editor-fold>
 
 }

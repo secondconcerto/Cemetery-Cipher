@@ -1,23 +1,21 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package pl.polsl.cementarycipher.oliwia.mlonek.severlets;
+
+package pl.polsl.cementarycipher.oliwia.mlonek.servlets;
 
 import java.io.IOException;
-import javax.servlet.RequestDispatcher;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
+ * Servlet responsible for the count and displaying cookies.
  *
- * Servlet is responsible for switching the appropriate html page 
- * to display the decoding result.
+ * @author Oliwia Mlonek
+ * @version 5.0
  */
-public class RedirectToDecodeServlet extends HttpServlet {
+public class CookiesServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -30,10 +28,22 @@ public class RedirectToDecodeServlet extends HttpServlet {
      */
     public void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        RequestDispatcher ds = request.getRequestDispatcher("decode.html");
-        ds.include(request, response);
-        
+       PrintWriter writer = response.getWriter();
+         
+        Cookie[] cookies = request.getCookies();
+         
+        if (cookies == null) {
+            writer.println("No cookies found");
+        } else {
+            writer.println("Number of cookies: " + cookies.length);
+             
+            for (Cookie aCookie : cookies) {
+                String name = aCookie.getName();
+                String value = aCookie.getValue();
+                 
+                writer.println(name + " = " + value);
+            }
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -48,7 +58,6 @@ public class RedirectToDecodeServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
         processRequest(request, response);
     }
 
@@ -73,7 +82,7 @@ public class RedirectToDecodeServlet extends HttpServlet {
      */
     @Override
     public String getServletInfo() {
-        return "Short description";
+        return " Servlet responsible for managing cookies.";
     }// </editor-fold>
 
 }

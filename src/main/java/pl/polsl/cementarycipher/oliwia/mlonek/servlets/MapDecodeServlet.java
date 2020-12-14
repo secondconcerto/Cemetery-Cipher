@@ -1,9 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package pl.polsl.cementarycipher.oliwia.mlonek.severlets;
+
+package pl.polsl.cementarycipher.oliwia.mlonek.servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -21,7 +17,7 @@ import pl.polsl.cementarycipher.oliwia.mlonek.model.DecodeAlphabetModel;
  * Servlet downloads and prepares data to be dedoded.
  *
  * @author Oliwia Mlonek
- * @version 4.0
+ * @version 5.0
  */
 @WebServlet(name = "MapDecodeServlet", urlPatterns = {"/MapDecodeServlet"})
 public class MapDecodeServlet extends HttpServlet {

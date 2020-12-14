@@ -6,7 +6,7 @@ import java.util.HashMap;
 /** 
  * Model class represents data in the form of an alphabet (number - pictogram).
  * @author Oliwia Mlonek
- * @version 4.0
+ * @version 5.0
  */
 public class DecodeAlphabetModel {
       /** Map to store collection of the numbers and the corresponding pictograms */

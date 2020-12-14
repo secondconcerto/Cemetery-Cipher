@@ -1,9 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package pl.polsl.cementarycipher.oliwia.mlonek.severlets;
+
+package pl.polsl.cementarycipher.oliwia.mlonek.servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -18,8 +14,10 @@ import javax.servlet.http.HttpServletResponse;
 import pl.polsl.cementarycipher.oliwia.mlonek.model.HistoryEntity;
 
 /**
+ * Servlet responsible for displaying history of operations which are stored in database.
  *
- * @author roza
+ * @author Oliwia Mlonek
+ * @version 5.0
  */
 public class HistoryDBServlet extends HttpServlet {
 
@@ -82,10 +80,9 @@ public class HistoryDBServlet extends HttpServlet {
             }
         }
         catch (PersistenceException e) {
-                 response.sendError(response.SC_CONFLICT, e.getMessage());
+                 response.sendError(response.SC_INTERNAL_SERVER_ERROR , e.getMessage());
         }
-        
-
+       
 
         }
 
